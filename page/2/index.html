@@ -1,0 +1,290 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Wherelse Blog</title>
+<link rel="shortcut icon" href="https://wherelse.cc/favicon.ico">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"> -->
+<link rel="stylesheet" href="https://wherelse.cc/media/css/tailwind.css">
+<link rel="stylesheet" href="https://wherelse.cc/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Wherelse Blog - Atom Feed" href="https://wherelse.cc/atom.xml">
+
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-153595757-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'UA-153595757-1');
+  </script>
+    
+
+  <meta name="description" content="Wherelse 的博客小站，在折腾的路上越走越远" />
+</head>
+<body>
+  <div class="antialiased flex flex-col min-h-screen" id="app">
+
+    <div class="nav py-3 md:py-8 fixed w-full z-10 bg-gray-50 dark:bg-gray-700 transition-all duration-300" :class="{ 'scroll': scrolled }">
+  <div class="flex justify-end px-4">
+    <div class="w-8 h-8 flex justify-center items-center rounded-full md:hidden" @click="showMenu = !showMenu">
+      <i class="ri-close-line" v-show="showMenu"></i>
+      <i class="ri-menu-3-line" v-show="!showMenu"></i>
+    </div>
+  </div>
+  <nav class="max-w-4xl w-full mx-auto text-center flex flex-col md:flex-row justify-center md:block" :class="`${ showMenu ? 'block' : 'hidden' }`">
+    
+      <a href="/" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        首页
+      </a>
+    
+      <a href="/archives" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        归档
+      </a>
+    
+      <a href="/tags" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        标签
+      </a>
+    
+      <a href="/post/Friends-link" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        友链
+      </a>
+    
+      <a href="https://navigation.wherelse.cc" target="_blank" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        导航站
+      </a>
+    
+    <a href="https://wherelse.cc/atom.xml" target="_blank" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+      RSS
+    </a>
+  </nav>
+</div>
+
+    <div class="max-w-4xl w-full mx-auto pt-32">
+      
+
+      <div class="shadow-box bg-white dark:bg-gray-600 border-gray-300 rounded-none md:rounded-lg -mx-1 md:mx-0 md:px-0">
+        
+  <div class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+    
+    <div class="flex-1 order-2 md:order-1">
+      <h2 class="text-2xl font-semibold mb-4">
+        <a href="https://wherelse.cc/post/shi-yong-matlab-de-appdesigner-she-ji-gui-jie-mian/" class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+          使用Matlab的Appdesigner设计GUI界面，显示弹道曲线
+        </a>
+      </h2>
+      <div class="mb-4 text-xs text-gray-500">2019-12-07</div>
+      <div class="mb-4 text-gray-500 dark:text-gray-300">
+        <p>使用龙格库塔法(定步长四阶)解算弹道方程</p>
+
+      </div>
+      <a href="https://wherelse.cc/post/shi-yong-matlab-de-appdesigner-she-ji-gui-jie-mian/" class="btn">
+        Read more
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+    
+    <div class="flex-1 order-2 md:order-1">
+      <h2 class="text-2xl font-semibold mb-4">
+        <a href="https://wherelse.cc/post/latex-language-style/" class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+          LateX基本的语法
+        </a>
+      </h2>
+      <div class="mb-4 text-xs text-gray-500">2019-12-04</div>
+      <div class="mb-4 text-gray-500 dark:text-gray-300">
+        <p>Basic Letax language style</p>
+
+      </div>
+      <a href="https://wherelse.cc/post/latex-language-style/" class="btn">
+        Read more
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+    
+    <div class="flex-1 order-2 md:order-1">
+      <h2 class="text-2xl font-semibold mb-4">
+        <a href="https://wherelse.cc/post/du-li-xi-tong-ni-zhen-de-gai-nian/" class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+          《现代优化理论与算法》Summary
+        </a>
+      </h2>
+      <div class="mb-4 text-xs text-gray-500">2019-12-04</div>
+      <div class="mb-4 text-gray-500 dark:text-gray-300">
+        <p>Some summary about the course</p>
+
+      </div>
+      <a href="https://wherelse.cc/post/du-li-xi-tong-ni-zhen-de-gai-nian/" class="btn">
+        Read more
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+    
+    <div class="flex-1 order-2 md:order-1">
+      <h2 class="text-2xl font-semibold mb-4">
+        <a href="https://wherelse.cc/post/ji-yi-ci-deng-shan/" class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+          记一次登山
+        </a>
+      </h2>
+      <div class="mb-4 text-xs text-gray-500">2019-11-29</div>
+      <div class="mb-4 text-gray-500 dark:text-gray-300">
+        <p>海拔大约从400m -&gt; 1700m,风景不虚此行</p>
+
+      </div>
+      <a href="https://wherelse.cc/post/ji-yi-ci-deng-shan/" class="btn">
+        Read more
+      </a>
+    </div>
+    
+      <img class="flex-shrink-0 self-start md:ml-4 mb-4 md:mb-0 rounded-sm object-cover featured-img order-1 md:order-2 w-full h-40 md:w-56 md:h-32" loading="lazy" src="https://wherelse.cc/post-images/ji-yi-ci-deng-shan.JPG" alt="记一次登山">
+    
+  </div>
+
+  <div class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+    
+    <div class="flex-1 order-2 md:order-1">
+      <h2 class="text-2xl font-semibold mb-4">
+        <a href="https://wherelse.cc/post/dai-tou-ming-dai-li-de-xiao-yuan-wang-ipv6-mian-liu-fang-an-guo-nei-zhi-lian-mian-liu/" class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+          校园网IPV6免流方案（国内直连免流）
+        </a>
+      </h2>
+      <div class="mb-4 text-xs text-gray-500">2019-09-22</div>
+      <div class="mb-4 text-gray-500 dark:text-gray-300">
+        <p>School internet environment ipv6 free solution</p>
+
+      </div>
+      <a href="https://wherelse.cc/post/dai-tou-ming-dai-li-de-xiao-yuan-wang-ipv6-mian-liu-fang-an-guo-nei-zhi-lian-mian-liu/" class="btn">
+        Read more
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+    
+    <div class="flex-1 order-2 md:order-1">
+      <h2 class="text-2xl font-semibold mb-4">
+        <a href="https://wherelse.cc/post/armbian-xi-tong-qi-yong-zhong-wen-huan-jing/" class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+          Armbian系统启用中文环境
+        </a>
+      </h2>
+      <div class="mb-4 text-xs text-gray-500">2019-09-17</div>
+      <div class="mb-4 text-gray-500 dark:text-gray-300">
+        <p>Enable the Chinese Simple environment in Armbian</p>
+
+      </div>
+      <a href="https://wherelse.cc/post/armbian-xi-tong-qi-yong-zhong-wen-huan-jing/" class="btn">
+        Read more
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+    
+    <div class="flex-1 order-2 md:order-1">
+      <h2 class="text-2xl font-semibold mb-4">
+        <a href="https://wherelse.cc/post/zai-gridea-zhong-pei-zhi-gitalk-ping-lun-xi-tong/" class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+          在Gridea中配置Gitalk评论系统
+        </a>
+      </h2>
+      <div class="mb-4 text-xs text-gray-500">2019-09-11</div>
+      <div class="mb-4 text-gray-500 dark:text-gray-300">
+        <p>Configura the Gridea Gitalk system<br>
+Gridea的文档中，关于评论配置的部分只有官方的repo链接，没有详细的配置过程，在网上查找了一些资料后，简单介绍一下如何在Gridea中配置Gitalk评论。</p>
+
+      </div>
+      <a href="https://wherelse.cc/post/zai-gridea-zhong-pei-zhi-gitalk-ping-lun-xi-tong/" class="btn">
+        Read more
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+    
+    <div class="flex-1 order-2 md:order-1">
+      <h2 class="text-2xl font-semibold mb-4">
+        <a href="https://wherelse.cc/post/raspberrypi-phicomm-n1-ipv6-ddns-solution/" class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+          RaspberryPi/Phicomm N1... IPV6 DDNS Solution
+        </a>
+      </h2>
+      <div class="mb-4 text-xs text-gray-500">2019-09-07</div>
+      <div class="mb-4 text-gray-500 dark:text-gray-300">
+        <p>树莓派IPV6 DDNS解决方案</p>
+
+      </div>
+      <a href="https://wherelse.cc/post/raspberrypi-phicomm-n1-ipv6-ddns-solution/" class="btn">
+        Read more
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+    
+    <div class="flex-1 order-2 md:order-1">
+      <h2 class="text-2xl font-semibold mb-4">
+        <a href="https://wherelse.cc/post/hello-gridea/" class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+          Hello Gridea
+        </a>
+      </h2>
+      <div class="mb-4 text-xs text-gray-500">2018-12-12</div>
+      <div class="mb-4 text-gray-500 dark:text-gray-300">
+        <p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
+✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
+
+      </div>
+      <a href="https://wherelse.cc/post/hello-gridea/" class="btn">
+        Read more
+      </a>
+    </div>
+    
+      <img class="flex-shrink-0 self-start md:ml-4 mb-4 md:mb-0 rounded-sm object-cover featured-img order-1 md:order-2 w-full h-40 md:w-56 md:h-32" loading="lazy" src="https://wherelse.cc/post-images/hello-gridea.png" alt="Hello Gridea">
+    
+  </div>
+  
+      </div>
+
+      
+  <div class="my-4 flex justify-between px-4 md:px-0">
+    
+      <a href="https://wherelse.cc/" class="btn btn-white">
+        <i class="ri-arrow-left-line mr-4"></i>
+        上一页
+      </a>
+    
+    
+  </div>
+
+      <footer class="py-12 text-center px-4 md:px-0" v-pre>
+  Powered by <a href="https://github.com/getgridea/gridea" 
+target="_blank">Gridea</a>
+<br>
+©2020 <a href="https://wherelse.cc/" 
+target="_blank">Wherelse. </a>All Right Reserved
+<br>
+<br>
+<span id="busuanzi_container_site_uv">
+  本站总访问数：<span id="busuanzi_value_site_uv"></span>人次
+</span>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script data-ad-client="ca-pub-2888059295301722" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+</footer>
+
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://wherelse.cc/media/scripts/main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,517 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>校园网IPV6免流方案（国内直连免流） - Wherelse Blog</title>
+<link rel="shortcut icon" href="https://wherelse.cc/favicon.ico">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"> -->
+<link rel="stylesheet" href="https://wherelse.cc/media/css/tailwind.css">
+<link rel="stylesheet" href="https://wherelse.cc/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="校园网IPV6免流方案（国内直连免流） - Wherelse Blog - Atom Feed" href="https://wherelse.cc/atom.xml">
+
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-153595757-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'UA-153595757-1');
+  </script>
+    
+
+  <meta name="description" content="School internet environment ipv6 free solution
+
+校园网的网费一般都较高，高达几元每G，但是校园网的IPV6都是免费的（可能需要认证后才能使用），将IPV4流量导入到IPV6中即可实现校园网免流..." />
+  <meta property="og:title" content="校园网IPV6免流方案（国内直连免流） - Wherelse Blog">
+  <meta property="og:description" content="School internet environment ipv6 free solution
+
+校园网的网费一般都较高，高达几元每G，但是校园网的IPV6都是免费的（可能需要认证后才能使用），将IPV4流量导入到IPV6中即可实现校园网免流..." />
+  <meta property="og:type" content="articles">
+  <meta property="og:url" content="https://wherelse.cc/post/dai-tou-ming-dai-li-de-xiao-yuan-wang-ipv6-mian-liu-fang-an-guo-nei-zhi-lian-mian-liu/" />
+  <meta property="og:image" content="https://wherelse.cc/images/avatar.png">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:width" content="1200">
+  <meta name="twitter:title" content="校园网IPV6免流方案（国内直连免流） - Wherelse Blog">
+  <meta name="twitter:description" content="School internet environment ipv6 free solution
+
+校园网的网费一般都较高，高达几元每G，但是校园网的IPV6都是免费的（可能需要认证后才能使用），将IPV4流量导入到IPV6中即可实现校园网免流...">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://wherelse.cc/post/dai-tou-ming-dai-li-de-xiao-yuan-wang-ipv6-mian-liu-fang-an-guo-nei-zhi-lian-mian-liu/">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
+  
+    <link rel="stylesheet" href="https://wherelse.cc/media/css/prism-github.css">
+  
+
+  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+  
+</head>
+
+<body>
+  <div class="antialiased flex flex-col min-h-screen" id="app">
+    <a href="https://wherelse.cc" class="fixed top-0 left-0 mt-4 bg-black text-white dark:text-gray-700 dark:bg-yellow-50 dark:hover:bg-black dark:hover:text-white inline-flex p-2 pl-8 hover:text-gray-700 hover:bg-yellow-50 font-bold z-10 transition-fast animated fadeInLeft">
+      Wherelse Blog
+    </a>
+    <div class="max-w-4xl w-full mx-auto">
+      <div class="shadow-box bg-white dark:bg-gray-600 rounded-lg pt-16 md:pt-32 px-4 md:px-8 pb-8 animated fadeIn mb-8">
+        <h1 class="text-5xl font-semibold leading-normal pb-8 mb-8 border-b-8 border-gray-700">
+          校园网IPV6免流方案（国内直连免流）
+        </h1>
+        
+        <div class="mb-8 flex flex-wrap">
+          <div class="text-gray-400 text-sm mr-4">2019-09-22 · 11 min read</div>
+          
+        </div>
+        <div class="markdown mb-8" v-pre>
+          <p>School internet environment ipv6 free solution</p>
+<!-- more -->
+<p>校园网的网费一般都较高，高达几元每G，但是校园网的IPV6都是免费的（可能需要认证后才能使用），将IPV4流量导入到IPV6中即可实现校园网免流。通过IPV6连接国内服务器，即可以实现国内直连，低延迟，高速度，还可以实现透明代理等操作。</p>
+<h2 id="现在常见的方案">现在常见的方案</h2>
+<p>网上现存的免流方案一般是采用国外VPS（时间：2019年9月），所有的流量都要从国外绕一圈，延迟很高，而且国内部分视频，音乐网站是不允许国外IP使用的，国外的版权也很严格，如果不小心进行了BT下载，还可能导致VPS被封，这样的免流体验大打折扣。<br>
+<img src="https://wherelse.cc/post-images/1576421704557.jpg" alt="" loading="lazy"></p>
+<h2 id="根据当下提出的新方案">根据当下提出的新方案</h2>
+<p>随着国内IPV6的迅速普及，在全国大部分地区，家庭宽带已经可以获取到IPV6地址了，而且一般为公网IPV6地址，这为我们免流提供了新的手段，我们不再需要国外的VPS，只需要在家中放置一个可以搭建代理的微型服务器设备就可以实现相同的效果。这样延迟低了，降低了使用成本，也避免了数据在境外遭到盗取的风险。<br>
+<img src="https://wherelse.cc/post-images/1576421728891.jpg" alt="" loading="lazy"><br>
+在家中放置一个安装好代理服务器端的设备，在校园内通过IPV6代理访问家中的服务器，就可以实现免流了，在电脑上配合使用proxifier，或配合如OPENWRT这样的路由设备使用，实现全局免流。这里我使用的树莓派作为服务器（最近的一些矿难设备性价比更高，比如斐讯N1，贝壳云P1，在安装armbian系统后也可使用）。</p>
+<h2 id="搭建ipv6免流代理的前提条件">搭建IPV6免流代理的前提条件</h2>
+<ol>
+<li>首先，确认家中的宽带能否获取到IPV6地址，如果连IPV6地址都获取不到，那么这篇文章就可以关闭了。这里可以使用<a href="test-ipv6.com">test-ipv6</a>进行测试，测试是否支持IPV6，部分地区的运行商宽带其实已经可以分配IPV6地址，但是光猫上要进行设置，这就要具体询问运营商了。<br>
+一般IPV6分配的都是公网地址，但是也有部分地区丧心病狂的分配了内网IPV6地址，这也是不行的，公网IPV6地址是2401,2001,2404等开头的一般都为公网地址，才能够搭建我们的免流代理。</li>
+<li>拥有一台服务器设备，这里树莓派或者我上面提到的矿难产物都是可以的，树莓派搭建起来比较方便，不需要额外的折腾，如果有热爱折腾的精神，那么矿难设备其实是更实惠和稳定的方案。</li>
+</ol>
+<h2 id="搭建免流的具体过程">搭建免流的具体过程</h2>
+<ol>
+<li>按服务器设备上安装系统，这里推荐安装Debian或者Ubuntu（或者树莓派官方系统），安装完系统后建议更换国内源，安装软件速度会快一些。这里推荐中科大源，具体配置方法见中科大源官网：<a href="http://mirrors.ustc.edu.cn/">http://mirrors.ustc.edu.cn/</a> 有各个系统详细的配置方法。</li>
+<li>将服务器设备连接到宽带的路由器或者光猫下，检查设备是否获取到IPV6地址。连接好设备后，在命令窗口中输入<code>sudo ifconfig</code>，在命令回应中如果找到如下的公网IPV6即为成功。<img src="https://wherelse.cc/post-images/1569156829915.png" alt="" loading="lazy"></li>
+<li>使用域名解析IPV6地址，IPV6地址虽然是公网地址，但是仍然可能会变动，这里使用域名进行DDNS解析，保证一直能够通过域名访问到设备。域名推荐使用<a href="https://www.freenom.com">Freenom</a>的免费域名，可以每次可以申请一年，一年到期后可以续期。然后再注册一个<a href="www.cloudflare.com">CloudFlare</a>账户,具体DDNS操作过程见我的另一篇文章<a href="https://www.wherelse.tk/post/raspberrypiphicomm-n1-ipv6-ddns-solution/">RaspberryPi/Phicomm N1... IPV6 DDNS Solution 树莓派IPV6 DDNS解决方案</a>。</li>
+<li>安装代理软件，这里我使用的是V2RAY，因为这个代理软件支持路由功能，为我们拓展透明代理，广告屏蔽等功能留下了可能。首先更新一下软件源，输入<code>sudo apt-get update</code>,完成后在命令窗口中输入：<br>
+<code>bash &lt;(curl -L -s https://install.direct/go.sh)</code>，<br>
+若不成功则分两步输入：<br>
+<code>wget https://install.direct/go.sh</code>,<code>sudo bash go.sh</code><br>
+等待软件安装完成。</li>
+<li>进行软件json脚本配置，这是代理配置的核心。配置文件分为以下几个部分：<img src="https://wherelse.cc/post-images/1569158646831.png" alt="" loading="lazy">在我们的配置中，我们一般只需要用到其中的<code>inbounds</code>，<code>outbounds</code>，<code>dns</code>，<code>routing</code>，其他根据具体情况再添加。我们在命令窗口中输入：<code>sudo nano /etc/v2ray/config.json</code>或 <code>sudo vi /etc/v2ray/config.json</code>进行脚本配置。<br>
+首先是inbounds，这是我我们代理服务器的入口，是配置代理信息的地方，在这里我们要设置代理协议，代理端口，详细配置等信息。</li>
+</ol>
+<pre><code class="language-json">  &quot;inbounds&quot;: [{
+       &quot;port&quot;: xxxxxxx,
+        &quot;protocol&quot;: &quot;shadowsocks&quot;,
+	    &quot;network&quot;:&quot;tcp,udp&quot;
+        &quot;settings&quot;: {
+        &quot;method&quot;: &quot;aes-128-gcm&quot;,
+        &quot;password&quot;: &quot;xxxxxxx&quot;
+      }
+    },
+    {
+      &quot;port&quot;: xxxxxxxxx,
+      &quot;protocol&quot;: &quot;vmess&quot;,
+      &quot;settings&quot;: {
+        &quot;clients&quot;: [{
+          &quot;id&quot;: &quot;xxxxxxxxxxxxxxxxxxxxxxxxxx&quot;,
+          &quot;alterId&quot;: 32
+        }]
+      },
+      &quot;streamSettings&quot;: {
+        &quot;network&quot;: &quot;tcp&quot;,
+        &quot;security&quot;: &quot;none&quot;,
+        &quot;tcpSettings&quot;: {}
+      }
+    }
+  ]
+</code></pre>
+<ul>
+<li>
+<p>代理端口范围可选0-65535，一般建议使用10000-65535，避免和一些特殊端口冲突。协议我们选择vmess或者shadowsocks均可。shadowsocks的加密协议建议选择aes-128-gcm，vmess中的id一般使用随机生成的数据，建议使用生成工具生成，alterid适当选择，建议不要太大。上方代码中实际为配置了shadowsocks和vmess两个代理入口，实现既可以使用shadowsocks连接，也可以使用V2ray连接，当然也可以根据情况只配置一个入口。</p>
+</li>
+<li>
+<p>然后是outbounds，这是代理服务器的出口，从入口进入的流量经过转发从出口发出。脚本可以配置多个出口，在这里，我们配置一个直连出口，将所有流量直接转发至树莓派所在网络即可。</p>
+</li>
+</ul>
+<pre><code class="language-json">&quot;outbounds&quot;:
+[{
+      &quot;protocol&quot;: &quot;freedom&quot;,
+      &quot;settings&quot;: {},
+      &quot;tag&quot;: &quot;direct&quot;
+}]
+</code></pre>
+<ul>
+<li>在配置文件中配置好inbound和outbound后，再简单设置一下dns和routing路由策略，json脚本就基本配置完成了,保存退出编辑器，使用<code>sudo /usr/bin/v2ray/v2ray -test -config /etc/v2ray/config.json</code>检查json脚本语法是否正确，若返回<code>Configuration OK</code>则说明配置正确，然后使用<code>sudo systemctl restart v2ray</code>重启V2ray即可。<br>
+这里可以先使用json脚本生成工具生成，再根据自己的实际情况做修改(<a href="https://intmainreturn0.com/v2ray-config-gen/">json脚本生成</a>).我也提供一个json配置模板，可以作为参考，这个模板入站和出站均使用shadowsocks协议。</li>
+</ul>
+<pre><code class="language-json">{
+  &quot;log&quot;: {
+    &quot;error&quot;: &quot;error.log&quot;,
+    &quot;loglevel&quot;: &quot;warning&quot;
+  },
+  &quot;outbounds&quot;:[
+      {
+      &quot;protocol&quot;: &quot;freedom&quot;,
+      &quot;settings&quot;: {},
+      &quot;tag&quot;: &quot;direct&quot;
+    }，
+   {
+      &quot;protocol&quot;: &quot;shadowsocks&quot;,
+      &quot;tag&quot;:proxy,
+      &quot;settings&quot;: {
+      &quot;servers&quot;: [
+       {
+            &quot;address&quot;: &quot;**********&quot;,
+            &quot;port&quot;: 14129,
+            &quot;method&quot;: &quot;aes-128-gcm&quot;,
+            &quot;password&quot;: &quot;*********&quot;,
+            &quot;network&quot;:&quot;tcp,udp&quot;
+      }]
+      }
+  }
+],
+  &quot;inbounds&quot;:[{
+      &quot;port&quot;: 14129,
+      &quot;protocol&quot;: &quot;shadowsocks&quot;,
+      &quot;settings&quot;: {
+      &quot;method&quot;: &quot;aes-128-gcm&quot;,
+      &quot;password&quot;: &quot;*********&quot;,
+      &quot;network&quot;:&quot;tcp,udp&quot;
+      }
+   },
+    {
+      &quot;port&quot;: 1080,
+      &quot;listen&quot;: &quot;127.0.0.1&quot;,
+      &quot;protocol&quot;: &quot;socks&quot;,
+      &quot;settings&quot;: {
+        &quot;auth&quot;: &quot;noauth&quot;,
+        &quot;udp&quot;: true,
+        &quot;ip&quot;: &quot;127.0.0.1&quot;
+      }
+    }],
+  &quot;dns&quot;: {
+    &quot;servers&quot;: [&quot;119.29.29.29&quot;,&quot;223.5.5.5&quot;,&quot;8.8.8.8&quot;, &quot;8.8.4.4&quot;, &quot;localhost&quot;]
+  },
+  &quot;routing&quot;: {
+    &quot;domainStrategy&quot;: &quot;IPIfNonMatch&quot;,
+    &quot;rules&quot;: [
+    ]
+  }
+}
+</code></pre>
+<ol start="6">
+<li>为电脑\手机安装代理软件，windows客户端下载：<a href="https://github.com/2dust/v2rayN/releases">v2rayN</a>,v2ray-core下载：<a href="https://github.com/v2ray/v2ray-core/releases">v2ray-core</a>.下载完成后，解压V2rayN后将v2ray-core解压到相同文件夹后即可使用。手机Android请到GooglePlay下载：<a href="https://play.google.com/store/apps/details?id=com.v2ray.ang">V2rayNG</a> 安装完成后启用代理即可。PC端若希望实现全局免流则需要配合proxifier或者sstap，或者使用openwrt等系统的路由器实现。</li>
+</ol>
+<h2 id="为免流添加透明代理自动分流">为免流添加透明代理自动分流</h2>
+<p>得益于v2ray内置了一个routing路由，我们可以通过路由来实现透明代理，实现无感科学上网，自动分流国内外网站，就可以愉快的上谷歌学术等学习了🙄。通过routing策略，我们可以对访问不同域名或者不同的地址的流量根据我们的需要打上tag标签，这些流量在outbound和出口tag标签进行匹配后，分别从不同出口发出，实现流量分流。<br>
+routing的路由策略有三种，分别是：<code>Asls, IPIfNonMatch, IPOnDemand</code></p>
+<ul>
+<li>&quot;AsIs&quot;: 只使用域名进行路由选择;</li>
+<li>&quot;IPIfNonMatch&quot;: 当域名没有匹配任何规则时，将域名解析成 IP（A 记录或 AAAA 记录）再次进行匹配;</li>
+<li>&quot;IPOnDemand&quot;: 当匹配时碰到任何基于 IP 的规则，将域名立即解析为 IP 进行匹配;<br>
+outboundTag 即出站标签，这里我将国内地址和国内ip，以及测速网站域名打上direct直连标签，国外网站打上proxy标签，然后在outbound出口增加一个有proxy标签的出口，这样国内流量匹配direct标签出口，直连国内，而被打上proxy标签的流量就会从proxy出口走代理，实现流量的自动分流，下面是我的配置。</li>
+</ul>
+<pre><code class="language-json">&quot;routing&quot;: {
+    &quot;domainStrategy&quot;: &quot;IPIfNonMatch&quot;,
+    &quot;rules&quot;: [
+        {
+        &quot;type&quot;: &quot;field&quot;,
+        &quot;outboundTag&quot;: &quot;direct&quot;,
+        &quot;domain&quot;:[&quot;geosite:speedtest&quot;]
+        },
+        {
+        &quot;type&quot;: &quot;field&quot;,
+        &quot;outboundTag&quot;: &quot;blocked&quot;,
+        &quot;ip&quot;: [&quot;geoip:private&quot;]
+        },
+       {
+        &quot;type&quot;:&quot;field&quot;,
+        &quot;outboundTag&quot;:&quot;proxy&quot;,
+        &quot;domain&quot;:[&quot;geosite:geolocation-!cn&quot;]
+        },
+        {
+        &quot;type&quot;:&quot;field&quot;,
+        &quot;outboundTag&quot;:&quot;blocked&quot;,
+        &quot;domain&quot;:[&quot;geosite:category-ads&quot;]
+        },
+       {
+        &quot;type&quot;: &quot;field&quot;,
+        &quot;ip&quot;: [&quot;geoip:cn&quot;],
+        &quot;domain&quot;: [&quot;geosite:cn&quot;],
+        &quot;outboundTag&quot;: &quot;direct&quot;
+      },
+      {
+        &quot;type&quot;: &quot;chinasites&quot;,
+        &quot;outboundTag&quot;: &quot;direct&quot;
+      },
+      {
+        &quot;type&quot;: &quot;chinaip&quot;,
+        &quot;outboundTag&quot;: &quot;direct&quot;
+      }
+    ]
+  }
+}
+</code></pre>
+<h2 id="使用链式代理在校园局域网环境下实现无ipv6免流">使用链式代理，在校园局域网环境下实现无IPV6免流</h2>
+<p>待更新····</p>
+<br>
+<font color="#ADADAD">
+<center>
+<span id="busuanzi_container_page_pv">
+  本文总阅读量:<span id="busuanzi_value_page_pv"></span>次
+</span>
+</center> 
+</font>
+        </div>
+        <!-- Share to Twitter, Weibo, Telegram -->
+        <div class="flex items-center">
+          <div class="mr-4 flex items-center">
+            <i class="ri-share-forward-line text-gray-500"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-blue-500 hover:bg-blue-100 dark:hover:bg-gray-600 inline-flex" @click="shareToTwitter">
+            <i class="ri-twitter-line"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-red-500 hover:bg-red-100 dark:hover:bg-gray-600 inline-flex" @click="shareToWeibo">
+            <i class="ri-weibo-line"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-indigo-500 hover:bg-indigo-100 dark:hover:bg-gray-600 inline-flex" @click="shareToTelegram">
+            <i class="ri-telegram-line"></i>
+          </div>
+        </div>
+      </div>
+
+      
+
+      <div id="vlaine-comment"></div>
+
+      <footer class="py-12 text-center px-4 md:px-0" v-pre>
+  Powered by <a href="https://github.com/getgridea/gridea" 
+target="_blank">Gridea</a>
+<br>
+©2020 <a href="https://wherelse.cc/" 
+target="_blank">Wherelse. </a>All Right Reserved
+<br>
+<br>
+<span id="busuanzi_container_site_uv">
+  本站总访问数：<span id="busuanzi_value_site_uv"></span>人次
+</span>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script data-ad-client="ca-pub-2888059295301722" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+</footer>
+    </div>
+
+    <!-- TOC Container -->
+    <div class="fixed right-0 bottom-0 mb-16 mr-4 shadow w-8 h-8 rounded-full flex justify-center items-center z-10 cursor-pointer bg-white dark:bg-gray-500 dark:text-gray-200 hover:shadow-lg transition-all animated fadeInRight" @click="showToc = true">
+      <i class="ri-file-list-line"></i>
+    </div>
+
+    <div class="fixed right-0 top-0 bottom-0 overflow-y-auto w-64 bg-white dark:bg-gray-800 p-4 border-l border-gray-100 dark:border-gray-600 z-10 transition-fast" :class="{ '-mr-64': !showToc }">
+      <div class="flex mb-4 justify-end">
+        <div class="w-8 h-8 inline-flex justify-center items-center rounded-full cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-fast" @click="showToc = false">
+          <i class="ri-close-line text-lg"></i>
+        </div>
+      </div>
+      <div class="post-toc-container">
+        <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E7%8E%B0%E5%9C%A8%E5%B8%B8%E8%A7%81%E7%9A%84%E6%96%B9%E6%A1%88">现在常见的方案</a></li>
+<li><a href="#%E6%A0%B9%E6%8D%AE%E5%BD%93%E4%B8%8B%E6%8F%90%E5%87%BA%E7%9A%84%E6%96%B0%E6%96%B9%E6%A1%88">根据当下提出的新方案</a></li>
+<li><a href="#%E6%90%AD%E5%BB%BAipv6%E5%85%8D%E6%B5%81%E4%BB%A3%E7%90%86%E7%9A%84%E5%89%8D%E6%8F%90%E6%9D%A1%E4%BB%B6">搭建IPV6免流代理的前提条件</a></li>
+<li><a href="#%E6%90%AD%E5%BB%BA%E5%85%8D%E6%B5%81%E7%9A%84%E5%85%B7%E4%BD%93%E8%BF%87%E7%A8%8B">搭建免流的具体过程</a></li>
+<li><a href="#%E4%B8%BA%E5%85%8D%E6%B5%81%E6%B7%BB%E5%8A%A0%E9%80%8F%E6%98%8E%E4%BB%A3%E7%90%86%E8%87%AA%E5%8A%A8%E5%88%86%E6%B5%81">为免流添加透明代理自动分流</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8%E9%93%BE%E5%BC%8F%E4%BB%A3%E7%90%86%E5%9C%A8%E6%A0%A1%E5%9B%AD%E5%B1%80%E5%9F%9F%E7%BD%91%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%AE%9E%E7%8E%B0%E6%97%A0ipv6%E5%85%8D%E6%B5%81">使用链式代理，在校园局域网环境下实现无IPV6免流</a></li>
+</ul>
+</li>
+</ul>
+
+      </div>
+    </div>
+
+    <!-- Back to top -->
+    <div class="fixed right-0 bottom-0 mb-4 mr-4 shadow w-8 h-8 rounded-full flex justify-center items-center z-10 cursor-pointer bg-white hover:shadow-lg transition-all dark:bg-gray-500 dark:text-gray-200" @click="backToUp" v-show="scrolled">
+      <i class="ri-arrow-up-line"></i>
+    </div>
+  </div>
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+  <!-- Background of PhotoSwipe. 
+        It's a separate element as animating opacity is faster than rgba(). -->
+  <div class="pswp__bg">
+  </div>
+  <!-- Slides wrapper with overflow:hidden. -->
+  <div class="pswp__scroll-wrap">
+    <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+    <div class="pswp__container">
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+    </div>
+    <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+    <div class="pswp__ui pswp__ui--hidden">
+      <div class="pswp__top-bar">
+        <!--  Controls are self-explanatory. Order can be changed. -->
+        <div class="pswp__counter">
+        </div>
+        <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+        <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+        <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+        <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+        <!-- element will get class pswp__preloader--active when preloader is running -->
+        <div class="pswp__preloader">
+          <div class="pswp__preloader__icn">
+            <div class="pswp__preloader__cut">
+              <div class="pswp__preloader__donut">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+        <div class="pswp__share-tooltip">
+        </div>
+      </div>
+      <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+      </button>
+      <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+      </button>
+      <div class="pswp__caption">
+        <div class="pswp__caption__center">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://wherelse.cc/media/scripts/main.js"></script>
+  
+  <!-- Code Highlight -->
+  
+    <script src="https://wherelse.cc/media/prism.js"></script>
+    <script>
+      Prism.highlightAll()
+    </script>
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+  <script>
+    //拿到预览框架，也就是上面的html代码
+    var pswpElement = document.querySelectorAll('.pswp')[0];
+    //定义图片数组变量
+    var imgitems;
+    /**
+    * 用于显示预览界面
+    * @param index 图片数组下标
+    */
+    function viewImg(index) {
+      //其它选项这里不做过多阐述，详情见官网
+      var pswpoptions = {
+        index: parseInt(index, 10), // 开始幻灯片索引。0是第一张幻灯片。必须是整数，而不是字符串。
+        bgOpacity: 0.7, // 背景透明度，0-1
+        maxSpreadZoom: 3, // 缩放级别，不要太大
+      };
+      //初始化并打开PhotoSwipe，pswpElement对应上面预览框架，PhotoSwipeUI_Default为皮肤，imgitems为图片数组，pswpoptions为选项
+      var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, imgitems, pswpoptions);
+      gallery.init()
+    }
+    /**
+    * 用于添加图片点击事件
+    * @param img 图片元素
+    * @param index 所属下标（在imgitems中的位置）
+    */
+    function addImgClick(img, index) {
+      img.onclick = function() {
+        viewImg(index)
+      }
+    }
+    /**
+    * 轮询所有图片，获取src、width、height等数据，加入imgitems，并给图片元素添加事件
+    * 最好在onload中执行该方法，本站因放在最底部，所以直接初始化
+    * 异步加载图片可在图片元素创建完成后调用此方法
+    */
+    function initImg() {
+      //重置图片数组
+      imgitems = [];
+      //查找class:markdown 下的所有img元素并遍历
+      var imgs = document.querySelectorAll('.markdown img');
+      for (var i = 0; i < imgs.length; i++) {
+        var img = imgs[i];
+        //本站相册初始为loading图片，真实图片放在data-src
+        var ds = img.getAttribute("data-src");
+        //创建image对象，用于获取图片宽高
+        var imgtemp = new Image();
+        //判断是否存在data-src
+        if (ds != null && ds.length > 0) {
+          imgtemp.src = ds
+        } else {
+          imgtemp.src = img.src
+        }
+        //判断是否存在缓存
+        if (imgtemp.complete) {
+          var imgobj = {
+            "src": imgtemp.src,
+            "w": imgtemp.width,
+            "h": imgtemp.height,
+          };
+          imgitems[i] = imgobj;
+          addImgClick(img, i);
+        } else {
+          console.log('进来了2')
+          imgtemp.index = i;
+          imgtemp.img = img;
+          imgtemp.onload = function() {
+            var imgobj = {
+              "src": this.src,
+              "w": this.width,
+              "h": this.height,
+            };
+            //不要使用push，因为onload前后顺序会不同
+            imgitems[this.index] = imgobj
+            //添加点击事件
+            addImgClick(this.img, this.index);
+          }
+        }
+      }
+    }
+    //初始化
+    initImg();
+  </script>
+  <script type="application/javascript" src="https://wherelse.cc/media/scripts/valine.min.js"></script>
+  <script type="application/javascript">
+  
+    // var valine = new Valine();
+    // valine.init({
+    //   el: '#vlaine-comment',
+    //   appId: 'WhdyquP4ILciqzTtaVas0lHV-MdYXbMMI',
+    //   appKey: 'CKBpTQaP0cucM1Lc3KI4t333',
+    //   notify: true,
+    //   avatar: 'mp',
+    //   verify: true,
+    //   placeholder: '来都来了，不妨评论一下',
+    //   visitor: true,
+    //   highlight: true,
+    //   recordIP: false,
+    // })
+  
+    var valine = new Valine();
+    valine.init({
+      el: '#vlaine-comment',
+      appId: 'WhdyquP4ILciqzTtaVas0lHV-MdYXbMMI',
+      appKey: 'CKBpTQaP0cucM1Lc3KI4t333',
+      notify: false,
+      verify: false,
+      visitor: true,
+      avatar: 'mp',
+      placeholder: '加入讨论...'
+    })
+  </script>
+</body>
+
+</html>

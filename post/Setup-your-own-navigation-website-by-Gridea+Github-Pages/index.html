@@ -1,0 +1,390 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>使用Gridea+Github Pages搭建自己的导航站 - Wherelse Blog</title>
+<link rel="shortcut icon" href="https://wherelse.cc/favicon.ico">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"> -->
+<link rel="stylesheet" href="https://wherelse.cc/media/css/tailwind.css">
+<link rel="stylesheet" href="https://wherelse.cc/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="使用Gridea+Github Pages搭建自己的导航站 - Wherelse Blog - Atom Feed" href="https://wherelse.cc/atom.xml">
+
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-153595757-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'UA-153595757-1');
+  </script>
+    
+
+  <meta name="description" content="Set up your own navigation website by Gridea+Github Pages
+
+之前在V2EX看到不少人搭建了自己的导航站，自己也觉得有些网站使用频次很低，浏览器收藏夹数量又爆炸，就心生自己搭建自己的导..." />
+  <meta property="og:title" content="使用Gridea+Github Pages搭建自己的导航站 - Wherelse Blog">
+  <meta property="og:description" content="Set up your own navigation website by Gridea+Github Pages
+
+之前在V2EX看到不少人搭建了自己的导航站，自己也觉得有些网站使用频次很低，浏览器收藏夹数量又爆炸，就心生自己搭建自己的导..." />
+  <meta property="og:type" content="articles">
+  <meta property="og:url" content="https://wherelse.cc/post/Setup-your-own-navigation-website-by-Gridea+Github-Pages/" />
+  <meta property="og:image" content="https://wherelse.cc/images/avatar.png">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:width" content="1200">
+  <meta name="twitter:title" content="使用Gridea+Github Pages搭建自己的导航站 - Wherelse Blog">
+  <meta name="twitter:description" content="Set up your own navigation website by Gridea+Github Pages
+
+之前在V2EX看到不少人搭建了自己的导航站，自己也觉得有些网站使用频次很低，浏览器收藏夹数量又爆炸，就心生自己搭建自己的导...">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://wherelse.cc/post/Setup-your-own-navigation-website-by-Gridea+Github-Pages/">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
+  
+    <link rel="stylesheet" href="https://wherelse.cc/media/css/prism-github.css">
+  
+
+  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+  
+</head>
+
+<body>
+  <div class="antialiased flex flex-col min-h-screen" id="app">
+    <a href="https://wherelse.cc" class="fixed top-0 left-0 mt-4 bg-black text-white dark:text-gray-700 dark:bg-yellow-50 dark:hover:bg-black dark:hover:text-white inline-flex p-2 pl-8 hover:text-gray-700 hover:bg-yellow-50 font-bold z-10 transition-fast animated fadeInLeft">
+      Wherelse Blog
+    </a>
+    <div class="max-w-4xl w-full mx-auto">
+      <div class="shadow-box bg-white dark:bg-gray-600 rounded-lg pt-16 md:pt-32 px-4 md:px-8 pb-8 animated fadeIn mb-8">
+        <h1 class="text-5xl font-semibold leading-normal pb-8 mb-8 border-b-8 border-gray-700">
+          使用Gridea+Github Pages搭建自己的导航站
+        </h1>
+        
+        <div class="mb-8 flex flex-wrap">
+          <div class="text-gray-400 text-sm mr-4">2020-01-28 · 4 min read</div>
+          
+            <a href="https://wherelse.cc/tag/sx7g1O9Qg/" class="text-gray-700 text-sm border-b-2 border-dotted border-gray-200 hover:border-gray-600 transition-all duration-100 inline-flex mr-2">
+              <i class="ri-hashtag"></i>
+              Gridea
+            </a>
+          
+        </div>
+        <div class="markdown mb-8" v-pre>
+          <p>Set up your own navigation website by Gridea+Github Pages</p>
+<!-- more -->
+<p>之前在V2EX看到不少人搭建了自己的导航站，自己也觉得有些网站使用频次很低，浏览器收藏夹数量又爆炸，就心生自己搭建自己的导航站的想法。于是去github上搜了搜，看了下开源的基本都是有后端的，对于我这种佛系的人自然不太适合。适逢<a href="https://github.com/lmm214">林木木</a>制作并开源了Gridea的导航站主题——<a href="https://github.com/lmm214/gridea-theme-webstack">gridea-theme-webstack</a>，决定试一试。<br>
+因为Gridea支持上传到Github，Coding以及SFTP，生成的网页也是静态的，占用空间少，管理起来也方便，不用去操心后端，就很省心。下面这张图是我搭建好的导航站的效果：<br>
+<img src="https://wherelse.cc/post-images/1580271838621.png" alt="" loading="lazy"></p>
+<h2 id="搭建过程">搭建过程</h2>
+<ol>
+<li>因为我已经在Github Pages下使用Gridea搭建了我的博客<a href="https://wherelse.cc">Wherelse Blog</a>，所以这里新建了一个Github仓库，并在设置了启用了pages功能，用做存储导航站的文件数据,这个仓库默认对应的pages页面就是：<code>https://域名/仓库名</code> ，我的域名是wherelse.cc，所以默认导航页面就是<code>https://wherelse.cc/navigation-webstack</code>，不过也可以通过CNAME文件设置自定义的域名。</li>
+<li>为了避免配置错乱，新建了一个新的Gridea配置文件夹切换过去，配置好navigation-webstack这个仓库的相关信息保存后，将主题<a href="https://github.com/lmm214/gridea-theme-webstack">gridea-theme-webstack</a>的文件夹放到配置文件夹的theme文件夹下，重启软件，在设置中切换到该主题并保存，预览应该就可以看到一个空的导航站了。</li>
+<li>在主题-自定义配置中添加导航站中的网站信息，包括以下几个内容：名称、地址、图片和描述。在网站添加完成后保存预览，一个导航站就完成了。<br>
+<img src="https://wherelse.cc/post-images/1580271760129.png" alt="" loading="lazy"></li>
+</ol>
+<h2 id="如何配置分类">如何配置分类</h2>
+<p>该主题默认有四个分类，如果需要添加或者调整分类需要手动更改<code>config.json</code>和<code>index.ejs</code>，主题的文件目录如下：</p>
+<pre><code class="language-json">├── assets
+│   ├── media
+│   │   ├── css
+│   │   │   ├── fonts
+│   │   │   │   ├── icomoon.eot
+│   │   │   │   ├── icomoon.svg
+│   │   │   │   ├── icomoon.ttf
+│   │   │   │   └── icomoon.woff
+│   │   │   ├── icomoon.css
+│   │   │   └── main.css
+│   │   ├── images
+│   │   │   ├── favicon.png
+│   │   │   └── logo-collapsed@2x.png
+│   │   └── js
+│   │       ├── bootstrap.min.js
+│   │       ├── jquery-1.11.1.min.js
+│   │       ├── lozad.js
+│   │       ├── xenon-custom.js
+│   │       └── xenon-toggles.js
+│   └── styles
+│       └── main.less //空文件
+├── config.json
+└── templates
+    ├── archives.ejs //空文件
+    ├── index.ejs
+    ├── post.ejs //空文件
+    ├── tag.ejs //空文件
+    └── tags.ejs //空文件
+</code></pre>
+<ol>
+<li>如果你只是需要更改分类的名称，在<code>config.json</code>中只需将文件中的<code>label</code>和<code>group</code>进行更改即可，然后更改<code>index.ejs</code>，见序号3内容。</li>
+<li>如果你需要添加分类，首先在<code>config.json</code>中复制添加一个相同的组，并将name更改与其他不同，例如更改为fun6,<code>label</code>和<code>group</code>更改为你想要的名称。<br>
+<img src="https://wherelse.cc/post-images/1580227844435.png" alt="config.json" loading="lazy"></li>
+<li>将如下图的每个类似代码段中的名称更改为与<code>config.json</code>中对应name下的名称<br>
+<img src="https://wherelse.cc/post-images/1580228141393.png" alt="inedx.ejs-1" loading="lazy"></li>
+</ol>
+<p><img src="https://wherelse.cc/post-images/1580228149082.png" alt="inedx.ejs-2" loading="lazy"><br>
+注意代码端中的<code>site.customConfig.xxxx</code>要与<code>config.json</code>中的<code>name</code>相对应。<br>
+4. 若要添加分类，需要复制添加如序号3中的2个代码段，并更改<code>site.customConfig.xxxx</code>，以及代码段中的名称，并需要与<code>config.json</code>中的<code>name</code>和<code>name</code>对应数组的内容相匹配。</p>
+<h2 id="最后">最后</h2>
+<p>使用Gridea+gridea-theme-webstack主题配合Github Pages搭建自己的导航站变的十分方便，同时也可以像普通博客一样通过gridea部署到coding以及sftp中，适应性强且轻量化。也欢迎到我的导航页参观：<a href="https://navigation.wherelse.cc">navigation.wherelse.cc</a></p>
+<br>
+<font color="#ADADAD">
+<center>
+<span id="busuanzi_container_page_pv">
+  本文总阅读量:<span id="busuanzi_value_page_pv"></span>次
+</span>
+</center> 
+</font>
+        </div>
+        <!-- Share to Twitter, Weibo, Telegram -->
+        <div class="flex items-center">
+          <div class="mr-4 flex items-center">
+            <i class="ri-share-forward-line text-gray-500"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-blue-500 hover:bg-blue-100 dark:hover:bg-gray-600 inline-flex" @click="shareToTwitter">
+            <i class="ri-twitter-line"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-red-500 hover:bg-red-100 dark:hover:bg-gray-600 inline-flex" @click="shareToWeibo">
+            <i class="ri-weibo-line"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-indigo-500 hover:bg-indigo-100 dark:hover:bg-gray-600 inline-flex" @click="shareToTelegram">
+            <i class="ri-telegram-line"></i>
+          </div>
+        </div>
+      </div>
+
+      
+
+      <div id="vlaine-comment"></div>
+
+      <footer class="py-12 text-center px-4 md:px-0" v-pre>
+  Powered by <a href="https://github.com/getgridea/gridea" 
+target="_blank">Gridea</a>
+<br>
+©2020 <a href="https://wherelse.cc/" 
+target="_blank">Wherelse. </a>All Right Reserved
+<br>
+<br>
+<span id="busuanzi_container_site_uv">
+  本站总访问数：<span id="busuanzi_value_site_uv"></span>人次
+</span>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script data-ad-client="ca-pub-2888059295301722" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+</footer>
+    </div>
+
+    <!-- TOC Container -->
+    <div class="fixed right-0 bottom-0 mb-16 mr-4 shadow w-8 h-8 rounded-full flex justify-center items-center z-10 cursor-pointer bg-white dark:bg-gray-500 dark:text-gray-200 hover:shadow-lg transition-all animated fadeInRight" @click="showToc = true">
+      <i class="ri-file-list-line"></i>
+    </div>
+
+    <div class="fixed right-0 top-0 bottom-0 overflow-y-auto w-64 bg-white dark:bg-gray-800 p-4 border-l border-gray-100 dark:border-gray-600 z-10 transition-fast" :class="{ '-mr-64': !showToc }">
+      <div class="flex mb-4 justify-end">
+        <div class="w-8 h-8 inline-flex justify-center items-center rounded-full cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-fast" @click="showToc = false">
+          <i class="ri-close-line text-lg"></i>
+        </div>
+      </div>
+      <div class="post-toc-container">
+        <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B">搭建过程</a></li>
+<li><a href="#%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AE%E5%88%86%E7%B1%BB">如何配置分类</a></li>
+<li><a href="#%E6%9C%80%E5%90%8E">最后</a></li>
+</ul>
+</li>
+</ul>
+
+      </div>
+    </div>
+
+    <!-- Back to top -->
+    <div class="fixed right-0 bottom-0 mb-4 mr-4 shadow w-8 h-8 rounded-full flex justify-center items-center z-10 cursor-pointer bg-white hover:shadow-lg transition-all dark:bg-gray-500 dark:text-gray-200" @click="backToUp" v-show="scrolled">
+      <i class="ri-arrow-up-line"></i>
+    </div>
+  </div>
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+  <!-- Background of PhotoSwipe. 
+        It's a separate element as animating opacity is faster than rgba(). -->
+  <div class="pswp__bg">
+  </div>
+  <!-- Slides wrapper with overflow:hidden. -->
+  <div class="pswp__scroll-wrap">
+    <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+    <div class="pswp__container">
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+    </div>
+    <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+    <div class="pswp__ui pswp__ui--hidden">
+      <div class="pswp__top-bar">
+        <!--  Controls are self-explanatory. Order can be changed. -->
+        <div class="pswp__counter">
+        </div>
+        <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+        <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+        <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+        <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+        <!-- element will get class pswp__preloader--active when preloader is running -->
+        <div class="pswp__preloader">
+          <div class="pswp__preloader__icn">
+            <div class="pswp__preloader__cut">
+              <div class="pswp__preloader__donut">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+        <div class="pswp__share-tooltip">
+        </div>
+      </div>
+      <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+      </button>
+      <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+      </button>
+      <div class="pswp__caption">
+        <div class="pswp__caption__center">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://wherelse.cc/media/scripts/main.js"></script>
+  
+  <!-- Code Highlight -->
+  
+    <script src="https://wherelse.cc/media/prism.js"></script>
+    <script>
+      Prism.highlightAll()
+    </script>
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+  <script>
+    //拿到预览框架，也就是上面的html代码
+    var pswpElement = document.querySelectorAll('.pswp')[0];
+    //定义图片数组变量
+    var imgitems;
+    /**
+    * 用于显示预览界面
+    * @param index 图片数组下标
+    */
+    function viewImg(index) {
+      //其它选项这里不做过多阐述，详情见官网
+      var pswpoptions = {
+        index: parseInt(index, 10), // 开始幻灯片索引。0是第一张幻灯片。必须是整数，而不是字符串。
+        bgOpacity: 0.7, // 背景透明度，0-1
+        maxSpreadZoom: 3, // 缩放级别，不要太大
+      };
+      //初始化并打开PhotoSwipe，pswpElement对应上面预览框架，PhotoSwipeUI_Default为皮肤，imgitems为图片数组，pswpoptions为选项
+      var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, imgitems, pswpoptions);
+      gallery.init()
+    }
+    /**
+    * 用于添加图片点击事件
+    * @param img 图片元素
+    * @param index 所属下标（在imgitems中的位置）
+    */
+    function addImgClick(img, index) {
+      img.onclick = function() {
+        viewImg(index)
+      }
+    }
+    /**
+    * 轮询所有图片，获取src、width、height等数据，加入imgitems，并给图片元素添加事件
+    * 最好在onload中执行该方法，本站因放在最底部，所以直接初始化
+    * 异步加载图片可在图片元素创建完成后调用此方法
+    */
+    function initImg() {
+      //重置图片数组
+      imgitems = [];
+      //查找class:markdown 下的所有img元素并遍历
+      var imgs = document.querySelectorAll('.markdown img');
+      for (var i = 0; i < imgs.length; i++) {
+        var img = imgs[i];
+        //本站相册初始为loading图片，真实图片放在data-src
+        var ds = img.getAttribute("data-src");
+        //创建image对象，用于获取图片宽高
+        var imgtemp = new Image();
+        //判断是否存在data-src
+        if (ds != null && ds.length > 0) {
+          imgtemp.src = ds
+        } else {
+          imgtemp.src = img.src
+        }
+        //判断是否存在缓存
+        if (imgtemp.complete) {
+          var imgobj = {
+            "src": imgtemp.src,
+            "w": imgtemp.width,
+            "h": imgtemp.height,
+          };
+          imgitems[i] = imgobj;
+          addImgClick(img, i);
+        } else {
+          console.log('进来了2')
+          imgtemp.index = i;
+          imgtemp.img = img;
+          imgtemp.onload = function() {
+            var imgobj = {
+              "src": this.src,
+              "w": this.width,
+              "h": this.height,
+            };
+            //不要使用push，因为onload前后顺序会不同
+            imgitems[this.index] = imgobj
+            //添加点击事件
+            addImgClick(this.img, this.index);
+          }
+        }
+      }
+    }
+    //初始化
+    initImg();
+  </script>
+  <script type="application/javascript" src="https://wherelse.cc/media/scripts/valine.min.js"></script>
+  <script type="application/javascript">
+  
+    // var valine = new Valine();
+    // valine.init({
+    //   el: '#vlaine-comment',
+    //   appId: 'WhdyquP4ILciqzTtaVas0lHV-MdYXbMMI',
+    //   appKey: 'CKBpTQaP0cucM1Lc3KI4t333',
+    //   notify: true,
+    //   avatar: 'mp',
+    //   verify: true,
+    //   placeholder: '来都来了，不妨评论一下',
+    //   visitor: true,
+    //   highlight: true,
+    //   recordIP: false,
+    // })
+  
+    var valine = new Valine();
+    valine.init({
+      el: '#vlaine-comment',
+      appId: 'WhdyquP4ILciqzTtaVas0lHV-MdYXbMMI',
+      appKey: 'CKBpTQaP0cucM1Lc3KI4t333',
+      notify: false,
+      verify: false,
+      visitor: true,
+      avatar: 'mp',
+      placeholder: '加入讨论...'
+    })
+  </script>
+</body>
+
+</html>

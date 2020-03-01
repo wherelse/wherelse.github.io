@@ -1,0 +1,374 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Wherelse Blog</title>
+<link rel="shortcut icon" href="https://wherelse.cc/favicon.ico">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"> -->
+<link rel="stylesheet" href="https://wherelse.cc/media/css/tailwind.css">
+<link rel="stylesheet" href="https://wherelse.cc/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Wherelse Blog - Atom Feed" href="https://wherelse.cc/atom.xml">
+
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-153595757-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'UA-153595757-1');
+  </script>
+    
+
+  <meta name="description" content="Wherelse 的博客小站，在折腾的路上越走越远" />
+</head>
+<body>
+  <div class="antialiased flex flex-col min-h-screen" id="app">
+
+    <div class="nav py-3 md:py-8 fixed w-full z-10 bg-gray-50 dark:bg-gray-700 transition-all duration-300" :class="{ 'scroll': scrolled }">
+  <div class="flex justify-end px-4">
+    <div class="w-8 h-8 flex justify-center items-center rounded-full md:hidden" @click="showMenu = !showMenu">
+      <i class="ri-close-line" v-show="showMenu"></i>
+      <i class="ri-menu-3-line" v-show="!showMenu"></i>
+    </div>
+  </div>
+  <nav class="max-w-4xl w-full mx-auto text-center flex flex-col md:flex-row justify-center md:block" :class="`${ showMenu ? 'block' : 'hidden' }`">
+    
+      <a href="/" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        首页
+      </a>
+    
+      <a href="/archives" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        归档
+      </a>
+    
+      <a href="/tags" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        标签
+      </a>
+    
+      <a href="/post/Friends-link" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        友链
+      </a>
+    
+      <a href="https://navigation.wherelse.cc" target="_blank" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        导航站
+      </a>
+    
+    <a href="https://wherelse.cc/atom.xml" target="_blank" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+      RSS
+    </a>
+  </nav>
+</div>
+
+    <div class="max-w-4xl w-full mx-auto ">
+      
+        <header class="flex py-16 md:py-16 mt-12 flex-col md:flex-row px-4 md:px-0 animated fadeIn">
+  <div class="flex-1 order-2 md:order-1 md:pr-16">
+    <div class="text-4xl font-bold text-center md:text-left">
+      Wherelse Blog
+    </div>
+    <div class="text-xl text-gray-500 mt-4 text-center md:text-left">
+      Wherelse 的博客小站，在折腾的路上越走越远
+    </div>
+    
+    
+      <div class="mt-8 flex items-center">
+        
+          <div class="text-gray-500 mr-2">
+            Follow me 👉
+          </div>
+        
+        
+          
+        
+          
+        
+          
+            
+              <a href="https://github.com/wherelse" target="_blank" class="mr-2 w-8 h-8 inline-flex items-center justify-center text-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition-fast">
+                <i class="ri-github-line"></i>
+              </a>
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+            
+              <a href="https://www.instagram.com/wherelses/" target="_blank" class="mr-2 w-8 h-8 inline-flex items-center justify-center text-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition-fast">
+                <i class="ri-instagram-line"></i>
+              </a>
+            
+          
+        
+          
+        
+          
+        
+      </div>
+    
+  </div>
+  <div class="md:mx-8 flex-shrink-0 self-start rounded-full border-4 border-dotted border-transparent hover:border-yellow-50 p-2 w-32 h-32 order-1 md:order-2 mx-auto s3-dotted">
+    <img class="rounded-full object-cover" src="https://wherelse.cc/images/avatar.png?v=1583043579169" alt="Wherelse Blog" width="100%" height="100%">
+  </div>
+</header>
+      
+
+      <div class="shadow-box bg-white dark:bg-gray-600 border-gray-300 rounded-none md:rounded-lg -mx-1 md:mx-0 md:px-0">
+        
+  <div class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+    
+    <div class="flex-1 order-2 md:order-1">
+      <h2 class="text-2xl font-semibold mb-4">
+        <a href="https://wherelse.cc/post/GPS-Navigation-Message-Format/" class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+          GPS导航电文格式
+        </a>
+      </h2>
+      <div class="mb-4 text-xs text-gray-500">2020-02-18</div>
+      <div class="mb-4 text-gray-500 dark:text-gray-300">
+        <p>GPS Navigation Message Format</p>
+
+      </div>
+      <a href="https://wherelse.cc/post/GPS-Navigation-Message-Format/" class="btn">
+        Read more
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+    
+    <div class="flex-1 order-2 md:order-1">
+      <h2 class="text-2xl font-semibold mb-4">
+        <a href="https://wherelse.cc/post/regular-expression/" class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+          正则表达式
+        </a>
+      </h2>
+      <div class="mb-4 text-xs text-gray-500">2020-02-17</div>
+      <div class="mb-4 text-gray-500 dark:text-gray-300">
+        <p>Regular expression</p>
+
+      </div>
+      <a href="https://wherelse.cc/post/regular-expression/" class="btn">
+        Read more
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+    
+    <div class="flex-1 order-2 md:order-1">
+      <h2 class="text-2xl font-semibold mb-4">
+        <a href="https://wherelse.cc/post/History-of-mobile-communication-technology-development/" class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+          移动通信技术发展史
+        </a>
+      </h2>
+      <div class="mb-4 text-xs text-gray-500">2020-02-08</div>
+      <div class="mb-4 text-gray-500 dark:text-gray-300">
+        <p>History of mobile communication technology development</p>
+
+      </div>
+      <a href="https://wherelse.cc/post/History-of-mobile-communication-technology-development/" class="btn">
+        Read more
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+    
+    <div class="flex-1 order-2 md:order-1">
+      <h2 class="text-2xl font-semibold mb-4">
+        <a href="https://wherelse.cc/post/ipv6-dns-server/" class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+          常用IPV6 DNS服务器
+        </a>
+      </h2>
+      <div class="mb-4 text-xs text-gray-500">2020-02-08</div>
+      <div class="mb-4 text-gray-500 dark:text-gray-300">
+        <p>Some IPv6 dns server in China and global</p>
+
+      </div>
+      <a href="https://wherelse.cc/post/ipv6-dns-server/" class="btn">
+        Read more
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+    
+    <div class="flex-1 order-2 md:order-1">
+      <h2 class="text-2xl font-semibold mb-4">
+        <a href="https://wherelse.cc/post/Setup-your-own-navigation-website-by-Gridea+Github-Pages/" class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+          使用Gridea+Github Pages搭建自己的导航站
+        </a>
+      </h2>
+      <div class="mb-4 text-xs text-gray-500">2020-01-28</div>
+      <div class="mb-4 text-gray-500 dark:text-gray-300">
+        <p>Set up your own navigation website by Gridea+Github Pages</p>
+
+      </div>
+      <a href="https://wherelse.cc/post/Setup-your-own-navigation-website-by-Gridea+Github-Pages/" class="btn">
+        Read more
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+    
+    <div class="flex-1 order-2 md:order-1">
+      <h2 class="text-2xl font-semibold mb-4">
+        <a href="https://wherelse.cc/post/zai-linux-ming-ling-huan-jing-xia-shi-yong-pppoe-bo-hao-shang-wang/" class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+          在Linux命令环境下使用PPPOE拨号上网
+        </a>
+      </h2>
+      <div class="mb-4 text-xs text-gray-500">2020-01-06</div>
+      <div class="mb-4 text-gray-500 dark:text-gray-300">
+        首先安装拨号软件
+sudo apt-get install pppoeconf
+
+打开终端配置上网信息，在这里你需要配置上网的账户和密码信息：
+sudo pppoeconf
+
+联网命令
+sudo pon dsl-provider
+
+断网
+s...
+      </div>
+      <a href="https://wherelse.cc/post/zai-linux-ming-ling-huan-jing-xia-shi-yong-pppoe-bo-hao-shang-wang/" class="btn">
+        Read more
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+    
+    <div class="flex-1 order-2 md:order-1">
+      <h2 class="text-2xl font-semibold mb-4">
+        <a href="https://wherelse.cc/post/jing-dou-yun-v20-shua-ji-jiao-cheng/" class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+          竟斗云V2.0免拆刷机教程
+        </a>
+      </h2>
+      <div class="mb-4 text-xs text-gray-500">2019-12-20</div>
+      <div class="mb-4 text-gray-500 dark:text-gray-300">
+        <p>免拆刷机方法</p>
+
+      </div>
+      <a href="https://wherelse.cc/post/jing-dou-yun-v20-shua-ji-jiao-cheng/" class="btn">
+        Read more
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+    
+    <div class="flex-1 order-2 md:order-1">
+      <h2 class="text-2xl font-semibold mb-4">
+        <a href="https://wherelse.cc/post/bei-ke-yun-p1-shua-ji/" class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+          贝壳云P1 刷机
+        </a>
+      </h2>
+      <div class="mb-4 text-xs text-gray-500">2019-12-18</div>
+      <div class="mb-4 text-gray-500 dark:text-gray-300">
+        <p>beike yun flash system</p>
+
+      </div>
+      <a href="https://wherelse.cc/post/bei-ke-yun-p1-shua-ji/" class="btn">
+        Read more
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+    
+    <div class="flex-1 order-2 md:order-1">
+      <h2 class="text-2xl font-semibold mb-4">
+        <a href="https://wherelse.cc/post/markdown-wen-ben-ju-zhong/" class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+          Markdown中使用HTML实现文本居中，改变字体颜色等
+        </a>
+      </h2>
+      <div class="mb-4 text-xs text-gray-500">2019-12-15</div>
+      <div class="mb-4 text-gray-500 dark:text-gray-300">
+        <p>How to make the markdown in the middle of pages</p>
+
+      </div>
+      <a href="https://wherelse.cc/post/markdown-wen-ben-ju-zhong/" class="btn">
+        Read more
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+    
+    <div class="flex-1 order-2 md:order-1">
+      <h2 class="text-2xl font-semibold mb-4">
+        <a href="https://wherelse.cc/post/liang-du-chuan-gan-qi-max44009-stm32-mo-ni-iic-qu-dong/" class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+          亮度传感器MAX44009 STM32模拟IIC驱动
+        </a>
+      </h2>
+      <div class="mb-4 text-xs text-gray-500">2019-12-10</div>
+      <div class="mb-4 text-gray-500 dark:text-gray-300">
+        <p>MAX44009 driver for STM32 use software IIC</p>
+
+      </div>
+      <a href="https://wherelse.cc/post/liang-du-chuan-gan-qi-max44009-stm32-mo-ni-iic-qu-dong/" class="btn">
+        Read more
+      </a>
+    </div>
+    
+  </div>
+  
+      </div>
+
+      
+  <div class="my-4 flex justify-between px-4 md:px-0">
+    
+    
+      <a href="https://wherelse.cc/page/2" class="btn btn-white">
+        下一页
+        <i class="ri-arrow-right-line ml-4"></i>
+      </a>
+    
+  </div>
+
+      <footer class="py-12 text-center px-4 md:px-0" v-pre>
+  Powered by <a href="https://github.com/getgridea/gridea" 
+target="_blank">Gridea</a>
+<br>
+©2020 <a href="https://wherelse.cc/" 
+target="_blank">Wherelse. </a>All Right Reserved
+<br>
+<br>
+<span id="busuanzi_container_site_uv">
+  本站总访问数：<span id="busuanzi_value_site_uv"></span>人次
+</span>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script data-ad-client="ca-pub-2888059295301722" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+</footer>
+
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://wherelse.cc/media/scripts/main.js"></script>
+</body>
+
+</html>

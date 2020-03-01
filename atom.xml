@@ -1,0 +1,1370 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://wherelse.cc</id>
+    <title>Wherelse Blog</title>
+    <updated>2020-03-01T06:19:43.033Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://wherelse.cc"/>
+    <link rel="self" href="https://wherelse.cc/atom.xml"/>
+    <subtitle>Wherelse 的博客小站，在折腾的路上越走越远</subtitle>
+    <logo>https://wherelse.cc/images/avatar.png</logo>
+    <icon>https://wherelse.cc/favicon.ico</icon>
+    <rights>All rights reserved 2020, Wherelse Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[GPS导航电文格式]]></title>
+        <id>https://wherelse.cc/post/GPS-Navigation-Message-Format/</id>
+        <link href="https://wherelse.cc/post/GPS-Navigation-Message-Format/">
+        </link>
+        <updated>2020-02-18T11:00:00.000Z</updated>
+        <summary type="html"><![CDATA[<p>GPS Navigation Message Format</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>GPS Navigation Message Format</p>
+<!-- more -->
+<h2 id="什么是导航电文">什么是导航电文</h2>
+<p>卫星导航电文是由导航卫星播发给用户的描述导航卫星运行状态参数的电文，包括系统时间、星历、历书、卫星时钟的修正参数、导航卫星健康状况和电离层延时模型参数等内容。导航电文的参数给用户提供了时间信息，利用导航电文参数可以计算用户的位置坐标和速度</p>
+<h2 id="导航电文的结构">导航电文的结构</h2>
+<p>导航电文每帧长1500比特，时长30s，每帧导航电文包括5个子帧，每个子帧长300比特，时长为6s。每个子帧又由10个字组成，每个字长30比特。每个子帧前两个字为遥测字（TLW）和交接字（HOW），后8个字为数据块。下图为导航电文结构示意图<br>
+<img src="https://wherelse.cc/post-images/1582033304239.jpg" alt="" loading="lazy"></p>
+<figure data-type="image" tabindex="1"><img src="https://wherelse.cc/post-images/1582033324086.png" alt="" loading="lazy"></figure>
+<h3 id="遥测字tlm">遥测字（TLM）</h3>
+<p>遥测字的30比特中，前8比特位固定值为<code>10001011</code>的同步码，9-22比特为遥测码，包含遥测信息，23、24比特保留，最后6比特位奇偶校验码。同步码用来匹配接收到的数据码，实现搜索确定子帧的起始位置，为后续解帧提供条件。</p>
+<h3 id="交接字how">交接字(HOW)</h3>
+<p>交接字紧接在遥测字之后，交接字的1-17比特为Z计数器上得到的截短的周内时计数值。第18比特是警告标识，当标志为1时，警告该卫星第一数据块提供的URA值有可能比其真实值要大，第19比特是A-S标志，当标志为1时表示对这颗卫星实施了反电子欺骗措施。第20-22比特是子帧识别标志，对应<code>001-101</code>，用于识别这是第几个子帧。第23和24比特是通过计算得出的可以使最后6位奇偶校验码以00结尾的值，最后6位位奇偶校验位。</p>
+<h3 id="第一数据块">第一数据块</h3>
+<p>第一个数据块包括第1个子帧的3-10字，为时间信息等，提供卫星的时间校正参数和健康状态等。</p>
+<ul>
+<li>星期数，每周星期数值+1，最大值为1023，若超过1023就会回零。</li>
+<li>用户测距进度精度（URA），是对所有由GPS地面监控部分和空间星座部分引起的误差的一个统计值，0-15变化，URA数值越大，则表示从这颗卫星得到的GPS距离测量值精度越低。</li>
+<li>卫星健康状况：共6比特，最高位0表示导航电文正确，1表示导航电文存在错误，后5位表示不同的错误状态。</li>
+<li>时钟校正参数：用来修正卫星时钟的钟差。</li>
+<li>群波延时校正值：单频接收机利用该值校正群波延迟。</li>
+<li>时钟数据期号：用10比特数据表示时钟数据块的“期号”，告诉接收机在时钟校正数据更新时才去处理数据中的时钟校正参数。</li>
+</ul>
+<h3 id="第二数据块">第二数据块</h3>
+<p>第二数据块由第2子帧和第3子帧组成，提供卫星星历参数，同来描述卫星各个时刻的空间位置和运行速度。一套星历的有效时间为4小时，一般使用第2子帧和第3子帧都播发的8比特星历数据期号来确定有没有过期。GPS卫星星历参数如下表：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">序号</th>
+<th style="text-align:left">名称</th>
+<th style="text-align:left">功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>t</mi><mrow><mi>o</mi><mi>e</mi></mrow></msub></mrow><annotation encoding="application/x-tex">t_{oe}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.76508em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">o</span><span class="mord mathdefault mtight">e</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></td>
+<td style="text-align:left">星历参考时间</td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><msqrt><mi>a</mi></msqrt><mi>s</mi></msub></mrow><annotation encoding="application/x-tex">\sqrt a_s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0897000000000001em;vertical-align:-0.28942em;"></span><span class="mord"><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8002800000000001em;"><span class="svg-align" style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathdefault" style="padding-left:0.833em;">a</span></span><span style="top:-2.76028em;"><span class="pstrut" style="height:3em;"></span><span class="hide-tail" style="min-width:0.853em;height:1.08em;"><svg width='400em' height='1.08em' viewBox='0 0 400000 1080' preserveAspectRatio='xMinYMin slice'><path d='M95,702c-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,
+-10,-9.5,-14c0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54c44.2,-33.3,65.8,
+-50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10s173,378,173,378c0.7,0,
+35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429c69,-144,104.5,-217.7,106.5,
+-221c5.3,-9.3,12,-14,20,-14H400000v40H845.2724s-225.272,467,-225.272,467
+s-235,486,-235,486c-2.7,4.7,-9,7,-19,7c-6,0,-10,-1,-12,-3s-194,-422,-194,-422
+s-65,47,-65,47z M834 80H400000v40H845z'/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.23972em;"><span></span></span></span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.011971999999999983em;"><span style="top:-2.4105800000000004em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">s</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.28942em;"><span></span></span></span></span></span></span></span></span></span></td>
+<td style="text-align:left">卫星轨道长半轴<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mi>s</mi></msub></mrow><annotation encoding="application/x-tex">a_s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">s</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>的平方根</td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>e</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">e_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">e</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></td>
+<td style="text-align:left">轨道偏心率</td>
+</tr>
+<tr>
+<td style="text-align:center">4</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>i</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">i_0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.80952em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">i</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>t</mi><mrow><mi>o</mi><mi>e</mi></mrow></msub></mrow><annotation encoding="application/x-tex">t_{oe}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.76508em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">o</span><span class="mord mathdefault mtight">e</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>时的轨道倾角</td>
+</tr>
+<tr>
+<td style="text-align:center">5</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="normal">Ω</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">Ω_0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord">Ω</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></td>
+<td style="text-align:left">周内时等于0时的轨道升交点赤经</td>
+</tr>
+<tr>
+<td style="text-align:center">6</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>ω</mi></mrow><annotation encoding="application/x-tex">\omega</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">ω</span></span></span></span></td>
+<td style="text-align:left">轨道近地角距</td>
+</tr>
+<tr>
+<td style="text-align:center">7</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="normal">Ｍ</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">Ｍ_0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.45110799999999995em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord cjk_fallback">Ｍ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>t</mi><mrow><mi>o</mi><mi>e</mi></mrow></msub></mrow><annotation encoding="application/x-tex">t_{oe}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.76508em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">o</span><span class="mord mathdefault mtight">e</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>时的平近点角</td>
+</tr>
+<tr>
+<td style="text-align:center">8</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">Δ</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">\Delta n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">Δ</span><span class="mord mathdefault">n</span></span></span></span></td>
+<td style="text-align:left">平均运动角速度校正值</td>
+</tr>
+<tr>
+<td style="text-align:center">9</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mo><mi>i</mi></mo><mi mathvariant="normal">.</mi></msup></mrow><annotation encoding="application/x-tex">\stackrel{.}{i}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.033412em;vertical-align:-0.07976em;"></span><span class="mrel"><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.9536519999999999em;"><span style="top:-2.92024em;"><span class="pstrut" style="height:3em;"></span><span><span class="mop mathdefault">i</span></span></span><span style="top:-3.77976em;margin-left:0em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">.</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.07976em;"><span></span></span></span></span></span></span></span></span></span></td>
+<td style="text-align:left">轨道倾角对时间的变化率</td>
+</tr>
+<tr>
+<td style="text-align:center">10</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mo><mi mathvariant="normal">Ω</mi></mo><mi mathvariant="normal">.</mi></msup></mrow><annotation encoding="application/x-tex">\stackrel{.}{Ω}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0572219999999999em;vertical-align:-0.091665em;"></span><span class="mrel"><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.965557em;"><span style="top:-2.908335em;"><span class="pstrut" style="height:3em;"></span><span><span class="mop">Ω</span></span></span><span style="top:-3.791665em;margin-left:0em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">.</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.091665em;"><span></span></span></span></span></span></span></span></span></span></td>
+<td style="text-align:left">轨道升交点赤经对时间的变化率</td>
+</tr>
+<tr>
+<td style="text-align:center">11</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>C</mi><mrow><mi>u</mi><mi>c</mi></mrow></msub></mrow><annotation encoding="application/x-tex">C_{uc}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">u</span><span class="mord mathdefault mtight">c</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></td>
+<td style="text-align:left">升交点角距余弦调和校正振幅</td>
+</tr>
+<tr>
+<td style="text-align:center">12</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>C</mi><mrow><mi>u</mi><mi>s</mi></mrow></msub></mrow><annotation encoding="application/x-tex">C_{us}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">u</span><span class="mord mathdefault mtight">s</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></td>
+<td style="text-align:left">升交点角距正弦调和校正振幅</td>
+</tr>
+<tr>
+<td style="text-align:center">13</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>C</mi><mrow><mi>r</mi><mi>c</mi></mrow></msub></mrow><annotation encoding="application/x-tex">C_{rc}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span><span class="mord mathdefault mtight">c</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></td>
+<td style="text-align:left">轨道半径余弦调和校正振幅</td>
+</tr>
+<tr>
+<td style="text-align:center">14</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>C</mi><mrow><mi>r</mi><mi>s</mi></mrow></msub></mrow><annotation encoding="application/x-tex">C_{rs}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span><span class="mord mathdefault mtight">s</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></td>
+<td style="text-align:left">轨道半径正弦调和校正振幅</td>
+</tr>
+<tr>
+<td style="text-align:center">15</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>C</mi><mrow><mi>i</mi><mi>c</mi></mrow></msub></mrow><annotation encoding="application/x-tex">C_{ic}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mord mathdefault mtight">c</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></td>
+<td style="text-align:left">轨道倾角余弦调和校正振幅</td>
+</tr>
+<tr>
+<td style="text-align:center">16</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>C</mi><mrow><mi>i</mi><mi>s</mi></mrow></msub></mrow><annotation encoding="application/x-tex">C_{is}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mord mathdefault mtight">s</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></td>
+<td style="text-align:left">轨道倾角正弦调和校正振幅</td>
+</tr>
+</tbody>
+</table>
+<h3 id="第三数据块">第三数据块</h3>
+<p>第三数据块由第4帧和第5帧构成，播发所有卫星的历书参数、电离层校正参数、GPS时间与UTC时间的关系、卫星健康状况等。<br>
+一帧中的第4和第五子帧没有足够空间播发所有卫星的历书参数，采用分页的办法。</p>
+<ul>
+<li>第4子帧的2,3,4,5,7,8,9,10页提供PRN号为25-32号卫星的历书。</li>
+<li>第4子帧的第18页提供电离层校正参数以及GPS时间UTC之间关系的参数。</li>
+<li>第4子帧第25页提供PRN号为25-32号卫星的卫星健康状况。</li>
+<li>第5子帧1-24页提供PRN号为1-24号卫星的历书。</li>
+<li>25页提供PRN号为1-24号卫星的健康状况，历书参考时间和历书参考星期数。</li>
+</ul>
+<p>GPS卫星历书参数如下表：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">序号</th>
+<th style="text-align:left">名称</th>
+<th style="text-align:left">功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>t</mi><mrow><mi>o</mi><mi>a</mi></mrow></msub></mrow><annotation encoding="application/x-tex">t_{oa}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.76508em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">o</span><span class="mord mathdefault mtight">a</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></td>
+<td style="text-align:left">历书参考时间</td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><msqrt><mi>a</mi></msqrt><mi>s</mi></msub></mrow><annotation encoding="application/x-tex">\sqrt a_s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0897000000000001em;vertical-align:-0.28942em;"></span><span class="mord"><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8002800000000001em;"><span class="svg-align" style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathdefault" style="padding-left:0.833em;">a</span></span><span style="top:-2.76028em;"><span class="pstrut" style="height:3em;"></span><span class="hide-tail" style="min-width:0.853em;height:1.08em;"><svg width='400em' height='1.08em' viewBox='0 0 400000 1080' preserveAspectRatio='xMinYMin slice'><path d='M95,702c-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,
+-10,-9.5,-14c0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54c44.2,-33.3,65.8,
+-50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10s173,378,173,378c0.7,0,
+35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429c69,-144,104.5,-217.7,106.5,
+-221c5.3,-9.3,12,-14,20,-14H400000v40H845.2724s-225.272,467,-225.272,467
+s-235,486,-235,486c-2.7,4.7,-9,7,-19,7c-6,0,-10,-1,-12,-3s-194,-422,-194,-422
+s-65,47,-65,47z M834 80H400000v40H845z'/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.23972em;"><span></span></span></span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.011971999999999983em;"><span style="top:-2.4105800000000004em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">s</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.28942em;"><span></span></span></span></span></span></span></span></span></span></td>
+<td style="text-align:left">卫星轨道长半轴<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mi>s</mi></msub></mrow><annotation encoding="application/x-tex">a_s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">s</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>的平方根</td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>e</mi><mi>s</mi></msub></mrow><annotation encoding="application/x-tex">e_s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">e</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">s</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></td>
+<td style="text-align:left">轨道偏心率</td>
+</tr>
+<tr>
+<td style="text-align:center">4</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>δ</mi><msub><mrow></mrow><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">\delta {_i}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord mathdefault" style="margin-right:0.03785em;">δ</span><span class="mord"><span class="mord"><span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span></td>
+<td style="text-align:left">相对于0.3<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>ϕ</mi></mrow><annotation encoding="application/x-tex">\phi</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">ϕ</span></span></span></span>的轨道倾角</td>
+</tr>
+<tr>
+<td style="text-align:center">5</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="normal">Ω</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">Ω_0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord">Ω</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></td>
+<td style="text-align:left">周内时等于0时的轨道升交点赤经</td>
+</tr>
+<tr>
+<td style="text-align:center">6</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>ω</mi></mrow><annotation encoding="application/x-tex">\omega</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">ω</span></span></span></span></td>
+<td style="text-align:left">轨道近地角距</td>
+</tr>
+<tr>
+<td style="text-align:center">7</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="normal">Ｍ</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">Ｍ_0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.45110799999999995em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord cjk_fallback">Ｍ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>t</mi><mrow><mi>o</mi><mi>a</mi></mrow></msub></mrow><annotation encoding="application/x-tex">t_{oa}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.76508em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">o</span><span class="mord mathdefault mtight">a</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>时的平近点角</td>
+</tr>
+<tr>
+<td style="text-align:center">8</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mo><mi mathvariant="normal">Ω</mi></mo><mi mathvariant="normal">.</mi></msup></mrow><annotation encoding="application/x-tex">\stackrel{.}{Ω}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0572219999999999em;vertical-align:-0.091665em;"></span><span class="mrel"><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.965557em;"><span style="top:-2.908335em;"><span class="pstrut" style="height:3em;"></span><span><span class="mop">Ω</span></span></span><span style="top:-3.791665em;margin-left:0em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">.</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.091665em;"><span></span></span></span></span></span></span></span></span></span></td>
+<td style="text-align:left">轨道升交点赤经对时间的变化率</td>
+</tr>
+<tr>
+<td style="text-align:center">9</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mrow><mi>f</mi><mn>0</mn></mrow></msub></mrow><annotation encoding="application/x-tex">a_{f0}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.10764em;">f</span><span class="mord mtight">0</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span></td>
+<td style="text-align:left">卫星时钟校正参数</td>
+</tr>
+<tr>
+<td style="text-align:center">10</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mrow><mi>f</mi><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">a_{f1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.10764em;">f</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span></td>
+<td style="text-align:left">卫星时钟校正参数</td>
+</tr>
+</tbody>
+</table>
+<h2 id="参考文献">参考文献</h2>
+<blockquote>
+<p>GPS原理与接收机设计-谢钢著</p>
+</blockquote>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[正则表达式]]></title>
+        <id>https://wherelse.cc/post/regular-expression/</id>
+        <link href="https://wherelse.cc/post/regular-expression/">
+        </link>
+        <updated>2020-02-17T14:00:00.000Z</updated>
+        <summary type="html"><![CDATA[<p>Regular expression</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>Regular expression</p>
+<!-- more -->
+<h2 id="正则表达式是什么">正则表达式是什么</h2>
+<p>正则表达式使用单个字符串来描述、匹配一系列符合某个句法规则的字符串。通过使用正则表达式，可以：</p>
+<ul>
+<li>测试字符串内的模式。可以测试输入字符串，以查看字符串内是否出现电话号码模式或信用卡号码，以数据验证。</li>
+<li>替换文本。可以使用正则表达式来识别文档中的特定文本，完全删除该文本或者用其他文本替换它。</li>
+<li>基于模式匹配从字符串中提取子字符串。可以查找文档内或输入域内特定的文本。</li>
+</ul>
+<h2 id="基本的匹配语法字符">基本的匹配语法字符</h2>
+<p>以下用<code>Regular expression</code>作为例子</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">字符</th>
+<th style="text-align:left">用法</th>
+<th style="text-align:left">例子</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>*</code></td>
+<td style="text-align:left">匹配前面子表达式0次或多次</td>
+<td style="text-align:left"><code>es*</code> 匹配 <code>e</code> 或<code>ess</code></td>
+</tr>
+<tr>
+<td style="text-align:center"><code>+</code></td>
+<td style="text-align:left">匹配前面子表达式一次或多次</td>
+<td style="text-align:left"><code>es+</code>匹配<code>es</code>或<code>ess</code>，但不匹配<code>e</code></td>
+</tr>
+<tr>
+<td style="text-align:center"><code>.</code></td>
+<td style="text-align:left">匹配除换行符以外的任意字符</td>
+<td style="text-align:left"><code>.e</code>匹配<code>Re</code>和<code>re</code>，表示:任意字符后面跟着一个字母<code>e</code></td>
+</tr>
+<tr>
+<td style="text-align:center"><code>?</code></td>
+<td style="text-align:left">用来表示前一个字符是可选的，匹配前面的子表达式零次或一次</td>
+<td style="text-align:left"><code>es?</code>匹配<code>e</code>或<code>es</code>，但不匹配<code>ess</code></td>
+</tr>
+<tr>
+<td style="text-align:center"><code>^</code></td>
+<td style="text-align:left">检查匹配字符是否是起始字符</td>
+<td style="text-align:left"><code>^re</code>匹配<code>regular</code>开头的<code>re</code>，而不匹配<code>expression</code>中的，这个例子我们忽略大小写问题</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>$</code></td>
+<td style="text-align:left">检查匹配字符是否是最后一个字符</td>
+<td style="text-align:left"><code>r$</code>匹配<code>regular</code>结尾的<code>r</code>,不匹配其他的r</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>( )</code></td>
+<td style="text-align:left">按照确切的顺序匹配括号内的字符</td>
+<td style="text-align:left"><code>(re)</code>只匹配<code>re</code>,不匹配其他</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>[ ]</code></td>
+<td style="text-align:left">匹配方括号中包含的任意字符,无顺序要求</td>
+<td style="text-align:left"><code>[rR]</code>既匹配大写，也匹配小写</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>[^ ]</code></td>
+<td style="text-align:left">匹配方括号中不包含的任意字符,无顺序要求</td>
+<td style="text-align:left"><code>[^rR]</code>会匹配到<code>egular expession</code></td>
+</tr>
+<tr>
+<td style="text-align:center"><code>{n,m}</code></td>
+<td style="text-align:left">匹配括号前字符至少 n 次，但是不超过 m 次</td>
+<td style="text-align:left"><code>9{2,4}</code>表示匹配至少2位数字但不超过4位的数字9</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>\</code></td>
+<td style="text-align:left">转义字符，用来将下一个字符转义</td>
+<td style="text-align:left"><code>\$</code>就是表示原本的符号<code>$</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="简写匹配字符">简写匹配字符</h2>
+<p>可以将较为复杂的匹配语句简写</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">字符</th>
+<th style="text-align:left">用法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>\w</code></td>
+<td style="text-align:left">匹配所有字母和数字的字符: [a-zA-Z0-9_]</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>\W</code></td>
+<td style="text-align:left">匹配非字母和数字的字符: [^\w]</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>\d</code></td>
+<td style="text-align:left">匹配数字: [0-9]</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>\D</code></td>
+<td style="text-align:left">匹配非数字: [^\d]</td>
+</tr>
+</tbody>
+</table>
+<h2 id="使用的或分支功能">使用<code>|</code>的或分支功能</h2>
+<p>和一些语言类似，正则表达式可以使用<code>|</code>来表示或。可以用<code>(r|R)e</code>来实现匹配大小写，或者使用<code>(c|m|f)at</code>来实现同时匹配<code>cat</code>、<code>mat</code>、<code>fat</code>。</p>
+<blockquote>
+<p>(c|m|f)at ==&gt; a <a href="">fat</a> <a href="">cat</a>  sleep at a <a href="">mat</a></p>
+</blockquote>
+<h2 id="使用实现可选匹配">使用<code>?</code>实现可选匹配</h2>
+<p>使用<code>(c|m|f)?at</code>来实现同时匹配<code>cat</code>、<code>mat</code>、<code>fat</code>和<code>at</code>，即问号前的内容是可不匹配的。</p>
+<blockquote>
+<p>(c|m|f)at ==&gt; a <a href="">fat</a> <a href="">cat</a>  sleep <a href="">at</a> a <a href="">mat</a></p>
+</blockquote>
+<h2 id="非打印字符匹配表">非打印字符匹配表</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">字符</th>
+<th style="text-align:left">用法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>\f</code></td>
+<td style="text-align:left">匹配一个换页符。</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>\n</code></td>
+<td style="text-align:left">匹配一个换行符。</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>\r</code></td>
+<td style="text-align:left">匹配一个回车符。</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>\s</code></td>
+<td style="text-align:left">匹配任何空白字符，包括空格、制表符、换页符等等。注意 Unicode 正则表达式会匹配全角空格符。</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>\S</code></td>
+<td style="text-align:left">匹配任何非空格字符。</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>\t</code></td>
+<td style="text-align:left">匹配一个制表符。</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>\v</code></td>
+<td style="text-align:left">匹配一个垂直制表符。</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>\b</code></td>
+<td style="text-align:left">匹配一个单词边界，即字与空格间的位置。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="常用的正则表达式">常用的正则表达式</h2>
+<ul>
+<li>正数、负数、和小数：<code>(\-|\+)?\d+(\.\d+)?</code></li>
+</ul>
+<blockquote>
+<p>The number was 9.9997 but we rounded it off to 10 =&gt; <code>9.9997</code>、<code>10</code></p>
+</blockquote>
+<ul>
+<li>由26个英文字母组成的字符串: <code>[A-Za-z]+</code></li>
+</ul>
+<blockquote>
+<p>The number was 9.9997 but we rounded it off to 10 =&gt;<code>The</code>、<code>number</code>、<code>was</code>、<code>but</code>、<code>we</code>、<code>rounded</code>、<code>it</code>、<code>off</code>、<code>to</code></p>
+</blockquote>
+<ul>
+<li>……</li>
+</ul>
+<h2 id="练习测试工具">练习测试工具</h2>
+<blockquote>
+<p><a href="https://c.runoob.com/front-end/854">菜鸟教程-正则表达式在线测试</a></p>
+</blockquote>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[移动通信技术发展史]]></title>
+        <id>https://wherelse.cc/post/History-of-mobile-communication-technology-development/</id>
+        <link href="https://wherelse.cc/post/History-of-mobile-communication-technology-development/">
+        </link>
+        <updated>2020-02-08T07:21:08.000Z</updated>
+        <summary type="html"><![CDATA[<p>History of mobile communication technology development</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>History of mobile communication technology development</p>
+<!-- more -->
+<h2 id="概述">概述</h2>
+<p>在当下，手机已经成为我们生活中不可或缺的一个必需品，而移动通信技术也随着我们的需求的不断提高以及行业从业者的推动而不断发展和更新。但是手机真正走入每个人的手中也不过20年左右的时间，移动手机网络的普及就更是这10余年的事情，但移动通信技术的发展已经有了相当长的时间，最早追溯到20世纪60年代，这里就从那时开始，说说移动通信技术发展史。我们常说的xG，<code>G -&gt;generation</code>就是指通信的代数。</p>
+<h2 id="0g移动通信的开端">0G，移动通信的开端</h2>
+<p>0G，确切的说是前移动通信技术，是移动通信技术正式发展，形成技术标准前的一系类通信技术，主要包括Push to Talk，Mobile Telephone Service移动电话服务 (MTS)，Improved Mobile Telephone Service改进移动电话服务 (IMTS)，Advanced Mobile Telephone System (AMTS）等。那时的移动通信使用范围还很小，是移动通信技术最早的拓荒时代。1966年，Televerket在挪威开设了第一家手动移动电话系统，稍后挪威成为欧洲获得一个自动移动电话系统的第一个国家，是移动通信技术开始走向民用的开端。</p>
+<h2 id="1g模拟移动通信技术的世代">1G，模拟移动通信技术的世代</h2>
+<p>第一代移动通信技术是用的模拟方式，将语音信号调制到高频载波上实现传输，使用频分复用方式，由于语音传播是模拟的，只能进行语音通信，一般频率为150Mhz或者更高。1G大多为0G发展和标准化的产物，主要包括以下标准制式：北欧移动电话系统 (NMT)，曾在北欧国家、瑞士、荷兰、东欧及俄罗斯使用，AMPS，在美国及澳大利亚应用，TACS，在英国应用....，虽然当时都是基于蜂窝规则建立的网络，但是不同的制式导致当时漫游无从谈起，所以普及的范围小，只有少数发达国家有所覆盖。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">年份</th>
+<th style="text-align:center">移动通信制式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1981</td>
+<td style="text-align:center">Nordic Mobile Telephone(NMT)450</td>
+</tr>
+<tr>
+<td style="text-align:center">1982</td>
+<td style="text-align:center">American Mobile Phone System(AMPS)</td>
+</tr>
+<tr>
+<td style="text-align:center">1985</td>
+<td style="text-align:center">Total Access Communication System(TACS)</td>
+</tr>
+<tr>
+<td style="text-align:center">1986</td>
+<td style="text-align:center">Nordic Mobile Telephony(NMT)900</td>
+</tr>
+</tbody>
+</table>
+<p>这时的手机类似于简单的无线电双工电台，通话时锁定在一定频率，所以使用可调频电台就可以窃听通话，保密性很差。虽然有着种种的不足，却可以说是移动通信的真正开端。</p>
+<h2 id="2g数字移动通信走入千家万户">2G，数字移动通信走入千家万户</h2>
+<p>基于数字通信技术的2G在20世纪90年代左右出现，并逐步发展为使用TDMA（时分复用）的GSM、PDC、iS-136制式和CDMA（码分多址）技术的IS-95两大阵营。2G提供了语音以及短消息功能，以及与1G相比高了许多的安全性。其中GSM的语音或数据信号采用高斯最小频移键控（GMSK）方式进行调制。1991年，第一个商用2G无线通信网络在芬兰建立了起来。1995年，中国国内开通了GSM网络。GSM是当前应用最为广泛的移动电话标准，全球超过200个国家和地区超过10亿人正在使用。</p>
+<h3 id="25g和275g移动上网需求的出现">2.5G和2.75G，移动上网需求的出现</h3>
+<p>2000年左右，通信技术的发展和互联网的普及，人们对移动上网的需求不断强烈，这时，基于2G技术发展而来的2.5G（GPRS）和2.75G（EDGE）应运而生。在EDGQ中还引入了效率更高的8进制相移键控（8PSK），以提高速度。虽然与现在相比速度很慢，但是移动互联网却在那时开始萌芽。也因为有这两个补丁式的技术迭代，让2G技术直到2020年的今天仍然在世界的很多地方存在并工作着，提供最基本的电话，短信以及网络服务。虽然很多国家已经给出了退网时间表，但是在短时间内，2G仍然会继续运行。</p>
+<h2 id="3g网速提升走向快车道">3G，网速提升走向快车道</h2>
+<p>3G将无线通信与互联网等多媒体通信结合，除了提供基本的语音和短信服务，还能能够处理图像、音乐、视频形式，视频通话第一次走入人们的生活。3G主要根据2G继续演进而来，包括以下三种制式：WCDMA（宽带码分多址）、CDMA2000、TDSCDMA（时分复用同步码分多址接入）。WCDMA标准形成最早，覆盖最广，其次是CDMA2000，TD-SCDMA则只有中国移动移动在中国大陆做了覆盖，而且在后续开始建设4G网络后便逐步废弃了。3G的数据通信能力相较于2G有了极大的提高，但是不同制式间还是有比较大的差距的，WCDMA的速度最快，体验最好。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">制式</th>
+<th style="text-align:center">理论速率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">WCDMA</td>
+<td style="text-align:center">下行：14.4Mbps 上行：5.76Mbps</td>
+</tr>
+<tr>
+<td style="text-align:center">CDMA2000</td>
+<td style="text-align:center">下行：3.1Mbps 上行：1.8Mbps</td>
+</tr>
+<tr>
+<td style="text-align:center">TD-SCDMA</td>
+<td style="text-align:center">下行：2.8Mbps 上行：2.2Mbps</td>
+</tr>
+</tbody>
+</table>
+<p>3G的发展和普及过程也是智能手机逐步发展的过程，从最初诺基亚等厂商的智能化程度较低的智能手机，到Android和IOS刚出现时的智能手机，移动通信技术的发展让手机这种移动设备智能化和网络化提供了可能，而智能手机的快速发展又推动了移动通信技术的进步。</p>
+<h2 id="4g为高速上网而生">4G，为高速上网而生</h2>
+<p>智能手机和移动互联网的发展，3G网络无法满足人们的需求，更加高速的4G出现了，它的出现就是为了满足人们对于高速移动数据传输的需求。4G标准数量进一步缩减为2个，FDD-LTE和TDD-LTE，两者的理论速率差距不大。4G标准下的理论传输速度可以达到下行100Mbps，如果引入载波聚合后，速度更是可以进一步提升。同时VoLTE技术的出现，让数据网络实现承载语音通话，通话效果和使用体验都有了很大的提升。<br>
+在4G普及的时间里，移动互联网飞速发展，语音、图片、视频、直播等各种形式的应用不断出现，网络数据量爆炸式增长，这些在前几代的移动网络中是不敢想象的。</p>
+<h2 id="5g面向更加高速的时代">5G，面向更加高速的时代</h2>
+<p>人们不满足于4G的速度，推出了更加高速的5G移动通信技术，更高的带宽和容量，更低的时延，能够满足更大容量的移动互联网发展，和高延迟敏感性的应用。同时5G标准化程度更高，通用性更强，以前制式终端不互通的问题也被基本解决。但是不断提高的传输频率带来的覆盖面积缩小的问题也困扰着5G和移动通信技术的发展，而更多的移动互联网应用也会在不就之后随着新的需求的出现而不断涌现。</p>
+<h2 id="参考文章">参考文章</h2>
+<blockquote>
+<ol>
+<li>https://en.wikipedia.org/wiki/List_of_mobile_phone_generations</li>
+<li>https://www.tutorialspoint.com/umts/umts_history_of_mobile_communication.htm</li>
+<li>https://ijcsit.com/docs/Volume%206/vol6issue03/ijcsit20150603123.pdf</li>
+</ol>
+</blockquote>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[常用IPV6 DNS服务器]]></title>
+        <id>https://wherelse.cc/post/ipv6-dns-server/</id>
+        <link href="https://wherelse.cc/post/ipv6-dns-server/">
+        </link>
+        <updated>2020-02-08T05:00:04.000Z</updated>
+        <summary type="html"><![CDATA[<p>Some IPv6 dns server in China and global</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>Some IPv6 dns server in China and global</p>
+<!-- more -->
+<p>比较常见和常用的IPV6 DNS服务器，建议使用前先用Ping工具测试延迟后择优使用</p>
+<h2 id="国内公共-ipv6-dns-chinese-public-ipv6-dns-server">国内公共 IPv6 DNS (Chinese Public IPv6 DNS Server)</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">服务商</th>
+<th style="text-align:center">地址1</th>
+<th style="text-align:center">地址2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">下一代互联网国家工程中心</td>
+<td style="text-align:center">240c::6666</td>
+<td style="text-align:center">240c::4444</td>
+</tr>
+<tr>
+<td style="text-align:center">CNNIC</td>
+<td style="text-align:center">2001:dc7:1000::1</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">阿里DNS</td>
+<td style="text-align:center">2400:3200::1</td>
+<td style="text-align:center">2400:3200:baba::1</td>
+</tr>
+<tr>
+<td style="text-align:center">百度DNS</td>
+<td style="text-align:center">2400:da00::6666</td>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
+</table>
+<h2 id="教育网-ipv6-dns-educational-ipv6-dns-server">教育网 IPv6 DNS (Educational IPv6 DNS Server)</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">服务商</th>
+<th style="text-align:center">地址1</th>
+<th style="text-align:center">地址2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">北京邮电大学 IPv6 DNS</td>
+<td style="text-align:center">2001:da8:202:10::36</td>
+<td style="text-align:center">2001:da8:202:10::37</td>
+</tr>
+<tr>
+<td style="text-align:center">上海交通大学 IPv6 DNS</td>
+<td style="text-align:center">2001:da8:8000:1:202:120:2:100</td>
+<td style="text-align:center">2001:da8:8000:1:202:120:2:101</td>
+</tr>
+<tr>
+<td style="text-align:center">清华 Tuna IPv6 DNS</td>
+<td style="text-align:center">2001:da8::666</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">北京科技大学 IPv6 DNS</td>
+<td style="text-align:center">2001:da8:208:10::6</td>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
+</table>
+<h2 id="国外公共-ipv6-dns-global-public-ipv6-dns-server">国外公共 IPv6 DNS (Global Public IPv6 DNS Server)</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">服务商</th>
+<th style="text-align:center">地址1</th>
+<th style="text-align:center">地址2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Google Public IPv6 DNS</td>
+<td style="text-align:center">2001:4860:4860::8888</td>
+<td style="text-align:center">2001:4860:4860::8844</td>
+</tr>
+<tr>
+<td style="text-align:center">Cloudflare IPv6 DNS</td>
+<td style="text-align:center">2606:4700:4700::1111</td>
+<td style="text-align:center">2606:4700:4700::1001</td>
+</tr>
+<tr>
+<td style="text-align:center">OpenDNS IPv6 DNS</td>
+<td style="text-align:center">2620:0:ccc::2</td>
+<td style="text-align:center">2620:0:ccd::2</td>
+</tr>
+</tbody>
+</table>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[使用Gridea+Github Pages搭建自己的导航站]]></title>
+        <id>https://wherelse.cc/post/Setup-your-own-navigation-website-by-Gridea+Github-Pages/</id>
+        <link href="https://wherelse.cc/post/Setup-your-own-navigation-website-by-Gridea+Github-Pages/">
+        </link>
+        <updated>2020-01-28T09:26:59.000Z</updated>
+        <summary type="html"><![CDATA[<p>Set up your own navigation website by Gridea+Github Pages</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>Set up your own navigation website by Gridea+Github Pages</p>
+<!-- more -->
+<p>之前在V2EX看到不少人搭建了自己的导航站，自己也觉得有些网站使用频次很低，浏览器收藏夹数量又爆炸，就心生自己搭建自己的导航站的想法。于是去github上搜了搜，看了下开源的基本都是有后端的，对于我这种佛系的人自然不太适合。适逢<a href="https://github.com/lmm214">林木木</a>制作并开源了Gridea的导航站主题——<a href="https://github.com/lmm214/gridea-theme-webstack">gridea-theme-webstack</a>，决定试一试。<br>
+因为Gridea支持上传到Github，Coding以及SFTP，生成的网页也是静态的，占用空间少，管理起来也方便，不用去操心后端，就很省心。下面这张图是我搭建好的导航站的效果：<br>
+<img src="https://wherelse.cc/post-images/1580271838621.png" alt="" loading="lazy"></p>
+<h2 id="搭建过程">搭建过程</h2>
+<ol>
+<li>因为我已经在Github Pages下使用Gridea搭建了我的博客<a href="https://wherelse.cc">Wherelse Blog</a>，所以这里新建了一个Github仓库，并在设置了启用了pages功能，用做存储导航站的文件数据,这个仓库默认对应的pages页面就是：<code>https://域名/仓库名</code> ，我的域名是wherelse.cc，所以默认导航页面就是<code>https://wherelse.cc/navigation-webstack</code>，不过也可以通过CNAME文件设置自定义的域名。</li>
+<li>为了避免配置错乱，新建了一个新的Gridea配置文件夹切换过去，配置好navigation-webstack这个仓库的相关信息保存后，将主题<a href="https://github.com/lmm214/gridea-theme-webstack">gridea-theme-webstack</a>的文件夹放到配置文件夹的theme文件夹下，重启软件，在设置中切换到该主题并保存，预览应该就可以看到一个空的导航站了。</li>
+<li>在主题-自定义配置中添加导航站中的网站信息，包括以下几个内容：名称、地址、图片和描述。在网站添加完成后保存预览，一个导航站就完成了。<br>
+<img src="https://wherelse.cc/post-images/1580271760129.png" alt="" loading="lazy"></li>
+</ol>
+<h2 id="如何配置分类">如何配置分类</h2>
+<p>该主题默认有四个分类，如果需要添加或者调整分类需要手动更改<code>config.json</code>和<code>index.ejs</code>，主题的文件目录如下：</p>
+<pre><code class="language-json">├── assets
+│   ├── media
+│   │   ├── css
+│   │   │   ├── fonts
+│   │   │   │   ├── icomoon.eot
+│   │   │   │   ├── icomoon.svg
+│   │   │   │   ├── icomoon.ttf
+│   │   │   │   └── icomoon.woff
+│   │   │   ├── icomoon.css
+│   │   │   └── main.css
+│   │   ├── images
+│   │   │   ├── favicon.png
+│   │   │   └── logo-collapsed@2x.png
+│   │   └── js
+│   │       ├── bootstrap.min.js
+│   │       ├── jquery-1.11.1.min.js
+│   │       ├── lozad.js
+│   │       ├── xenon-custom.js
+│   │       └── xenon-toggles.js
+│   └── styles
+│       └── main.less //空文件
+├── config.json
+└── templates
+    ├── archives.ejs //空文件
+    ├── index.ejs
+    ├── post.ejs //空文件
+    ├── tag.ejs //空文件
+    └── tags.ejs //空文件
+</code></pre>
+<ol>
+<li>如果你只是需要更改分类的名称，在<code>config.json</code>中只需将文件中的<code>label</code>和<code>group</code>进行更改即可，然后更改<code>index.ejs</code>，见序号3内容。</li>
+<li>如果你需要添加分类，首先在<code>config.json</code>中复制添加一个相同的组，并将name更改与其他不同，例如更改为fun6,<code>label</code>和<code>group</code>更改为你想要的名称。<br>
+<img src="https://wherelse.cc/post-images/1580227844435.png" alt="config.json" loading="lazy"></li>
+<li>将如下图的每个类似代码段中的名称更改为与<code>config.json</code>中对应name下的名称<br>
+<img src="https://wherelse.cc/post-images/1580228141393.png" alt="inedx.ejs-1" loading="lazy"></li>
+</ol>
+<p><img src="https://wherelse.cc/post-images/1580228149082.png" alt="inedx.ejs-2" loading="lazy"><br>
+注意代码端中的<code>site.customConfig.xxxx</code>要与<code>config.json</code>中的<code>name</code>相对应。<br>
+4. 若要添加分类，需要复制添加如序号3中的2个代码段，并更改<code>site.customConfig.xxxx</code>，以及代码段中的名称，并需要与<code>config.json</code>中的<code>name</code>和<code>name</code>对应数组的内容相匹配。</p>
+<h2 id="最后">最后</h2>
+<p>使用Gridea+gridea-theme-webstack主题配合Github Pages搭建自己的导航站变的十分方便，同时也可以像普通博客一样通过gridea部署到coding以及sftp中，适应性强且轻量化。也欢迎到我的导航页参观：<a href="https://navigation.wherelse.cc">navigation.wherelse.cc</a></p>
+<br>
+<font color="#ADADAD">
+<center>
+<span id="busuanzi_container_page_pv">
+  本文总阅读量:<span id="busuanzi_value_page_pv"></span>次
+</span>
+</center> 
+</font>]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[在Linux命令环境下使用PPPOE拨号上网]]></title>
+        <id>https://wherelse.cc/post/zai-linux-ming-ling-huan-jing-xia-shi-yong-pppoe-bo-hao-shang-wang/</id>
+        <link href="https://wherelse.cc/post/zai-linux-ming-ling-huan-jing-xia-shi-yong-pppoe-bo-hao-shang-wang/">
+        </link>
+        <updated>2020-01-06T12:46:19.000Z</updated>
+        <content type="html"><![CDATA[<p>首先安装拨号软件</p>
+<pre><code class="language-shell">sudo apt-get install pppoeconf
+</code></pre>
+<p>打开终端配置上网信息，在这里你需要配置上网的账户和密码信息：</p>
+<pre><code class="language-shell">sudo pppoeconf
+</code></pre>
+<p>联网命令</p>
+<pre><code class="language-shell">sudo pon dsl-provider
+</code></pre>
+<p>断网</p>
+<pre><code class="language-shell">sudo poff
+</code></pre>
+<p>查看pppoe日志：</p>
+<pre><code class="language-shell">plog
+</code></pre>
+<p>开启ipv6支持，在<code>/etc/ppp/options</code>文件最后添加<code>ipv6 ,</code> 注意，在ipv6和“，”之间有一个空格</p>
+<br>
+<font color="#ADADAD">
+<center>
+<span id="busuanzi_container_page_pv">
+  本文总阅读量:<span id="busuanzi_value_page_pv"></span>次
+</span>
+</center> 
+</font>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[竟斗云V2.0免拆刷机教程]]></title>
+        <id>https://wherelse.cc/post/jing-dou-yun-v20-shua-ji-jiao-cheng/</id>
+        <link href="https://wherelse.cc/post/jing-dou-yun-v20-shua-ji-jiao-cheng/">
+        </link>
+        <updated>2019-12-20T13:16:55.000Z</updated>
+        <summary type="html"><![CDATA[<p>免拆刷机方法</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>免拆刷机方法</p>
+<!-- more -->
+<p>以下刷机方法主要来自恩山论坛和博客</p>
+<h2 id="免拆免劫持刷机">免拆免劫持刷机</h2>
+<b>
+<font color="#FF0000">
+注意：此部分免拆免劫持刷机内容更新于2019年12月20日，使用前请确认该方法仍有效，否则有变砖风险
+</b>
+</font >
+<ol>
+<li>在原厂固件的系统设置中进行固件更新，将固件更新到最新版本</li>
+<li>在最新的原厂固件中进行更新，选择bootloader解锁固件刷入(文件名<a href="https://github.com/wherelse/wherelse.github.io/tree/master/files/openwrt-ipq40xx-R9.11.22-unlock-p2w_r619ac-squashfs-nand-factory.bin">openwrt-ipq40xx-R9.11.22-unlock-p2w_r619ac-squashfs-nand-factory.bin</a>)刷入即可,第三方固件刷入完成。</li>
+<li>等3min左右,自动开机后登陆192.168.1.1或http://openwrt.lan 密码 password。</li>
+<li>winscp连接到路由器,将不死opboot(文件名<a href="https://github.com/wherelse/wherelse.github.io/tree/master/files/opboot-p2w-r619ac-flash-v1.0.9.bin">opboot-p2w-r619ac-flash-v1.0.9.bin</a>上传到/tmp目录下.</li>
+<li>通过SSH连接到到路由器，输入如下命令，完成opboot刷入</li>
+</ol>
+<pre><code class="language-shell">mtd -r write /tmp/opboot-p2w-r619ac-flash-v1.0.9.bin Bootloader
+</code></pre>
+<ol start="6">
+<li>确定完成后，断电，按住RESET键上电，大约10S左右，进入upboot</li>
+</ol>
+<p>第4步和第5步推荐使用mobaxterm软件，可以同时连接到SCP和SSH，效果如下图：<br>
+<img src="https://wherelse.cc/post-images/1576854424653.png" alt="" loading="lazy"></p>
+<blockquote>
+<p>来源：https://www.right.com.cn/forum/thread-1442821-1-1.html</p>
+</blockquote>
+<h2 id="opboot-升级方法说明">OpBoot 升级方法说明</h2>
+<p>竞斗云 2.0 的 NAND 闪存大小是 128 MB，但前期的 OpBoot 仅支持 64 MB 大小，相应的 OpenWrt 固件也是 64 MB 的，也就是说实际可用的空间仅 64 MB。自从 OpBoot 升级至 1.0.9 之后即可支持竞斗云 2.0 的 128 MB 的 NAND 闪存。如果你当前是1.0.8版本的OpBoot，可以通过一下方法更新。如果以后出更新版本的OpBoot，方法类似。</p>
+<h3 id="方法-1">方法 1</h3>
+<p>使用前面通过 scp 命令将 OpBoot 1.0.9 固件 ( opboot-p2w-r619ac-flash-v1.0.9.bin ) 上传至路由器的 /tmp 目录下，SSH登录到路由器的 shell 然后执行下面的命令刷入即可(事前 请先校验 文件的md5值是否匹配):</p>
+<pre><code class="language-shell">mtd -r write /tmp/opboot-p2w-r619ac-flash-v1.0.9.bin
+</code></pre>
+<h3 id="方法-2">方法 2</h3>
+<p>您也可以通过 OpBoot 内置的更新功能刷入 opboot-p2w-r619ac-nor-v1.0.9.img 。通过如下操作刷入：</p>
+<p>首先让路由器进入 OpBoot ，然后点击 OpBoot 的右上角的 『 高级功能 』 -&gt; 『 更新OpBoot 』 ，找到 opboot-p2w-r619ac-nor-v1.0.9.img 更新即可。</p>
+<b>
+<font color="#FF0000">
+！！！注意: 
+切勿混刷 opboot-p2w-r619ac-flash-v1.0.9.bin 和 opboot-p2w-r619ac-nor-v1.0.9.img，xxxflashxxx.bin 文件仅通过命令刷入，xxxnorxxx.img 那个则通过 OpBoot 内置的更新功能刷入。刷错会导致机器变砖
+</b>
+</font >
+<br>
+<font color="#ADADAD">
+<center>
+<span id="busuanzi_container_page_pv">
+  本文总阅读量:<span id="busuanzi_value_page_pv"></span>次
+</span>
+</center> 
+</font>]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[贝壳云P1 刷机]]></title>
+        <id>https://wherelse.cc/post/bei-ke-yun-p1-shua-ji/</id>
+        <link href="https://wherelse.cc/post/bei-ke-yun-p1-shua-ji/">
+        </link>
+        <updated>2019-12-18T12:56:27.000Z</updated>
+        <summary type="html"><![CDATA[<p>beike yun flash system</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>beike yun flash system</p>
+<!-- more -->
+<p>转载自hanwckf的博客</p>
+<h2 id="刷机方法">刷机方法</h2>
+<p>暂无免拆机刷机法，必须要拆机引出USB进行线刷</p>
+<p>刷机工具：<a href="https://pan.baidu.com/s/1aOAIZ3vyG8mgipj726Bhgg">https://pan.baidu.com/s/1aOAIZ3vyG8mgipj726Bhgg</a> 提取码: 7eee<br>
+固件发布：<a href="https://github.com/hanwckf/build-beikeyun/releases/latest">https://github.com/hanwckf/build-beikeyun/releases/latest</a></p>
+<h2 id="准备工作">准备工作</h2>
+<ol>
+<li>
+<p>去Github Release下载你喜欢的固件，解压xz包得到img镜像</p>
+</li>
+<li>
+<p>剪一根废旧的USB线，焊接到USB焊盘上，或者焊接一个排针在焊盘上，注意线序（可以从背面焊接，VCC可以不焊）</p>
+</li>
+<li>
+<p>进入maskrom模式</p>
+</li>
+</ol>
+<ul>
+<li>对于已经刷过第三方固件的机器，可按照本文后面的方法快速进入maskrom模式</li>
+<li>对于从未刷机的原厂固件，按照以下步骤操作以进入maskrom模式：将USB线连接到电脑，然后用镊子短接主板背面的maskrom触点，最后再接入12V电源，等待两秒钟后松开镊子。</li>
+</ul>
+<ol start="4">
+<li>下载安装线刷驱动 (DriverAssitant_v4.5.zip)和AndroidTool，然后运行AndroidTool，如果没有出现&quot;发现一个MASKROM设备&quot;的提示，请重新进行准备工作</li>
+</ol>
+<p>选择img镜像刷入即可（loader已经预先设置无需更改）</p>
+<ol start="5">
+<li>armbian默认root密码为1234，第一次登陆后会让你设置新密码</li>
+</ol>
+<h2 id="其他注意">其他注意</h2>
+<p>已经刷入Rock64的armbian固件后，可以在上电时长按主板正面的微动开关进入maskrom模式而无需短接触点，此时ttl输出如下（波特率：1500000）：</p>
+<pre><code class="language-shell">DDR version 1.13 20180428
+ID:0xFFF
+In
+SRX
+DDR3
+786MHz
+Bus Width=32 Col=10 Bank=8 Row=15 CS=1 Die Bus-Width=16 Size=1024MB
+ddrconfig:1
+OUT
+Boot1 Release Time: Feb  2 2018 15:41:39, version: 2.46
+ChipType = 0x11, 209
+SdmmcInit=2 0
+BootCapSize=2000
+UserCapSize=7456MB
+FwPartOffset=2000 , 2000
+SdmmcInit=0 2
+StorageInit ok = 19161
+Raw SecureMode = 0
+SecureInit read PBA: 0x4
+SecureInit read PBA: 0x404
+SecureInit read PBA: 0x804
+SecureInit read PBA: 0xc04
+SecureInit read PBA: 0x1004
+SecureInit ret = 0, SecureMode = 0
+LoadTrustBL
+No find bl30.bin
+No find bl32.bin
+Load uboot, ReadLba = 2000
+Load OK, addr=0x200000, size=0xa4e00
+RunBL31 0x10000
+NOTICE:  BL31: v1.3(debug):f947c7e
+NOTICE:  BL31: Built : 20:41:40, Nov 26 2018
+NOTICE:  BL31:Rockchip release version: v1.3
+INFO:    ARM GICv2 driver initialized
+INFO:    Using rkfiq sec cpu_context!
+INFO:    boot cpu mask: 1
+INFO:    plat_rockchip_pmu_init: pd status 0xe
+INFO:    BL31: Initializing runtime services
+INFO:    BL31: Preparing for EL3 exit to normal world
+INFO:    Entry point address = 0x200000
+INFO:    SPSR = 0x3c9
+
+
+U-Boot 2017.09-armbian (Feb 08 2019 - 11:49:32 +0100)
+
+Model: Pine64 Rock64
+DRAM:  1022 MiB
+MMC:   rksdmmc@ff520000: 0, rksdmmc@ff500000: 1
+SF: unrecognized JEDEC id bytes: ff, ff, ff
+*** Warning - spi_flash_probe_bus_cs() failed, using default environment
+
+In:    serial@ff130000
+Out:   serial@ff130000
+Err:   serial@ff130000
+Model: Pine64 Rock64
+misc_init_r
+cpuid=55524b50303930323200000000192205
+serial=433a170c2728fd1
+rockchip_dnl_mode = 1 mode
+LED 'power' operation failed (err=-121)
+LED 'power' operation failed (err=-121)
+rockchip_dnl_mode = 2 mode
+LED 'power' operation failed (err=-121)
+LED 'power' operation failed (err=-121)
+LED 'power' operation failed (err=-121)
+LED 'power' operation failed (err=-121)
+rockchip_dnl_mode = 3 mode
+LED 'power' operation failed (err=-121)
+LED 'power' operation failed (err=-121)
+LED 'power' operation failed (err=-121)
+LED 'power' operation failed (err=-121)
+LED 'power' operation failed (err=-121)
+LED 'power' operation failed (err=-121)
+rockchip_dnl_mode = 4 mode
+LED 'power' operation failed (err=-121)
+LED 'power' operation failed (err=-121)
+LED 'power' operation failed (err=-121)
+LED 'power' operation failed (err=-121)
+LED 'power' operation failed (err=-121)
+LED 'power' operation failed (err=-121)
+LED 'power' operation failed (err=-121)
+LED 'power' operation failed (err=-121)
+LED 'power' operation failed (err=-121)
+LED 'standby' operation failed (err=-121)
+entering maskrom mode...
+</code></pre>
+<p>对于已经刷入任一第三方固件的机器，可以采用以下方法进入maskrom模式：<br>
+接好TTL（波特率：1500000），上电后在U-boot倒计时结束前按任意键进入U-boot命令行，输入以下指令擦除emmc前面的内容：</p>
+<pre><code class="language-shell">mmc erase 0 100
+</code></pre>
+<p>然后复位</p>
+<pre><code class="language-shell">reset
+</code></pre>
+<p>复位后就进入maskrom模式了</p>
+<p>作者：libgcc<br>
+链接：https://www.jianshu.com/p/21d3954231dc<br>
+来源：简书</p>
+<br>
+<font color="#ADADAD">
+<center>
+<span id="busuanzi_container_page_pv">
+  本文总阅读量:<span id="busuanzi_value_page_pv"></span>次
+</span>
+</center> 
+</font>]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Markdown中使用HTML实现文本居中，改变字体颜色等]]></title>
+        <id>https://wherelse.cc/post/markdown-wen-ben-ju-zhong/</id>
+        <link href="https://wherelse.cc/post/markdown-wen-ben-ju-zhong/">
+        </link>
+        <updated>2019-12-15T13:17:51.000Z</updated>
+        <summary type="html"><![CDATA[<p>How to make the markdown in the middle of pages</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>How to make the markdown in the middle of pages</p>
+<!-- more -->
+<h2 id="文本居中">文本居中</h2>
+<p>将HTML语法放到Markdown里面就可以实现文本及图像等的居中,比如说加上br标签就可以换行，给文字加上center标签就可以使文字居中，写法是：<code>&lt;center&gt;markdown居中文本&lt;/center&gt;</code><br>
+例如：<code>&lt;center&gt;markdown居中测试&lt;/center&gt;</code>效果如下：</p>
+<center> markdown居中测试</center>
+<h2 id="字体颜色">字体颜色</h2>
+<p>使用以下代码实现改变markdown中文字的颜色，使用时需要将想要改变颜色的内容放在······的位置。</p>
+<pre><code class="language-html">&lt;font color=#xxxxxx&gt;    &lt;! xxxxxx为颜色代号&gt;
+·····
+&lt;/font&gt;
+</code></pre>
+<p>例子代码：</p>
+<pre><code class="language-html">&lt;font color=#FF0000&gt; 
+文字颜色测试
+&lt;/font&gt;
+</code></pre>
+<p>效果：<br>
+<font color=#FF0000><br>
+文字颜色测试<br>
+</font></p>
+<h2 id="字体的加粗和斜体">字体的加粗和斜体</h2>
+<p>在使用以上的两种html方法进行文字编辑时可能会影响到Markdown的加粗等内容的渲染,如果这个时候想对文字进行加粗斜体等操作该怎么办呢？</p>
+<p>使用加粗、斜体、删除线，下划线等标签</p>
+<pre><code class="language-html">&lt;b&gt;          &lt;! 加粗标签&gt;
+·····
+&lt;/b&gt;
+
+&lt;i&gt;          &lt;! 斜体标签&gt;
+·····
+&lt;/i&gt;
+
+&lt;u&gt;          &lt;! 下划线标签&gt;
+·····
+&lt;/u&gt;
+
+&lt;s&gt;          &lt;! 删除标签&gt;
+·····
+&lt;/s&gt;
+</code></pre>
+<p>这里我们以一个加粗斜体红色字为例：<br>
+例子代码：</p>
+<pre><code class="language-html">&lt;b&gt;
+&lt;i&gt;
+&lt;font color=#FF0000&gt; 
+文字颜色测试
+&lt;/font&gt;
+&lt;/i&gt;
+&lt;/b&gt;
+</code></pre>
+<p>显示效果:<br>
+<b><br>
+<i><br>
+<font color=#FF0000><br>
+文字颜色测试<br>
+</font><br>
+</i><br>
+</b></p>
+<br>
+<font color="#ADADAD">
+<center>
+<span id="busuanzi_container_page_pv">
+  本文总阅读量:<span id="busuanzi_value_page_pv"></span>次
+</span>
+</center> 
+</font>]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[亮度传感器MAX44009 STM32模拟IIC驱动]]></title>
+        <id>https://wherelse.cc/post/liang-du-chuan-gan-qi-max44009-stm32-mo-ni-iic-qu-dong/</id>
+        <link href="https://wherelse.cc/post/liang-du-chuan-gan-qi-max44009-stm32-mo-ni-iic-qu-dong/">
+        </link>
+        <updated>2019-12-10T13:24:59.000Z</updated>
+        <summary type="html"><![CDATA[<p>MAX44009 driver for STM32 use software IIC</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>MAX44009 driver for STM32 use software IIC</p>
+<!-- more -->
+<p><strong>当前程序运行环境：STM32F103C8T6<br>
+IIC IO端口：PB10,PB11<br>
+ADDR端口连接至GND</strong></p>
+<figure data-type="image" tabindex="1"><img src="https://wherelse.cc/post-images/1575985397089.jpg" alt="" loading="lazy"></figure>
+<p>IIC驱动文件：myiic.c</p>
+<pre><code class="language-c">#include &quot;myiic.h&quot;
+#include &quot;delay.h&quot;
+
+//初始化IIC
+void IIC_Init(void)
+{			
+    GPIO_InitTypeDef GPIO_InitStructure;
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB , ENABLE); //使能GPIOB时钟
+
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10 | GPIO_Pin_11;
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; //推挽输出
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+    GPIO_Init(GPIOB, &amp;GPIO_InitStructure);
+    GPIO_SetBits(GPIOB, GPIO_Pin_10 | GPIO_Pin_11); //PB6,PB7 输出高，空闲状态
+}
+//产生IIC起始信号
+void IIC_Start(void)
+{
+	SDA_OUT();     //sda线输出
+	IIC_SDA=1;	  	  
+	IIC_SCL=1;
+	delay_us(4);
+ 	IIC_SDA=0;//START:when CLK is high,DATA change form high to low 
+	delay_us(4);
+	IIC_SCL=0;//钳住I2C总线，准备发送或接收数据 
+}	  
+
+void IIC_Stop(void)
+{
+	SDA_OUT();//sda线输出
+	IIC_SDA=0;
+ 	IIC_SCL=1;
+	delay_us(4);
+	IIC_SDA=1;//发送I2C总线结束信号
+	delay_us(4);							   	
+}
+//等待应答信号到来
+//返回值：1，接收应答失败
+//        0，接收应答成功
+u8 IIC_Wait_Ack(void)
+{
+	u8 ucErrTime=0;
+	SDA_IN();      //SDA设置为输入  
+	IIC_SDA=1;delay_us(1);	   
+	IIC_SCL=1;delay_us(1);	 
+	while(READ_SDA)
+	{
+		ucErrTime++;
+		if(ucErrTime&gt;250)
+		{
+			IIC_Stop();
+			return 1;
+		}
+	}
+	IIC_SCL=0;//时钟输出0 	   
+	return 0;  
+} 
+//产生ACK应答
+void IIC_Ack(void)
+{
+	IIC_SCL=0;
+	SDA_OUT();
+	IIC_SDA=0;
+	delay_us(2);
+	IIC_SCL=1;
+	delay_us(2);
+	IIC_SCL=0;
+}
+//不产生ACK应答		    
+void IIC_NAck(void)
+{
+	IIC_SCL=0;
+	SDA_OUT();
+	IIC_SDA=1;
+	delay_us(2);
+	IIC_SCL=1;
+	delay_us(2);
+	IIC_SCL=0;
+}					 				     
+//IIC发送一个字节
+//返回从机有无应答
+//1，有应答
+//0，无应答			  
+void IIC_Send_Byte(u8 txd)
+{                        
+    u8 t;   
+	SDA_OUT(); 	    
+    IIC_SCL=0;//拉低时钟开始数据传输
+    for(t=0;t&lt;8;t++)
+    {              
+        IIC_SDA=(txd&amp;0x80)&gt;&gt;7;
+        txd&lt;&lt;=1; 	  
+		delay_us(2);   //对TEA5767这三个延时都是必须的
+		IIC_SCL=1;
+		delay_us(2); 
+		IIC_SCL=0;	
+		delay_us(2);
+    }	 
+} 	    
+//读1个字节，ack=1时，发送ACK，ack=0，发送nACK   
+u8 IIC_Read_Byte(unsigned char ack)
+{
+	unsigned char i,receive=0;
+	SDA_IN();//SDA设置为输入
+    for(i=0;i&lt;8;i++ )
+	{
+        IIC_SCL=0; 
+        delay_us(2);
+		IIC_SCL=1;
+        receive&lt;&lt;=1;
+        if(READ_SDA)receive++;   
+		delay_us(2); 
+    }					 
+    if (!ack)
+        IIC_NAck();//发送nACK
+    else
+        IIC_Ack(); //发送ACK   
+    return receive;
+}
+
+
+</code></pre>
+<p>IIC驱动文件：myiic.h</p>
+<pre><code class="language-c">#ifndef __MYIIC_H
+#define __MYIIC_H
+#include &quot;sys.h&quot; 
+   	   		   
+//IO方向设置
+#define SDA_IN()  {GPIOB-&gt;CRH &amp;= 0xFFFF0FFF;GPIOB-&gt;CRH |= 0x00008000;}	//PB11输入模式
+#define SDA_OUT() {GPIOB-&gt;CRH &amp;= 0xFFFF0FFF;GPIOB-&gt;CRH |= 0x00003000;} //PB11输出模式
+//IO操作函数	 
+#define IIC_SCL    PBout(10) //SCL
+#define IIC_SDA    PBout(11) //SDA	 
+#define READ_SDA   PBin(11)  //输入SDA 
+
+//IIC所有操作函数
+void IIC_Init(void);                //初始化IIC的IO口				 
+void IIC_Start(void);				//发送IIC开始信号
+void IIC_Stop(void);	  			//发送IIC停止信号
+void IIC_Send_Byte(u8 txd);			//IIC发送一个字节
+u8 IIC_Read_Byte(unsigned char ack);//IIC读取一个字节
+u8 IIC_Wait_Ack(void); 				//IIC等待ACK信号
+void IIC_Ack(void);					//IIC发送ACK信号
+void IIC_NAck(void);				//IIC不发送ACK信号
+
+void IIC_Write_One_Byte(u8 daddr,u8 addr,u8 data);
+u8 IIC_Read_One_Byte(u8 daddr,u8 addr);	  
+#endif
+</code></pre>
+<p>MAX44009驱动文件：MAX44009.c</p>
+<pre><code class="language-c">#include &quot;MAX44009.h&quot;
+#include &quot;myiic.h&quot;
+#include &quot;delay.h&quot;
+
+void MAX44009_Init(void)
+{
+
+	IIC_Init(); //IIC初始化
+	MAX44009_WriteOneByte(MAX44009_REG_CFG, 0x03);				// Default mode: measurements performed every 800ms
+																// Auto range: CDR and integration time are automatically determined by
+																//             the internal autoranging circuitry of the IC
+	MAX44009_WriteOneByte(MAX44009_REG_INTE, MAX44009_INT_DISABLE);//关闭中断
+	MAX44009_WriteOneByte(MAX44009_REG_THT, MAX44009_IT_800ms);//积分时间800ms
+	MAX44009_WriteOneByte(MAX44009_REG_THU, 0xff);
+	MAX44009_WriteOneByte(MAX44009_REG_THL, 0x00);
+	MAX44009_WriteOneByte(0x02,0x80);//连续转换、手动模式、积分时间6.25MS
+}
+
+//在MAX44009指定地址读出一个数据
+//ReadAddr:开始读数的地址
+//返回值  :读到的数据
+u8 MAX44009_ReadOneByte(u8 ReadAddr)
+{
+	u8 temp = 0;
+	IIC_Start();
+
+	IIC_Send_Byte(MAX44009_ADDR);
+	IIC_Wait_Ack();
+
+	IIC_Send_Byte(ReadAddr);
+	IIC_Wait_Ack();
+
+	IIC_Start();
+	IIC_Send_Byte(MAX44009_ADDR+1); //进入接收模式
+	IIC_Wait_Ack();
+
+	temp = IIC_Read_Byte(0);
+
+	IIC_Stop(); //产生一个停止条件
+	return temp;
+}
+//在MAX44009指定地址写入一个数据
+//WriteAddr  :写入数据的目的地址
+//DataToWrite:要写入的数据
+void MAX44009_WriteOneByte(u8 WriteAddr, u8 DataToWrite)
+{
+	IIC_Start();
+	IIC_Send_Byte(MAX44009_ADDR);
+	IIC_Wait_Ack();
+
+	IIC_Send_Byte(WriteAddr);
+	IIC_Wait_Ack();
+
+	IIC_Send_Byte(DataToWrite); //发送字节
+	IIC_Wait_Ack();
+
+	IIC_Stop(); //产生一个停止条件
+}
+
+//在MAX44009里面读取流明值
+
+float MAX44009_ReadLux(void)
+{
+	u8 exponent=0, mantissa=0;
+	u8 High_Lux = 0, Low_Lux = 0;
+	float result=0;
+	High_Lux=MAX44009_ReadOneByte(0x03);
+	Low_Lux=MAX44009_ReadOneByte(0x04);
+	
+	exponent = (High_Lux &amp; 0xF0) &gt;&gt; 4;
+	mantissa = (High_Lux &amp; 0x0F) &lt;&lt; 4;
+	mantissa += Low_Lux &amp; 0x0F;
+	result=(float)(((0x00000001 &lt;&lt; exponent) * (float)mantissa) * 0.045);
+	return result;
+}
+//在MAX44009里面的指定地址开始写入长度为Len的数据
+//该函数用于写入16bit或者32bit的数据.
+//WriteAddr  :开始写入的地址
+//DataToWrite:数据数组首地址
+//Len        :要写入数据的长度2,4
+void MAX44009_WriteLenByte(u16 WriteAddr, u32 DataToWrite, u8 Len)
+{
+	u8 t;
+	for (t = 0; t &lt; Len; t++)
+	{
+		MAX44009_WriteOneByte(WriteAddr + t, (DataToWrite &gt;&gt; (8 * t)) &amp; 0xff);
+	}
+}
+
+//在MAX44009里面的指定地址开始读出长度为Len的数据
+//该函数用于读出16bit或者32bit的数据.
+//ReadAddr   :开始读出的地址
+//返回值     :数据
+//Len        :要读出数据的长度2,4
+u32 MAX44009_ReadLenByte(u16 ReadAddr, u8 Len)
+{
+	u8 t;
+	u32 temp = 0;
+	for (t = 0; t &lt; Len; t++)
+	{
+		temp &lt;&lt;= 8;
+		temp += MAX44009_ReadOneByte(ReadAddr + Len - t - 1);
+	}
+	return temp;
+}
+
+//在MAX44009里面的指定地址开始读出指定个数的数据
+//ReadAddr :开始读出的地址
+//pBuffer  :数据数组首地址
+//NumToRead:要读出数据的个数
+void MAX44009_Read(u16 ReadAddr, u8 *pBuffer, u16 NumToRead)
+{
+	while (NumToRead)
+	{
+		*pBuffer++ = MAX44009_ReadOneByte(ReadAddr++);
+		NumToRead--;
+	}
+}
+//在MAX44009里面的指定地址开始写入指定个数的数据
+//WriteAddr :开始写入的地址
+//pBuffer   :数据数组首地址
+//NumToWrite:要写入数据的个数
+void MAX44009_Write(u16 WriteAddr, u8 *pBuffer, u16 NumToWrite)
+{
+	while (NumToWrite--)
+	{
+		MAX44009_WriteOneByte(WriteAddr, *pBuffer);
+		WriteAddr++;
+		pBuffer++;
+	}
+}
+
+</code></pre>
+<p>MAX44009驱动文件：MAX44009.h</p>
+<pre><code class="language-c">#ifndef __MAX44009_H
+#define __MAX44009_H
+#include &quot;sys.h&quot;
+
+// Accuracy of the Lux value calculation
+//   0: reduced accuracy (slightly faster)
+//   1: maximum accuracy (slightly slower)
+#define MAX44009_ACCURACY 1
+
+// MAX44009 HAL
+#define MAX44009_I2C_PORT I2C1 // I2C port where the MAX44009 connected
+
+// Possible I2C device addresses
+#define MAX44009_ADDR_G ((uint8_t)0x4A) // A0 pin tied to GND //0100 1010
+#define MAX44009_ADDR_V ((uint8_t)0x4B) // A0 pin tied to VCC //0100 1011
+
+// Current I2C device address (depends on the pin A0 connection)
+#define MAX44009_ADDR (MAX44009_ADDR_G &lt;&lt; 1)
+//#define MAX44009_ADDR (0x94)
+// MAX44009 register definitions
+#define MAX44009_REG_INTS ((uint8_t)0x00) // Interrupt status
+#define MAX44009_REG_INTE ((uint8_t)0x01) // Interrupt enable
+#define MAX44009_REG_CFG ((uint8_t)0x02)  // Configuration
+#define MAX44009_REG_LUXH ((uint8_t)0x03) // Lux reading high byte
+#define MAX44009_REG_LUXL ((uint8_t)0x04) // Lux reading low byte
+#define MAX44009_REG_THU ((uint8_t)0x05)  // Upper threshold high byte
+#define MAX44009_REG_THL ((uint8_t)0x06)  // Lower threshold high byte
+#define MAX44009_REG_THT ((uint8_t)0x07)  // Threshold timer
+
+// MAX44009 interrupt status end configuration definitions
+#define MAX44009_INT_SET ((uint8_t)0x01)     // Interrupt is asserted
+#define MAX44009_INT_RESET ((uint8_t)0x00)   // Interrupt is deasserted
+#define MAX44009_INT_ENABLE ((uint8_t)0x01)  // Interrupt enabled
+#define MAX44009_INT_DISABLE ((uint8_t)0x00) // Interrupt disabled
+
+// MAX44009 CFG register bits
+
+#define MAX44009_CFG_CONT ((uint8_t)0x80)   // Continuous mode
+#define MAX44009_CFG_MANUAL ((uint8_t)0x40) // Manual configuration
+
+// Current division ratio (CDR)
+#define MAX44009_CDR_NORM ((uint8_t)0x00) // All photodiode current goes to the ADC
+#define MAX44009_CDR_DIV8 ((uint8_t)0x08) // Only 1/8 of the photodiode current goes to the ADC
+
+// Integration time
+#define MAX44009_IT_800ms ((uint8_t)0x00)  // 800ms
+#define MAX44009_IT_400ms ((uint8_t)0x01)  // 400ms
+#define MAX44009_IT_200ms ((uint8_t)0x02)  // 200ms
+#define MAX44009_IT_100ms ((uint8_t)0x03)  // 100ms
+#define MAX44009_IT_50ms ((uint8_t)0x04)   // 50ms
+#define MAX44009_IT_25ms ((uint8_t)0x05)   // 25ms
+#define MAX44009_IT_12d5ms ((uint8_t)0x06) // 12.5ms
+#define MAX44009_IT_6d25ms ((uint8_t)0x07) // 6.25ms
+
+// Bit mask for MODE and RANGE bits
+#define MAX44009_MASK_CFG_MODE ((uint8_t)0xC0)
+
+// Bit mask for CDR bit and integration time
+#define MAX44009_MASK_CDR_IT ((uint8_t)0x0F)
+
+// Value indicating overrange condition (used in return of GetLux() function)
+#define MAX44009_OVERRANGE ((uint32_t)1000000000U)
+
+void MAX44009_Init(void);
+u8 MAX44009_ReadOneByte(u8 ReadAddr);
+void MAX44009_WriteOneByte(u8 WriteAddr,u8 DataToWrite);
+void MAX44009_WriteLenByte(u16 WriteAddr,u32 DataToWrite,u8 Len);
+u32 MAX44009_ReadLenByte(u16 ReadAddr,u8 Len);
+void MAX44009_Read(u16 ReadAddr,u8 *pBuffer,u16 NumToRead);
+void MAX44009_Write(u16 WriteAddr,u8 *pBuffer,u16 NumToWrite);
+float MAX44009_ReadLux(void);
+
+#endif
+</code></pre>
+<br>
+<font color="#ADADAD">
+<center>
+<span id="busuanzi_container_page_pv">
+  本文总阅读量:<span id="busuanzi_value_page_pv"></span>次
+</span>
+</center> 
+</font>]]></content>
+    </entry>
+</feed>
