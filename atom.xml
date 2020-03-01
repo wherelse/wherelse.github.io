@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://wherelse.cc</id>
     <title>Wherelse Blog</title>
-    <updated>2020-03-01T13:55:33.103Z</updated>
+    <updated>2020-03-01T14:02:24.910Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://wherelse.cc"/>
     <link rel="self" href="https://wherelse.cc/atom.xml"/>
@@ -676,8 +676,8 @@ s-65,47,-65,47z M834 80H400000v40H845z'/></svg></span></span></span><span class=
     </entry>
     <entry>
         <title type="html"><![CDATA[在Linux命令环境下使用PPPOE拨号上网]]></title>
-        <id>https://wherelse.cc/post/zai-linux-ming-ling-huan-jing-xia-shi-yong-pppoe-bo-hao-shang-wang/</id>
-        <link href="https://wherelse.cc/post/zai-linux-ming-ling-huan-jing-xia-shi-yong-pppoe-bo-hao-shang-wang/">
+        <id>https://wherelse.cc/post/use-the-pppoe-in-linux-environment/</id>
+        <link href="https://wherelse.cc/post/use-the-pppoe-in-linux-environment/">
         </link>
         <updated>2020-01-06T12:46:19.000Z</updated>
         <content type="html"><![CDATA[<p>首先安装拨号软件</p>
@@ -912,8 +912,8 @@ entering maskrom mode...
     </entry>
     <entry>
         <title type="html"><![CDATA[Markdown中使用HTML实现文本居中，改变字体颜色等]]></title>
-        <id>https://wherelse.cc/post/markdown-wen-ben-ju-zhong/</id>
-        <link href="https://wherelse.cc/post/markdown-wen-ben-ju-zhong/">
+        <id>https://wherelse.cc/post/markdown-center-or-other-language-style/</id>
+        <link href="https://wherelse.cc/post/markdown-center-or-other-language-style/">
         </link>
         <updated>2019-12-15T13:17:51.000Z</updated>
         <summary type="html"><![CDATA[<p>How to make the markdown in the middle of pages</p>
@@ -987,8 +987,8 @@ entering maskrom mode...
     </entry>
     <entry>
         <title type="html"><![CDATA[亮度传感器MAX44009 STM32模拟IIC驱动]]></title>
-        <id>https://wherelse.cc/post/liang-du-chuan-gan-qi-max44009-stm32-mo-ni-iic-qu-dong/</id>
-        <link href="https://wherelse.cc/post/liang-du-chuan-gan-qi-max44009-stm32-mo-ni-iic-qu-dong/">
+        <id>https://wherelse.cc/post/light-sensor-max44009-stm32-iic-driver/</id>
+        <link href="https://wherelse.cc/post/light-sensor-max44009-stm32-iic-driver/">
         </link>
         <updated>2019-12-10T13:24:59.000Z</updated>
         <summary type="html"><![CDATA[<p>MAX44009 driver for STM32 use software IIC</p>
