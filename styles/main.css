@@ -130,19 +130,22 @@ div.meta .remixicon {
 .fa-comment:before {
   content: "\eafc";
 }
-i.icon,
-i.fa,
-.remixicon {
-  font-style: normal !important;
-  font-weight: normal !important;
-  display: inline-block;
+.friend-box {
+  float: left;
+  width: calc(50% - 20px);
+  margin: 15px 10px;
 }
-.icon {
-  width: 1em;
-  height: 1em;
-  vertical-align: -0.15em;
-  fill: currentColor;
+.friend-box img.friend-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50% !important;
+  float: left;
+  margin: 0 15px 0 0 !important;
+}
+.friend-box .flink-info {
+  height: 70px;
   overflow: hidden;
+  line-height: 24px;
 }
 
       body {
