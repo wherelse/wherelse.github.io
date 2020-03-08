@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://wherelse.cc</id>
     <title>Wherelse Blog</title>
-    <updated>2020-03-06T14:13:55.315Z</updated>
+    <updated>2020-03-08T06:35:48.072Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://wherelse.cc"/>
     <link rel="self" href="https://wherelse.cc/atom.xml"/>
@@ -10,6 +10,161 @@
     <logo>https://wherelse.cc/images/avatar.png</logo>
     <icon>https://wherelse.cc/favicon.ico</icon>
     <rights>All rights reserved 2020, Wherelse Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[HTML语法笔记]]></title>
+        <id>https://wherelse.cc/post/html-grammar-notes/</id>
+        <link href="https://wherelse.cc/post/html-grammar-notes/">
+        </link>
+        <updated>2020-03-08T04:00:00.000Z</updated>
+        <summary type="html"><![CDATA[<p>HTML Grammar notes</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>HTML Grammar notes</p>
+<!-- more -->
+<h2 id="基本元素">基本元素</h2>
+<p>省略</p>
+<h2 id="表格元素">表格元素</h2>
+<p><code>&lt;table&gt;</code>表格样式:<br>
+-<code>&lt;thead&gt;``&lt;tbody&gt;``&lt;tfoot&gt;</code><br>
+<code>&lt;tr&gt;</code>表格行<br>
+<code>&lt;td&gt;</code>表格列<br>
+<code>&lt;th&gt;</code>表头<br>
+<code>colspan</code>水平合并单元格<br>
+<code>rowspan</code>垂直合并单元格</p>
+<pre><code class="language-html">&lt;table border=&quot;1px&quot;&gt;
+    &lt;thead&gt;
+        &lt;th&gt;
+            &lt;td&gt;1&lt;/td&gt;
+            &lt;td&gt;2&lt;/td&gt;
+            &lt;td&gt;3&lt;/td&gt;
+        &lt;/th&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+        &lt;tr&gt;
+            &lt;td&gt;1&lt;/td&gt;
+            &lt;td&gt;2&lt;/td&gt;
+            &lt;td&gt;3&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;1&lt;/td&gt;
+            &lt;td&gt;2&lt;/td&gt;
+            &lt;td&gt;3&lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/tbody&gt;
+&lt;/table&gt;
+</code></pre>
+<h2 id="列表元素">列表元素</h2>
+<p><code>&lt;ol&gt;</code>有序列表<br>
+-<code>type</code>设置样式，<code>reversed</code>降序<br>
+<code>&lt;ul&gt;</code>无序列表<br>
+<code>&lt;li&gt;</code>放在<code>&lt;ol&gt;``&lt;ul&gt;</code>列表中的项</p>
+<h2 id="表单元素">表单元素</h2>
+<h3 id="form表单样式"><code>&lt;form&gt;</code>表单样式</h3>
+<h4 id="input输入框"><code>&lt;input&gt;</code>输入框</h4>
+<p><code>type</code>属性，单行输入框：</p>
+<ol>
+<li>text，默认属性</li>
+</ol>
+<ul>
+<li>value，默认填充内容</li>
+<li>placeholder，占位显示，不影响输入</li>
+<li>maxlength，输入最大长度控制</li>
+<li>size，输入框长度控制，拓宽单行输入框的长度</li>
+<li>readonly，只读不可编辑标签</li>
+</ul>
+<ol start="2">
+<li>password，密码属性，隐藏输入内容，单行文本框</li>
+<li>submit，按钮</li>
+<li>email，邮箱</li>
+<li>date，时间</li>
+<li>url，链接</li>
+<li>tel，电话</li>
+<li>color，获取颜色</li>
+<li>hidden，隐藏该表单内容</li>
+<li>image，图片按钮</li>
+<li>file，文件选择框</li>
+</ol>
+<pre><code class="language-html">&lt;form&gt;
+    &lt;input type=&quot;text&quot; value=&quot;HTML语法笔记&quot;&gt;
+    &lt;br&gt;
+    &lt;input type=&quot;text&quot; placeholder=&quot;占位符&quot;&gt;
+&lt;/form&gt;
+</code></pre>
+<p><code>textarea</code>，多行输入框：</p>
+<ul>
+<li>rows，输入框宽度</li>
+<li>cols，输入框长度</li>
+</ul>
+<p><code>button</code>，按钮属性</p>
+<pre><code class="language-html">&lt;input type=&quot;button&quot; value=&quot;按钮&quot;&gt;
+&lt;button&gt;按钮&lt;/button&gt;&lt;!--和js配合绑定事件--&gt;
+&lt;input type=&quot;submit&quot; value=&quot;按钮&quot;&gt;&lt;!--仅用于提交表单--&gt;
+</code></pre>
+<p><code>range</code>，数值滑动条</p>
+<ul>
+<li>min，最小值</li>
+<li>max，最大值</li>
+<li>step，步进值</li>
+<li>value，滑动条默认起始值</li>
+</ul>
+<p><code>number</code>，数字输入框</p>
+<ul>
+<li>min，最小值</li>
+<li>max，最大值</li>
+<li>value，滑动条默认起始值</li>
+</ul>
+<p><code>list</code>，输入选框，具体见datalist<br>
+<code>checkbox</code>，复选框，可勾可选<br>
+<code>radio</code>，单选框</p>
+<ul>
+<li>name，值</li>
+<li>checked，默认选中</li>
+<li>value，传递出去的结果</li>
+</ul>
+<pre><code class="language-html">&lt;input type=&quot;radio&quot; name=&quot;test&quot;  checked&gt;a&lt;!--实现类似填表单选效果，同name只能用一个选中--&gt;
+&lt;input type=&quot;radio&quot; name=&quot;test&quot;&gt;b
+&lt;input type=&quot;radio&quot; name=&quot;test&quot;&gt;c
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://wherelse.cc/post-images/1583590191149.png" alt="" loading="lazy"></figure>
+<h4 id="select下拉列表">select下拉列表</h4>
+<pre><code class="language-html">&lt;select&gt;
+    &lt;option&gt;test1&lt;/option&gt;
+    &lt;option&gt;test2&lt;/option&gt;
+    &lt;option&gt;test3&lt;/option&gt;
+&lt;/select&gt;
+</code></pre>
+<p>效果：<img src="https://wherelse.cc/post-images/1583589773566.png" alt="" loading="lazy"></p>
+<h4 id="datalist下拉输入框">datalist下拉输入框</h4>
+<p>datalist需要配合input使用</p>
+<pre><code class="language-html">    &lt;input type=&quot;text&quot; list=&quot;list1&quot; value=&quot;test&quot;/&gt;
+    &lt;datalist id=&quot;list1&quot;&gt;
+      &lt;option&gt;test1&lt;/option&gt;
+      &lt;option&gt;test2&lt;/option&gt;
+      &lt;option&gt;test3&lt;/option&gt;
+    &lt;/datalist&gt;
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="https://wherelse.cc/post-images/1583589968696.png" alt="" loading="lazy"></figure>
+<h2 id="图片">图片</h2>
+<h3 id="img标签">img标签</h3>
+<p><code>src</code>,图片链接，图片地址<br>
+<code>width</code> <code>height</code>高度宽度<br>
+<code>alt</code>备选内容，当图片内容丢失时显示的值<br>
+<code>href</code>跳转链接地址</p>
+<pre><code class="language-html">&lt;img src=&quot;xxxxx.jpg&quot; width=&quot;80px&quot; alt=&quot;图片丢失&quot;&gt;
+</code></pre>
+<h2 id="视频">视频</h2>
+<h3 id="video标签">video标签</h3>
+<p><code>src</code>,视频链接，视频地址<br>
+<code>width</code> <code>height</code>高度宽度<br>
+<code>controls</code>视频控制控件<br>
+<code>autoplay</code>自动播放<br>
+<code>preload</code>预载视频，有none，auto<br>
+<code>loop</code>循环播放<br>
+<code>poster</code>视频载入时显示封面图片<br>
+<code>muted</code>视频静音</p>
+<pre><code class="language-html">&lt;vedio src=&quot;xxxxx.mp4&quot; height=&quot;800px&quot; controls preload=&quot;auto&quot; poster=&quot;xxx.img&quot;&gt;&lt;/vedio&gt;
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[竞斗云2.0硬改、硬件修复（MINI-PCIE、USB3.0）]]></title>
         <id>https://wherelse.cc/post/GDOCK-Repair-hardware-bug/</id>
@@ -916,74 +1071,6 @@ entering maskrom mode...
 <p>作者：libgcc<br>
 链接：https://www.jianshu.com/p/21d3954231dc<br>
 来源：简书</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Markdown中使用HTML实现文本居中，改变字体颜色等]]></title>
-        <id>https://wherelse.cc/post/markdown-center-or-other-language-style/</id>
-        <link href="https://wherelse.cc/post/markdown-center-or-other-language-style/">
-        </link>
-        <updated>2019-12-15T13:17:51.000Z</updated>
-        <summary type="html"><![CDATA[<p>How to make the markdown in the middle of pages</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>How to make the markdown in the middle of pages</p>
-<!-- more -->
-<h2 id="文本居中">文本居中</h2>
-<p>将HTML语法放到Markdown里面就可以实现文本及图像等的居中,比如说加上br标签就可以换行，给文字加上center标签就可以使文字居中，写法是：<code>&lt;center&gt;markdown居中文本&lt;/center&gt;</code><br>
-例如：<code>&lt;center&gt;markdown居中测试&lt;/center&gt;</code>效果如下：</p>
-<center> markdown居中测试</center>
-<h2 id="字体颜色">字体颜色</h2>
-<p>使用以下代码实现改变markdown中文字的颜色，使用时需要将想要改变颜色的内容放在······的位置。</p>
-<pre><code class="language-html">&lt;font color=#xxxxxx&gt;    &lt;! xxxxxx为颜色代号&gt;
-·····
-&lt;/font&gt;
-</code></pre>
-<p>例子代码：</p>
-<pre><code class="language-html">&lt;font color=#FF0000&gt; 
-文字颜色测试
-&lt;/font&gt;
-</code></pre>
-<p>效果：<br>
-<font color=#FF0000><br>
-文字颜色测试<br>
-</font></p>
-<h2 id="字体的加粗和斜体">字体的加粗和斜体</h2>
-<p>在使用以上的两种html方法进行文字编辑时可能会影响到Markdown的加粗等内容的渲染,如果这个时候想对文字进行加粗斜体等操作该怎么办呢？</p>
-<p>使用加粗、斜体、删除线，下划线等标签</p>
-<pre><code class="language-html">&lt;b&gt;          &lt;! 加粗标签&gt;
-·····
-&lt;/b&gt;
-
-&lt;i&gt;          &lt;! 斜体标签&gt;
-·····
-&lt;/i&gt;
-
-&lt;u&gt;          &lt;! 下划线标签&gt;
-·····
-&lt;/u&gt;
-
-&lt;s&gt;          &lt;! 删除标签&gt;
-·····
-&lt;/s&gt;
-</code></pre>
-<p>这里我们以一个加粗斜体红色字为例：<br>
-例子代码：</p>
-<pre><code class="language-html">&lt;b&gt;
-&lt;i&gt;
-&lt;font color=#FF0000&gt; 
-文字颜色测试
-&lt;/font&gt;
-&lt;/i&gt;
-&lt;/b&gt;
-</code></pre>
-<p>显示效果:<br>
-<b><br>
-<i><br>
-<font color=#FF0000><br>
-文字颜色测试<br>
-</font><br>
-</i><br>
-</b></p>
 ]]></content>
     </entry>
 </feed>
