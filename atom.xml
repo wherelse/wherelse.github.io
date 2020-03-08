@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://wherelse.cc</id>
     <title>Wherelse Blog</title>
-    <updated>2020-03-08T06:35:48.072Z</updated>
+    <updated>2020-03-08T17:17:24.006Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://wherelse.cc"/>
     <link rel="self" href="https://wherelse.cc/atom.xml"/>
@@ -10,6 +10,54 @@
     <logo>https://wherelse.cc/images/avatar.png</logo>
     <icon>https://wherelse.cc/favicon.ico</icon>
     <rights>All rights reserved 2020, Wherelse Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[为Gridea主题添加看板娘]]></title>
+        <id>https://wherelse.cc/post/add-live2d-in-the-gridea-theme/</id>
+        <link href="https://wherelse.cc/post/add-live2d-in-the-gridea-theme/">
+        </link>
+        <updated>2020-03-08T17:00:00.000Z</updated>
+        <summary type="html"><![CDATA[<p>Add Live2D for Gridea theme</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>Add Live2D for Gridea theme</p>
+<!-- more -->
+<h2 id="概要">概要</h2>
+<p>看到别人的网站有看板娘，但是Gridea并没有特别完整的解决方案，便在Github上寻找相关的代码，看到项目：<a href="https://github.com/stevenjoezhang/live2d-widget">live2d-widget</a>，便稍作修改，就实现将看板娘本地化到主题中，需要改动的地方很少。<br>
+效果预览：<a href="https://wherelse.cc">wherelse.cc</a></p>
+<h2 id="操作方法">操作方法</h2>
+<ol>
+<li>从我的github上下载或clone repo，地址：<a href="https://github.com/wherelse/Live2D-for-Gridea">Live2D For Gridea</a></li>
+<li>将文件以文件夹形式放入到<code>\主题\assets\media</code>下<br>
+<img src="https://wherelse.cc/post-images/1583685033340.png" alt="" loading="lazy"><br>
+文件夹的内容应有一下几项：<br>
+<img src="https://wherelse.cc/post-images/1583685129035.png" alt="" loading="lazy"></li>
+<li>将下面的代码加入 <code>index.ejs</code>的<code>&lt;head&gt;</code>或 <code>&lt;body&gt;</code>之间保存。</li>
+</ol>
+<pre><code class="language-html">&lt;script src=&quot;./media/live2d/autoload.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<ol start="4">
+<li>在Gridea中预览添加完成后的效果。<br>
+<img src="https://wherelse.cc/post-images/1583685534617.png" alt="" loading="lazy"></li>
+</ol>
+<h2 id="在主题中添加开启按钮可选">在主题中添加开启按钮（可选）</h2>
+<p>在config.json最后添加：</p>
+<pre><code class="language-json">{
+    &quot;name&quot;: &quot;Live2D&quot;,
+    &quot;label&quot;: &quot;Live2D看板娘&quot;,
+    &quot;group&quot;: &quot;Live2D&quot;,
+    &quot;value&quot;: true,
+    &quot;type&quot;: &quot;switch&quot;,
+    &quot;note&quot;: &quot;若不需要，可关闭以加快页面加载速度&quot;
+}
+</code></pre>
+<p><code>&lt;head&gt;</code>或 <code>&lt;body&gt;</code>间的代码更改为：</p>
+<pre><code class="language-html">&lt;% if (site.customConfig.Live2D){ %&gt;
+    &lt;script src=&quot;./media/live2d/autoload.js&quot;&gt;&lt;/script&gt;
+&lt;% } %&gt;
+</code></pre>
+<h2 id="live2d自定义">Live2D自定义</h2>
+<p>在<code>waifu-tips.json</code>和<code>waifu-tips.js</code>中可以自定义看板娘的文字内容，按需更改。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[HTML语法笔记]]></title>
         <id>https://wherelse.cc/post/html-grammar-notes/</id>
@@ -932,145 +980,6 @@ s-65,47,-65,47z M834 80H400000v40H845z'/></svg></span></span></span><span class=
 切勿混刷 opboot-p2w-r619ac-flash-v1.0.9.bin 和 opboot-p2w-r619ac-nor-v1.0.9.img，xxxflashxxx.bin 文件仅通过命令刷入，xxxnorxxx.img 那个则通过 OpBoot 内置的更新功能刷入。刷错会导致机器变砖
 </b>
 </font >
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[贝壳云P1 刷机]]></title>
-        <id>https://wherelse.cc/post/bei-ke-yun-p1-shua-ji/</id>
-        <link href="https://wherelse.cc/post/bei-ke-yun-p1-shua-ji/">
-        </link>
-        <updated>2019-12-18T12:56:27.000Z</updated>
-        <summary type="html"><![CDATA[<p>beike yun flash system</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>beike yun flash system</p>
-<!-- more -->
-<p>转载自hanwckf的博客</p>
-<h2 id="刷机方法">刷机方法</h2>
-<p>暂无免拆机刷机法，必须要拆机引出USB进行线刷</p>
-<p>刷机工具：<a href="https://pan.baidu.com/s/1aOAIZ3vyG8mgipj726Bhgg">https://pan.baidu.com/s/1aOAIZ3vyG8mgipj726Bhgg</a> 提取码: 7eee<br>
-固件发布：<a href="https://github.com/hanwckf/build-beikeyun/releases/latest">https://github.com/hanwckf/build-beikeyun/releases/latest</a></p>
-<h2 id="准备工作">准备工作</h2>
-<ol>
-<li>
-<p>去Github Release下载你喜欢的固件，解压xz包得到img镜像</p>
-</li>
-<li>
-<p>剪一根废旧的USB线，焊接到USB焊盘上，或者焊接一个排针在焊盘上，注意线序（可以从背面焊接，VCC可以不焊）</p>
-</li>
-<li>
-<p>进入maskrom模式</p>
-</li>
-</ol>
-<ul>
-<li>对于已经刷过第三方固件的机器，可按照本文后面的方法快速进入maskrom模式</li>
-<li>对于从未刷机的原厂固件，按照以下步骤操作以进入maskrom模式：将USB线连接到电脑，然后用镊子短接主板背面的maskrom触点，最后再接入12V电源，等待两秒钟后松开镊子。</li>
-</ul>
-<ol start="4">
-<li>下载安装线刷驱动 (DriverAssitant_v4.5.zip)和AndroidTool，然后运行AndroidTool，如果没有出现&quot;发现一个MASKROM设备&quot;的提示，请重新进行准备工作</li>
-</ol>
-<p>选择img镜像刷入即可（loader已经预先设置无需更改）</p>
-<ol start="5">
-<li>armbian默认root密码为1234，第一次登陆后会让你设置新密码</li>
-</ol>
-<h2 id="其他注意">其他注意</h2>
-<p>已经刷入Rock64的armbian固件后，可以在上电时长按主板正面的微动开关进入maskrom模式而无需短接触点，此时ttl输出如下（波特率：1500000）：</p>
-<pre><code class="language-shell">DDR version 1.13 20180428
-ID:0xFFF
-In
-SRX
-DDR3
-786MHz
-Bus Width=32 Col=10 Bank=8 Row=15 CS=1 Die Bus-Width=16 Size=1024MB
-ddrconfig:1
-OUT
-Boot1 Release Time: Feb  2 2018 15:41:39, version: 2.46
-ChipType = 0x11, 209
-SdmmcInit=2 0
-BootCapSize=2000
-UserCapSize=7456MB
-FwPartOffset=2000 , 2000
-SdmmcInit=0 2
-StorageInit ok = 19161
-Raw SecureMode = 0
-SecureInit read PBA: 0x4
-SecureInit read PBA: 0x404
-SecureInit read PBA: 0x804
-SecureInit read PBA: 0xc04
-SecureInit read PBA: 0x1004
-SecureInit ret = 0, SecureMode = 0
-LoadTrustBL
-No find bl30.bin
-No find bl32.bin
-Load uboot, ReadLba = 2000
-Load OK, addr=0x200000, size=0xa4e00
-RunBL31 0x10000
-NOTICE:  BL31: v1.3(debug):f947c7e
-NOTICE:  BL31: Built : 20:41:40, Nov 26 2018
-NOTICE:  BL31:Rockchip release version: v1.3
-INFO:    ARM GICv2 driver initialized
-INFO:    Using rkfiq sec cpu_context!
-INFO:    boot cpu mask: 1
-INFO:    plat_rockchip_pmu_init: pd status 0xe
-INFO:    BL31: Initializing runtime services
-INFO:    BL31: Preparing for EL3 exit to normal world
-INFO:    Entry point address = 0x200000
-INFO:    SPSR = 0x3c9
-
-
-U-Boot 2017.09-armbian (Feb 08 2019 - 11:49:32 +0100)
-
-Model: Pine64 Rock64
-DRAM:  1022 MiB
-MMC:   rksdmmc@ff520000: 0, rksdmmc@ff500000: 1
-SF: unrecognized JEDEC id bytes: ff, ff, ff
-*** Warning - spi_flash_probe_bus_cs() failed, using default environment
-
-In:    serial@ff130000
-Out:   serial@ff130000
-Err:   serial@ff130000
-Model: Pine64 Rock64
-misc_init_r
-cpuid=55524b50303930323200000000192205
-serial=433a170c2728fd1
-rockchip_dnl_mode = 1 mode
-LED 'power' operation failed (err=-121)
-LED 'power' operation failed (err=-121)
-rockchip_dnl_mode = 2 mode
-LED 'power' operation failed (err=-121)
-LED 'power' operation failed (err=-121)
-LED 'power' operation failed (err=-121)
-LED 'power' operation failed (err=-121)
-rockchip_dnl_mode = 3 mode
-LED 'power' operation failed (err=-121)
-LED 'power' operation failed (err=-121)
-LED 'power' operation failed (err=-121)
-LED 'power' operation failed (err=-121)
-LED 'power' operation failed (err=-121)
-LED 'power' operation failed (err=-121)
-rockchip_dnl_mode = 4 mode
-LED 'power' operation failed (err=-121)
-LED 'power' operation failed (err=-121)
-LED 'power' operation failed (err=-121)
-LED 'power' operation failed (err=-121)
-LED 'power' operation failed (err=-121)
-LED 'power' operation failed (err=-121)
-LED 'power' operation failed (err=-121)
-LED 'power' operation failed (err=-121)
-LED 'power' operation failed (err=-121)
-LED 'standby' operation failed (err=-121)
-entering maskrom mode...
-</code></pre>
-<p>对于已经刷入任一第三方固件的机器，可以采用以下方法进入maskrom模式：<br>
-接好TTL（波特率：1500000），上电后在U-boot倒计时结束前按任意键进入U-boot命令行，输入以下指令擦除emmc前面的内容：</p>
-<pre><code class="language-shell">mmc erase 0 100
-</code></pre>
-<p>然后复位</p>
-<pre><code class="language-shell">reset
-</code></pre>
-<p>复位后就进入maskrom模式了</p>
-<p>作者：libgcc<br>
-链接：https://www.jianshu.com/p/21d3954231dc<br>
-来源：简书</p>
 ]]></content>
     </entry>
 </feed>
