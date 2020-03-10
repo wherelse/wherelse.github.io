@@ -133,7 +133,11 @@ div.meta .remixicon {
 .friend-box {
   display: flex;
   display: -webkit-flex;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
   flex-direction: row;
+  justify-content: center;
   background-color: #fffefe;
   width: 300px;
   border-radius: 35px;
