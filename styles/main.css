@@ -131,21 +131,38 @@ div.meta .remixicon {
   content: "\eafc";
 }
 .friend-box {
-  float: left;
-  width: calc(50% - 20px);
+  background-color: #fffefe;
+  border-radius: 35px;
+  width: calc(30% - 10px);
   margin: 20px 10px;
+  border: 1px solid #bbbbbb;
 }
 .friend-box img.friend-avatar {
-  width: 100px;
-  height: 100px;
+  width: 60px;
+  height: 60px;
   border-radius: 50% !important;
   float: left;
-  margin: 0 15px 0 0 !important;
+  margin: 5px 5px 5px !important;
 }
 .friend-box .flink-info {
   height: 70px;
   overflow: hidden;
-  line-height: 24px;
+  line-height: 30px;
+}
+.friendblock {
+  display: inline-block;
+}
+.friend-box:hover {
+  transform: translateY(-5px);
+  -webkit-transform: translateY(-5px);
+  -moz-transform: translateY(-5px);
+  box-shadow: 0 26px 40px -24px rgba(0, 36, 100, 0.3);
+  -webkit-box-shadow: 0 26px 40px -24px rgba(0, 36, 100, 0.3);
+  -moz-box-shadow: 0 26px 40px -24px rgba(0, 36, 100, 0.3);
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
 }
 @font-face {
   font-family: "iconfont";
