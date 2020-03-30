@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://wherelse.cc</id>
     <title>Wherelse Blog</title>
-    <updated>2020-03-21T13:00:09.097Z</updated>
+    <updated>2020-03-30T16:48:57.951Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://wherelse.cc"/>
     <link rel="self" href="https://wherelse.cc/atom.xml"/>
@@ -10,6 +10,86 @@
     <logo>https://wherelse.cc/images/avatar.png</logo>
     <icon>https://wherelse.cc/favicon.ico</icon>
     <rights>All rights reserved 2020, Wherelse Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[Docker下安装openwrt做旁路由]]></title>
+        <id>https://wherelse.cc/post/Install-openwrt-under-Docker-for-bypass-router/</id>
+        <link href="https://wherelse.cc/post/Install-openwrt-under-Docker-for-bypass-router/">
+        </link>
+        <updated>2020-03-30T16:00:00.000Z</updated>
+        <summary type="html"><![CDATA[<p>Install openwrt under Docker for bypass router</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>Install openwrt under Docker for bypass router</p>
+<!-- more -->
+<h2 id="前言">前言</h2>
+<p>我的斐讯N1 运行着armbian linux用作校园网的免流服务器，但是就做着一个功能，实在有点浪费，同时现在因为疫情迟迟没有开学，在家里科学上网查资料手机电脑都要开个科学客户端很是麻烦，就决定在斐讯N1上再安装一个Docker openwrt做旁路由网关。<br>
+自己配置好之后又指导着同学在贝壳云上安装成功，方法应该是通用于所以装有armbian-linux的服务器。网上的教程都或多或少有点问题，很多个教程看起来很麻烦，决定写下来方便自己以后再次配置。</p>
+<h2 id="配置">配置</h2>
+<ul>
+<li>为方便配置，最好使用root用户，若不是root用户则输入<code>su</code>进行切换。</li>
+<li>在命令中分别输入以下命令，安装Docker</li>
+</ul>
+<pre><code class="language-shell">curl -fsSL https://get.docker.com -o get-docker.sh #获取安装脚本
+sh get-docker.sh –mirror Aliyun #使用阿里云源进行安装，加快安装速度
+</code></pre>
+<ul>
+<li>安装完Docker后，打开网卡的混杂模式：</li>
+</ul>
+<pre><code class="language-shell">ip link set eth0 promisc on
+</code></pre>
+<ul>
+<li>给Docker创建网络，运行以下命令，其中<code>192.168.1.0</code>和<code>192.168.1.1</code>都要修改到自己的对应网段<code>192.168.x.0</code>和<code>192.168.x.1</code></li>
+</ul>
+<pre><code class="language-shell">docker network create -d macvlan --subnet=192.168.1.0/24 --gateway=192.168.1.1 -o parent=eth0 macnet
+</code></pre>
+<ul>
+<li>拉取openwrt镜像，这里我使用的是buddyfly的openwrt-aarch64，在docker hub找到的docker镜像，地址：<a href="https://hub.docker.com/r/buddyfly/openwrt-aarch64">buddyfly/openwrt-aarch64</a> ,以下配置基于这个docker镜像。</li>
+</ul>
+<pre><code class="language-shell">docker pull buddyfly/openwrt-aarch64
+</code></pre>
+<ul>
+<li>开启openwrt容器，并把这个容器命名为openwrt</li>
+</ul>
+<pre><code class="language-shell">docker run --name openwrt --restart always -d --network macnet --privileged buddyfly/openwrt-aarch64:latest
+</code></pre>
+<ul>
+<li>修改docker内的openwrt网络设置，首先输入：</li>
+</ul>
+<pre><code class="language-shell">docker exec -it openwrt /bin/bash
+</code></pre>
+<p>输入之后会进入docker容器内，修改网络设置<code>vi /etc/config/network</code><br>
+输入i开始编辑，编辑完成之后按ESC退出编辑，然后输入:wq（不要忘记冒号）回车保存，这里需要给容器内的openwrt指定静态地址，网关和dns，这些配置要和你家中的网络处于一个网段。<br>
+<img src="https://wherelse.cc/post-images/1585585461543.png" alt="" loading="lazy"><br>
+完成后按<code>Crtl+D</code>退出docker容器。</p>
+<ul>
+<li>重启docker容器，到这里openwrt已经安装好了：</li>
+</ul>
+<pre><code class="language-shell">docker restart openwrt
+</code></pre>
+<ul>
+<li>在浏览器输入刚刚配置的静态地址，进入openwrt的luci界面，我这个固件的密码是password。进入网络-接口-修改，进行配置。需要检查ip，子网掩码，ipv4网关以及dns是否配置正确。<br>
+<img src="https://wherelse.cc/post-images/1585585776463.png" alt="" loading="lazy"></li>
+</ul>
+<p><img src="https://wherelse.cc/post-images/1585585884206.png" alt="" loading="lazy"><br>
+选择忽略DHCP服务<br>
+<img src="https://wherelse.cc/post-images/1585585827430.png" alt="" loading="lazy"><br>
+然后保存应用。</p>
+<ul>
+<li>配置防火墙，在网络-防火墙-自定义规则添加以下命令后重启防火墙：</li>
+</ul>
+<pre><code class="language-shell">iptables -t nat -I POSTROUTING -o eth0 -j MASQUERADE 
+</code></pre>
+<p><img src="https://wherelse.cc/post-images/1585586056918.png" alt="" loading="lazy"><br>
+到这里，docker openwrt就全部配置完了。</p>
+<h2 id="使用">使用</h2>
+<p>旁路由网关的使用有两种方式</p>
+<ul>
+<li>一种是分设备配置网关，这样配置只影响修改过配置的设备，只有这些设备的流量走旁路由。</li>
+<li>另一种是将主路由的网关指向docker openwrt，家庭中所有网络的流量都走旁路由。</li>
+</ul>
+<p>第一种方式需要分设备配置，比较麻烦，第二种在修改时则会影响家中的网络访问，造成网络中断。我使用的是第一种方式，需要修改电脑或者手机的网关，将网关指向openwrt。<br>
+<img src="https://wherelse.cc/post-images/1585586611757.png" alt="" loading="lazy"></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[为Gridea主题添加看板娘]]></title>
         <id>https://wherelse.cc/post/add-live2d-in-the-gridea-theme/</id>
@@ -929,57 +1009,6 @@ s-65,47,-65,47z M834 80H400000v40H845z'/></svg></span></span></span><span class=
 <pre><code class="language-shell">plog
 </code></pre>
 <p>开启ipv6支持，在<code>/etc/ppp/options</code>文件最后添加<code>ipv6 ,</code> 注意，在ipv6和“，”之间有一个空格</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[竞斗云V2.0免拆刷机教程]]></title>
-        <id>https://wherelse.cc/post/jing-dou-yun-v20-shua-ji-jiao-cheng/</id>
-        <link href="https://wherelse.cc/post/jing-dou-yun-v20-shua-ji-jiao-cheng/">
-        </link>
-        <updated>2019-12-20T13:16:55.000Z</updated>
-        <summary type="html"><![CDATA[<p>免拆刷机方法</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>免拆刷机方法</p>
-<!-- more -->
-<p>以下刷机方法主要来自恩山论坛和博客</p>
-<h2 id="免拆免劫持刷机">免拆免劫持刷机</h2>
-<b>
-<font color="#FF0000">
-注意：此部分免拆免劫持刷机内容更新于2019年12月20日，使用前请确认该方法仍有效，否则有变砖风险
-</b>
-</font >
-<ol>
-<li>在原厂固件的系统设置中进行固件更新，将固件更新到最新版本</li>
-<li>在最新的原厂固件中进行更新，选择bootloader解锁固件刷入(文件名<a href="https://github.com/wherelse/wherelse.github.io/tree/master/files/openwrt-ipq40xx-R9.11.22-unlock-p2w_r619ac-squashfs-nand-factory.bin">openwrt-ipq40xx-R9.11.22-unlock-p2w_r619ac-squashfs-nand-factory.bin</a>)刷入即可,第三方固件刷入完成。</li>
-<li>等3min左右,自动开机后登陆192.168.1.1或http://openwrt.lan 密码 password。</li>
-<li>winscp连接到路由器,将不死opboot(文件名<a href="https://github.com/wherelse/wherelse.github.io/tree/master/files/opboot-p2w-r619ac-flash-v1.0.9.bin">opboot-p2w-r619ac-flash-v1.0.9.bin</a>上传到/tmp目录下.</li>
-<li>通过SSH连接到到路由器，输入如下命令，完成opboot刷入</li>
-</ol>
-<pre><code class="language-shell">mtd -r write /tmp/opboot-p2w-r619ac-flash-v1.0.9.bin Bootloader
-</code></pre>
-<ol start="6">
-<li>确定完成后，断电，按住RESET键上电，大约10S左右，进入upboot</li>
-</ol>
-<p>第4步和第5步推荐使用mobaxterm软件，可以同时连接到SCP和SSH，效果如下图：<br>
-<img src="https://wherelse.cc/post-images/1576854424653.png" alt="" loading="lazy"></p>
-<blockquote>
-<p>来源：https://www.right.com.cn/forum/thread-1442821-1-1.html</p>
-</blockquote>
-<h2 id="opboot-升级方法说明">OpBoot 升级方法说明</h2>
-<p>竞斗云 2.0 的 NAND 闪存大小是 128 MB，但前期的 OpBoot 仅支持 64 MB 大小，相应的 OpenWrt 固件也是 64 MB 的，也就是说实际可用的空间仅 64 MB。自从 OpBoot 升级至 1.0.9 之后即可支持竞斗云 2.0 的 128 MB 的 NAND 闪存。如果你当前是1.0.8版本的OpBoot，可以通过一下方法更新。如果以后出更新版本的OpBoot，方法类似。</p>
-<h3 id="方法-1">方法 1</h3>
-<p>使用前面通过 scp 命令将 OpBoot 1.0.9 固件 ( opboot-p2w-r619ac-flash-v1.0.9.bin ) 上传至路由器的 /tmp 目录下，SSH登录到路由器的 shell 然后执行下面的命令刷入即可(事前 请先校验 文件的md5值是否匹配):</p>
-<pre><code class="language-shell">mtd -r write /tmp/opboot-p2w-r619ac-flash-v1.0.9.bin
-</code></pre>
-<h3 id="方法-2">方法 2</h3>
-<p>您也可以通过 OpBoot 内置的更新功能刷入 opboot-p2w-r619ac-nor-v1.0.9.img 。通过如下操作刷入：</p>
-<p>首先让路由器进入 OpBoot ，然后点击 OpBoot 的右上角的 『 高级功能 』 -&gt; 『 更新OpBoot 』 ，找到 opboot-p2w-r619ac-nor-v1.0.9.img 更新即可。</p>
-<b>
-<font color="#FF0000">
-！！！注意: 
-切勿混刷 opboot-p2w-r619ac-flash-v1.0.9.bin 和 opboot-p2w-r619ac-nor-v1.0.9.img，xxxflashxxx.bin 文件仅通过命令刷入，xxxnorxxx.img 那个则通过 OpBoot 内置的更新功能刷入。刷错会导致机器变砖
-</b>
-</font >
 ]]></content>
     </entry>
 </feed>

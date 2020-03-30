@@ -4,14 +4,14 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>竞斗云2.0硬改、硬件修复（MINI-PCIE、USB3.0） -
+<title>Docker下安装openwrt做旁路由 -
     Wherelse Blog</title>
 <link rel="shortcut icon" href="https://wherelse.cc/favicon.ico">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
 <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"> -->
 <link rel="stylesheet" href="https://wherelse.cc/media/css/tailwind.css">
 <link rel="stylesheet" href="https://wherelse.cc/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="竞斗云2.0硬改、硬件修复（MINI-PCIE、USB3.0） -
+<link rel="alternate" type="application/atom+xml" title="Docker下安装openwrt做旁路由 -
     Wherelse Blog - Atom Feed" href="https://wherelse.cc/atom.xml">
 
 
@@ -25,25 +25,28 @@
   </script>
     
 
-  <meta name="description" content="修复无法使用USB3.0，恢复MINI-PCIE功能
+  <meta name="description" content="Install openwrt under Docker for bypass router
 
-竞斗云2.0的硬件设计有一些缺陷，导致无法使用USB3.0以及内置的MINI-PCIE接口，需要对硬件进行一些修复才能正常使用其功能。TF卡只需要固件里有驱动就可以使用，没有硬件问题。..." />
-  <meta property="og:title" content="竞斗云2.0硬改、硬件修复（MINI-PCIE、USB3.0） - Wherelse Blog" />
-  <meta property="og:description" content="修复无法使用USB3.0，恢复MINI-PCIE功能
+前言
+我的斐讯N1 运行着armbian linux用作校园网的免流服务器，但是就做着一个功能，实在有点浪费，同时现在因为疫情迟迟没有开学，在家..." />
+  <meta property="og:title" content="Docker下安装openwrt做旁路由 - Wherelse Blog" />
+  <meta property="og:description" content="Install openwrt under Docker for bypass router
 
-竞斗云2.0的硬件设计有一些缺陷，导致无法使用USB3.0以及内置的MINI-PCIE接口，需要对硬件进行一些修复才能正常使用其功能。TF卡只需要固件里有驱动就可以使用，没有硬件问题。..." />
+前言
+我的斐讯N1 运行着armbian linux用作校园网的免流服务器，但是就做着一个功能，实在有点浪费，同时现在因为疫情迟迟没有开学，在家..." />
   <meta property="og:type" content="articles" />
-  <meta property="og:url" content="https://wherelse.cc/post/GDOCK-Repair-hardware-bug/" />
+  <meta property="og:url" content="https://wherelse.cc/post/Install-openwrt-under-Docker-for-bypass-router/" />
   <meta property="og:image"
     content="https://wherelse.cc/images/avatar.png" />
   <meta property="og:image:height" content="630" />
   <meta property="og:image:width" content="1200" />
-  <meta name="twitter:title" content="竞斗云2.0硬改、硬件修复（MINI-PCIE、USB3.0） - Wherelse Blog" />
-  <meta name="twitter:description" content="修复无法使用USB3.0，恢复MINI-PCIE功能
+  <meta name="twitter:title" content="Docker下安装openwrt做旁路由 - Wherelse Blog" />
+  <meta name="twitter:description" content="Install openwrt under Docker for bypass router
 
-竞斗云2.0的硬件设计有一些缺陷，导致无法使用USB3.0以及内置的MINI-PCIE接口，需要对硬件进行一些修复才能正常使用其功能。TF卡只需要固件里有驱动就可以使用，没有硬件问题。..." />
+前言
+我的斐讯N1 运行着armbian linux用作校园网的免流服务器，但是就做着一个功能，实在有点浪费，同时现在因为疫情迟迟没有开学，在家..." />
   <meta name="twitter:card" content="summary_large_image" />
-  <link rel="canonical" href="https://wherelse.cc/post/GDOCK-Repair-hardware-bug/" />
+  <link rel="canonical" href="https://wherelse.cc/post/Install-openwrt-under-Docker-for-bypass-router/" />
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css" />
@@ -65,45 +68,92 @@
       <div
         class="shadow-box bg-white dark:bg-gray-600 rounded-lg pt-16 md:pt-32 px-4 md:px-8 pb-8 animated fadeIn mb-8">
         <h1 class="text-5xl font-semibold leading-normal pb-8 mb-8 border-b-8 border-gray-700">
-          竞斗云2.0硬改、硬件修复（MINI-PCIE、USB3.0）
+          Docker下安装openwrt做旁路由
         </h1>
         
         <div class="mb-8 flex flex-wrap">
           <div class="text-gray-400 text-sm mr-4">
-            2020-03-03 · 2 min read
+            2020-03-31 · 4 min read
           </div>
           
-          <a href="https://wherelse.cc/tag/pzG81SEzw/"
+          <a href="https://wherelse.cc/tag/Hg2wOF7pj/"
             class="text-gray-700 text-sm border-b-2 border-dotted border-gray-200 hover:border-gray-600 transition-all duration-100 inline-flex mr-2">
             <i class="ri-hashtag"></i>
-            矿渣
+            网络
           </a>
           
         </div>
         <div class="markdown mb-8" v-pre>
-          <p>修复无法使用USB3.0，恢复MINI-PCIE功能</p>
+          <p>Install openwrt under Docker for bypass router</p>
 <!-- more -->
-<p>竞斗云2.0的硬件设计有一些缺陷，导致无法使用USB3.0以及内置的MINI-PCIE接口，需要对硬件进行一些修复才能正常使用其功能。TF卡只需要固件里有驱动就可以使用，没有硬件问题。</p>
-<h2 id="usb">USB</h2>
-<p>USB部分有两个电容点位被焊成了电阻，同时缺少部分供电，需要替换成电容，并补上供电的电阻。</p>
+<h2 id="前言">前言</h2>
+<p>我的斐讯N1 运行着armbian linux用作校园网的免流服务器，但是就做着一个功能，实在有点浪费，同时现在因为疫情迟迟没有开学，在家里科学上网查资料手机电脑都要开个科学客户端很是麻烦，就决定在斐讯N1上再安装一个Docker openwrt做旁路由网关。<br>
+自己配置好之后又指导着同学在贝壳云上安装成功，方法应该是通用于所以装有armbian-linux的服务器。网上的教程都或多或少有点问题，很多个教程看起来很麻烦，决定写下来方便自己以后再次配置。</p>
+<h2 id="配置">配置</h2>
 <ul>
-<li><code>C7</code>、<code>C8</code>在PCB上被焊接成了0欧电阻，需要替换成0.1uF（104）电容，封装为0402.</li>
-<li><code>R970</code>原本为空焊位，需要补上0欧电阻，或者直接短接。<br>
-修复后的USB就可以正常使用USB3.0设备了，但是USB3.0会对2.4G信号产生影响，在连接使用USB3.0设备的时候，2.4G信号会变差。</li>
+<li>为方便配置，最好使用root用户，若不是root用户则输入<code>su</code>进行切换。</li>
+<li>在命令中分别输入以下命令，安装Docker</li>
 </ul>
-<blockquote>
-<p>待补图</p>
-</blockquote>
-<h2 id="mini-pcie">MINI-PCIE</h2>
-<p>MINI-PCIE硬件部分缺少两个时钟信号线的连接，以及3.3V和5V的供电，其中时钟和3.3V供电一定需要补齐，5V供电则根据设备需要补上。</p>
+<pre><code class="language-shell">curl -fsSL https://get.docker.com -o get-docker.sh #获取安装脚本
+sh get-docker.sh –mirror Aliyun #使用阿里云源进行安装，加快安装速度
+</code></pre>
 <ul>
-<li><code>R436</code>、<code>R444</code>、<code>R489</code>补焊0欧电阻或者短接，恢复时钟信号和3.3V供电</li>
-<li><code>R443</code>、<code>R447</code>补焊0欧电阻或者短接，恢复5V供电（可选）<br>
-修复后的MINI-PCIE可以安装4G模块或者4x4 MIMO的无线网卡，亦或者是MINI-PCIE装SATA，扩展性很强。</li>
+<li>安装完Docker后，打开网卡的混杂模式：</li>
 </ul>
-<blockquote>
-<p>待补图</p>
-</blockquote>
+<pre><code class="language-shell">ip link set eth0 promisc on
+</code></pre>
+<ul>
+<li>给Docker创建网络，运行以下命令，其中<code>192.168.1.0</code>和<code>192.168.1.1</code>都要修改到自己的对应网段<code>192.168.x.0</code>和<code>192.168.x.1</code></li>
+</ul>
+<pre><code class="language-shell">docker network create -d macvlan --subnet=192.168.1.0/24 --gateway=192.168.1.1 -o parent=eth0 macnet
+</code></pre>
+<ul>
+<li>拉取openwrt镜像，这里我使用的是buddyfly的openwrt-aarch64，在docker hub找到的docker镜像，地址：<a href="https://hub.docker.com/r/buddyfly/openwrt-aarch64">buddyfly/openwrt-aarch64</a> ,以下配置基于这个docker镜像。</li>
+</ul>
+<pre><code class="language-shell">docker pull buddyfly/openwrt-aarch64
+</code></pre>
+<ul>
+<li>开启openwrt容器，并把这个容器命名为openwrt</li>
+</ul>
+<pre><code class="language-shell">docker run --name openwrt --restart always -d --network macnet --privileged buddyfly/openwrt-aarch64:latest
+</code></pre>
+<ul>
+<li>修改docker内的openwrt网络设置，首先输入：</li>
+</ul>
+<pre><code class="language-shell">docker exec -it openwrt /bin/bash
+</code></pre>
+<p>输入之后会进入docker容器内，修改网络设置<code>vi /etc/config/network</code><br>
+输入i开始编辑，编辑完成之后按ESC退出编辑，然后输入:wq（不要忘记冒号）回车保存，这里需要给容器内的openwrt指定静态地址，网关和dns，这些配置要和你家中的网络处于一个网段。<br>
+<img src="https://wherelse.cc/post-images/1585585461543.png" alt="" loading="lazy"><br>
+完成后按<code>Crtl+D</code>退出docker容器。</p>
+<ul>
+<li>重启docker容器，到这里openwrt已经安装好了：</li>
+</ul>
+<pre><code class="language-shell">docker restart openwrt
+</code></pre>
+<ul>
+<li>在浏览器输入刚刚配置的静态地址，进入openwrt的luci界面，我这个固件的密码是password。进入网络-接口-修改，进行配置。需要检查ip，子网掩码，ipv4网关以及dns是否配置正确。<br>
+<img src="https://wherelse.cc/post-images/1585585776463.png" alt="" loading="lazy"></li>
+</ul>
+<p><img src="https://wherelse.cc/post-images/1585585884206.png" alt="" loading="lazy"><br>
+选择忽略DHCP服务<br>
+<img src="https://wherelse.cc/post-images/1585585827430.png" alt="" loading="lazy"><br>
+然后保存应用。</p>
+<ul>
+<li>配置防火墙，在网络-防火墙-自定义规则添加以下命令后重启防火墙：</li>
+</ul>
+<pre><code class="language-shell">iptables -t nat -I POSTROUTING -o eth0 -j MASQUERADE 
+</code></pre>
+<p><img src="https://wherelse.cc/post-images/1585586056918.png" alt="" loading="lazy"><br>
+到这里，docker openwrt就全部配置完了。</p>
+<h2 id="使用">使用</h2>
+<p>旁路由网关的使用有两种方式</p>
+<ul>
+<li>一种是分设备配置网关，这样配置只影响修改过配置的设备，只有这些设备的流量走旁路由。</li>
+<li>另一种是将主路由的网关指向docker openwrt，家庭中所有网络的流量都走旁路由。</li>
+</ul>
+<p>第一种方式需要分设备配置，比较麻烦，第二种在修改时则会影响家中的网络访问，造成网络中断。我使用的是第一种方式，需要修改电脑或者手机的网关，将网关指向openwrt。<br>
+<img src="https://wherelse.cc/post-images/1585586611757.png" alt="" loading="lazy"></p>
 
         </div>
         <!-- Share to Twitter, Weibo, Telegram -->
@@ -126,7 +176,7 @@
         </div>
         <div class="text-center text-gray-300">
           
-          <span id="/post/GDOCK-Repair-hardware-bug/" class="leancloud_visitors views-counter meta-info" title="">
+          <span id="/post/Install-openwrt-under-Docker-for-bypass-router/" class="leancloud_visitors views-counter meta-info" title="">
             <!--<i class="iconfont icon--shujujilu"></i>-->
             <a class="text-center">📋阅读量:</a>
             <span class="leancloud-visitors-count"></span>
@@ -180,8 +230,9 @@ target="_blank">Wherelse. </a>All Right Reserved
         <ul class="markdownIt-TOC">
 <li>
 <ul>
-<li><a href="#usb">USB</a></li>
-<li><a href="#mini-pcie">MINI-PCIE</a></li>
+<li><a href="#%E5%89%8D%E8%A8%80">前言</a></li>
+<li><a href="#%E9%85%8D%E7%BD%AE">配置</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8">使用</a></li>
 </ul>
 </li>
 </ul>
