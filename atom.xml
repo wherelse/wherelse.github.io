@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://wherelse.cc</id>
     <title>Wherelse Blog</title>
-    <updated>2020-04-03T16:05:03.928Z</updated>
+    <updated>2020-04-05T07:24:33.015Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://wherelse.cc"/>
     <link rel="self" href="https://wherelse.cc/atom.xml"/>
@@ -10,6 +10,61 @@
     <logo>https://wherelse.cc/images/avatar.png</logo>
     <icon>https://wherelse.cc/favicon.ico</icon>
     <rights>All rights reserved 2020, Wherelse Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[一个自用的硬件测试小板]]></title>
+        <id>https://wherelse.cc/post/self-use-hardware-test-board/</id>
+        <link href="https://wherelse.cc/post/self-use-hardware-test-board/">
+        </link>
+        <updated>2020-04-05T07:07:55.000Z</updated>
+        <summary type="html"><![CDATA[<p>A self-use hardware test board</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>A self-use hardware test board</p>
+<!-- more -->
+<p>去年做的给自己和同学用于一些硬件设备或传感器测试的小测试板，这两天有空整理了一下，把硬件PCB工程和测试程序放到了github上。地址：<a href="https://github.com/wherelse/STM32F103-Coreboard">https://github.com/wherelse/STM32F103-Coreboard</a><br>
+测试板体积比较小（5cmx8cm）,内置了电池，可以使用TYPE-C进行数据传输和充电。屏幕，用户按键，蜂鸣器等一应俱全，而且引出了14个GPIO端口。引出IO PinMap：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">PB11</th>
+<th style="text-align:center">PB10</th>
+<th style="text-align:center">GND</th>
+<th style="text-align:center">3.3V</th>
+<th style="text-align:center">PB3</th>
+<th style="text-align:center">PB1</th>
+<th style="text-align:center">PB0</th>
+<th style="text-align:center">PA7</th>
+<th style="text-align:center">3.3V</th>
+<th style="text-align:center">DIO</th>
+<th style="text-align:center">CLK</th>
+<th style="text-align:center">GND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">GND</td>
+<td style="text-align:center">3.3V</td>
+<td style="text-align:center">PB4</td>
+<td style="text-align:center">PB5</td>
+<td style="text-align:center">PB6</td>
+<td style="text-align:center">PB7</td>
+<td style="text-align:center">PB8</td>
+<td style="text-align:center">PB9</td>
+<td style="text-align:center">PA1</td>
+<td style="text-align:center">PA2</td>
+<td style="text-align:center">3.3V</td>
+<td style="text-align:center">GND</td>
+</tr>
+</tbody>
+</table>
+<p>使用PA0端口作为内置电池的电压采样输入端口，采样分压为1/2，用于获取电压状态。<br>
+之前主要使用这个测试板测试光线传感器，想做个测光表，大概弄的差不多了又不想做了就弃坑了🙄那个程序也基本成了这个板子的测试程序，后面估计有动力会把坑填上吧。<br>
+板子的3D图和实物图：</p>
+<figure data-type="image" tabindex="1"><img src="https://wherelse.cc/post-images/1586070593531.png" alt="" width="200" height="400" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://wherelse.cc/post-images/1586070598074.jpg" alt="" width="200" height="400" loading="lazy"></figure>
+<figure data-type="image" tabindex="3"><img src="https://wherelse.cc/post-images/1586070600852.jpg" alt="" width="200" height="400" loading="lazy"></figure>
+<figure data-type="image" tabindex="4"><img src="https://wherelse.cc/post-images/1586070604331.jpg" alt="" width="200" height="400" loading="lazy"></figure>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Docker下安装openwrt做旁路由]]></title>
         <id>https://wherelse.cc/post/Install-openwrt-under-Docker-for-bypass-router/</id>
@@ -984,34 +1039,6 @@ s-65,47,-65,47z M834 80H400000v40H845z'/></svg></span></span></span><span class=
 </ol>
 <h2 id="最后">最后</h2>
 <p>使用Gridea+gridea-theme-webstack主题配合Github Pages搭建自己的导航站变的十分方便，同时也可以像普通博客一样通过gridea部署到coding以及sftp中，适应性强且轻量化。也欢迎到我的导航页参观：<a href="https://navigation.wherelse.cc">navigation.wherelse.cc</a></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[在Linux命令环境下使用PPPOE拨号上网]]></title>
-        <id>https://wherelse.cc/post/use-the-pppoe-in-linux-environment/</id>
-        <link href="https://wherelse.cc/post/use-the-pppoe-in-linux-environment/">
-        </link>
-        <updated>2020-01-06T12:46:19.000Z</updated>
-        <summary type="html"><![CDATA[<p>Use PPPOE dial-up Internet access under Linux terminal environment</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>Use PPPOE dial-up Internet access under Linux terminal environment</p>
-<!-- more -->
-<p>首先安装拨号软件</p>
-<pre><code class="language-shell">sudo apt-get install pppoeconf
-</code></pre>
-<p>打开终端配置上网信息，在这里你需要配置上网的账户和密码信息：</p>
-<pre><code class="language-shell">sudo pppoeconf
-</code></pre>
-<p>联网命令</p>
-<pre><code class="language-shell">sudo pon dsl-provider
-</code></pre>
-<p>断网</p>
-<pre><code class="language-shell">sudo poff
-</code></pre>
-<p>查看pppoe日志：</p>
-<pre><code class="language-shell">plog
-</code></pre>
-<p>开启ipv6支持，在<code>/etc/ppp/options</code>文件最后添加<code>ipv6 ,</code> 注意，在ipv6和“，”之间有一个空格</p>
 ]]></content>
     </entry>
 </feed>
