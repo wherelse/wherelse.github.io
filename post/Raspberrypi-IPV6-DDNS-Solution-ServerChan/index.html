@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>树莓派IPV6 DDNS解决方案，支持Server酱版本 -
+    Wherelse Blog</title>
+<meta name="ThemeName" content="Gridea Theme Rocky by EryouHao" />
+<meta name="referrer" content="always" />
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<link rel="manifest" href="/site.webmanifest">
+<!-- <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet preload" as="style"> -->
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"> -->
+<!-- <link rel="stylesheet" href="https://cdn.staticfile.org/animate.css/3.7.2/animate.min.css" as="style" /> -->
+<link href="/media/css/remixicon.css" rel="stylesheet" as="style">
+<link rel="stylesheet" href="/media/css/tailwind.css">
+<link rel="stylesheet" href="/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="树莓派IPV6 DDNS解决方案，支持Server酱版本 -
+    Wherelse Blog - Atom Feed" href="/atom.xml">
+
+  
+  <script defer src="https://www.googletagmanager.com/gtag/js?id=G-4449R7TQN5"></script>
+  <script>
+  var host = window.location.hostname;
+  if(host != "localhost")
+  {
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4449R7TQN5');
+  }
+  </script>
+    
+
+  <!-- <title name="树莓派IPV6 DDNS解决方案，支持Server酱版本"> </title> -->
+  <meta name="socialText" content="记录学习与折腾，网络，博客，嵌入式相关；Record learning and toss, network, blog, embedded related" />
+  <meta name="description" content="Raspberry pi IPV6 DDNS Solution,support server酱
+
+背景
+随着IPV6的逐渐普及，国内各个地方的宽带都开始分配IPV6地址，不同于IPV4很多分配内网地址的情况，IPV6一般分配的都是公网地址，..." />
+  <meta name="referrer" content="always" />
+  <link rel="canonical" href="https://wherelse.cc/post/Raspberrypi-IPV6-DDNS-Solution-ServerChan/" />
+  <link rel="preconnect" href="https://cdn.staticfile.org" />
+  <script src="https://wherelse.cc/media/scripts/photoswipe.min.js"></script>
+  <script src="https://wherelse.cc/media/scripts/photoswipe-ui-default.min.js"></script>
+  <link rel="stylesheet" href="https://wherelse.cc/media/css/photoswipe.css" as="style" />
+  <link rel="stylesheet" href="https://wherelse.cc/media/css/default-skin.css" as="style" />
+  <!-- Code Highlight -->
+  
+  <script src="https://wherelse.cc/media/prism.js"></script>
+  <script>
+    Prism.highlightAll();
+  </script>
+  
+  
+  <link rel="stylesheet preload"
+    href="https://wherelse.cc/media/css/prism-github.css"
+    as="style" />
+  
+</head>
+
+<body>
+  <div class="antialiased flex flex-col min-h-screen" id="app">
+    <a href="https://wherelse.cc"
+      class="fixed top-0 left-0 mt-4 bg-black text-white dark:text-gray-700 dark:bg-yellow-50 dark:hover:bg-black dark:hover:text-white inline-flex p-2 pl-8 hover:text-gray-700 hover:bg-yellow-50 font-bold z-10 transition-fast animated fadeInLeft">
+      Wherelse Blog
+    </a>
+    <div class="max-w-4xl w-full mx-auto">
+      <div
+        class="shadow-box bg-white dark:bg-gray-600 rounded-lg pt-32 md:pt-32 px-4 md:px-8 pb-8 animated fadeIn mb-8">
+        <h1 class="text-5xl font-semibold leading-normal pb-8 mb-8 border-b-8 border-gray-700">
+          树莓派IPV6 DDNS解决方案，支持Server酱版本
+        </h1>
+        
+        <div class="mb-8 flex flex-wrap">
+          <div class="text-gray-400 text-sm mr-4">
+            2020-01-31 · 5 min read
+          </div>
+          
+          <a href="https://wherelse.cc/tag/Hg2wOF7pj/"
+            class="text-gray-700 text-sm border-b-2 border-dotted border-gray-200 hover:border-gray-600 transition-all duration-100 inline-flex mr-2">
+            <i class="ri-hashtag"></i>
+            网络
+          </a>
+          
+        </div>
+        <div class="markdown mb-16" v-pre>
+          <p>Raspberry pi IPV6 DDNS Solution,support server酱</p>
+<!-- more -->
+<h2 id="背景">背景</h2>
+<p>随着IPV6的逐渐普及，国内各个地方的宽带都开始分配IPV6地址，不同于IPV4很多分配内网地址的情况，IPV6一般分配的都是公网地址，这就为树莓派以及类似这样的设备联网提供了很大的方便。不过，分配的IP地址一般都会以一定的周期变动，一般是一天左右。</p>
+<p>IPV6地址又相当的长，通过输入访问变得难以实现，这个时候在树莓派上搭建一个动态域名解析服务（DDNS）就很有必要。在这里我们使用CloudFlare的API接口来实现动态域名解析。</p>
+<p>Server酱是「Server酱」，英文名「ServerChan」，是从服务器推报警和日志到手机的工具，在本脚本中可以推送服务器的IP变动信息，使用前需要在网站使用github登录获得一个SCKEY，网站地址：<a href="https://sc.ftqq.com/3.version">Server酱</a></p>
+<h2 id="使用脚本前需要做的">使用脚本前需要做的</h2>
+<ol>
+<li>一台可以联网的树莓派设备（其他Linux系统设备也是可以的）</li>
+<li>注册一个域名，免费的或者收费的都可以（国内的域名需要备案）</li>
+<li>注册一个CloudFlare账户 ( www.cloudflare.com ), 并将需要使用的域名添加到账户上，完成配置后根据需要添加服务设备的IPV6地址添加一个AAAA解析，并设为仅进行DNS解析</li>
+<li>查询CloudFlare账户的Globel ID并记录下来，用于后续配置</li>
+</ol>
+<h2 id="使用方法">使用方法</h2>
+<p>打开命令窗口，执行以下程序：</p>
+<pre><code class="language-shell">wget https://raw.githubusercontent.com/wherelse/cloudflare-ddns-script/ServerPush/cloudflare-ddns.sh
+sudo chmod +x /home/username/cloudflare-ddns.sh #目录根据实际用户等进行更改，username为用户名
+</code></pre>
+<p>需要对脚本内的个人配置信息进行更改，目录和上一条命令保持一致</p>
+<pre><code class="language-shell">sudo nano /home/username/cloudflare-ddns.sh
+#或
+sudo vi /home/username/cloudflare-ddns.sh
+</code></pre>
+<p>找到如下内容进行更改</p>
+<pre><code class="language-shell">auth_email=&quot;xxxxxxx@xxxx.com&quot;  #你的CloudFlare注册账户邮箱
+auth_key=&quot;*****************&quot;   #你的cloudflare账户Globel ID 
+zone_name=&quot;Your main Domain&quot;   #你的域名
+record_name=&quot;Your Full Domain&quot; #完整域名
+
+ip_index=&quot;local&quot;   #域名获取方式，本地或者网络         
+#use &quot;internet&quot; or &quot;local&quot;,使用本地方式还是网络方式获取地址
+eth_card=&quot;eth0&quot;    #使用本地获取方式时绑定的网卡，使用网络方式可不更改         
+#使用本地方式获取ip绑定的网卡，默认为eth0，仅本地方式有效
+</code></pre>
+<p>以任意一个域名为例，ipv6.google.com 这个域名，zone_name为 <code>google.com</code> 和record_name则为 <code>ipv6.google.com</code> 。然后修改代码中的push函数，填入SCKEY信息，title和content内容可以更改，title为推送的标题，content为推送的内容：</p>
+<pre><code class="language-shell">#server酱推送函数
+Pushsend(){
+    key=xxxxxxxxxxxxxxxxxxxxxxxx #server酱key
+    title=IPV6地址变动
+    content=IPV6地址变动到$ip
+    curl &quot;http://sc.ftqq.com/$key.send?text=$title&amp;desp=$content&quot; &gt;/dev/null 2&gt;&amp;1 &amp;
+}
+</code></pre>
+<p>修改完成后，保存并退出。</p>
+<p>在命令行中输入以下内容运行脚本：</p>
+<pre><code class="language-shell">bash /home/username/cloudflare-ddns.sh
+</code></pre>
+<p>如果提示 <code>IP changed to: xxxxx</code> 或 <code>IP has not changed.</code> 则说明配置成功了</p>
+<p><strong>定时运行脚本</strong><br>
+为了实现动态域名解析，必须让脚本保持运行以获取IP状态，这里使用系统crontab定时<br>
+在命令行输入：<code>crontab -e</code> 后在文件最后添加以下内容</p>
+<pre><code class="language-shell">*/5 * * * *  /home/username/cloudflare-ddns.sh &gt;/dev/null 2&gt;&amp;1
+</code></pre>
+<p>更改完成后保存并退出。<br>
+在这里将脚本设置为每五分钟执行一次 <code>cloudflare-ddns.sh</code> 脚本，就可以实现动态域名解析了。</p>
+<h2 id="结束">结束</h2>
+<p>该脚本不仅适用于树莓派，在其他Linux服务器上也适用，使用时都需要根据自己的实际情况更改以上配置时使用的路径</p>
+<h2 id="faq">FAQ</h2>
+<p>错误日志为以下内容时：<br>
+<code>API UPDATE FAILED. DUMPING RESULTS:</code><br>
+<code>{&quot;success&quot;:false,&quot;errors&quot;:[{&quot;code&quot;:7001,&quot;message&quot;:&quot;Method PUT not available for that URI.&quot;}],&quot;messages&quot;:[],&quot;result&quot;:null}</code><br>
+删除脚本运行目录下的<code>cloudflare.ids</code>文件，然后再次尝试运行。</p>
+
+        </div>
+
+        <!-- copyright -->
+        <div class="copyright">
+          <div class="container">
+            <p><small class="text-gray-400">
+                The copyright of the articles on this website is owned by me. Without consent, it is not allowed to copy without permission. Reasonable reprints are welcome to indicate the source of the quotation. Please leave a message for reprinting pictures. The content of the article is only used for technical research and exploration, and shall not be used for illegal purposes.
+             </small></p>
+          </div>
+        </div>
+
+        <div class="text-center text-gray-300">
+          
+          <span id="/post/Raspberrypi-IPV6-DDNS-Solution-ServerChan/" class="leancloud_visitors views-counter meta-info">
+            <a class="text-center">📋阅读量:</a>
+            <span id="twikoo_visitors">0</span>
+          </span>
+          
+        </div>
+      </div>
+
+      
+
+      
+        <button type="button" class="collapsible">
+          <i class="ri-message-2-line"></i>
+        </button>
+        <div class="tcomment rounded-lg px-4 py-4">
+          <div id="tcomment"></div>
+        </div>  
+      
+
+      <footer class="py-12 text-center px-4 md:px-0" v-pre>
+  <a href="/atom.xml" target="_blank">RSS
+</a> | Powered by <a href="https://github.com/getgridea/gridea" 
+target="_blank">Gridea</a> &nbsp;&nbsp;
+<br>
+©2020 Wherelse All Right Reserved 
+</footer>
+
+    </div>
+
+
+    <!-- TOC Container -->
+    <div id="toc"
+      class="fixed right-0 bottom-0 mb-20 mr-6 shadow w-12 h-12 rounded-lg flex justify-center items-center z-10 cursor-pointer bg-white dark:bg-gray-500 dark:text-gray-200 hover:shadow-lg transition-all animated fadeInRight"
+      @click="showToc = true">
+      <i class="ri-menu-line font-bold"></i>
+    </div>
+
+    <div
+      class="fixed right-0 top-0 bottom-0 overflow-y-auto w-64 rounded-lg p-4 m-4  shadow-md bg-white dark:bg-gray-800 p-4 border-l border-gray-100 dark:border-gray-600 z-10 transition-fast"
+      :class="{ '-mr-64': !showToc }">
+      <div class="flex mb-4 justify-end">
+        <div
+          class="w-8 h-8 inline-flex justify-center items-center rounded-full cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-fast"
+          @click="showToc = false">
+          <i class="ri-close-circle-fill"></i>
+        </div>
+      </div>
+      <div class="post-toc-container"><ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E8%83%8C%E6%99%AF">背景</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8%E8%84%9A%E6%9C%AC%E5%89%8D%E9%9C%80%E8%A6%81%E5%81%9A%E7%9A%84">使用脚本前需要做的</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95">使用方法</a></li>
+<li><a href="#%E7%BB%93%E6%9D%9F">结束</a></li>
+<li><a href="#faq">FAQ</a></li>
+</ul>
+</li>
+</ul>
+</div>
+    </div>
+
+    <!-- Back to top -->
+    <div
+      class="fixed right-0 bottom-0 mb-4 mr-6 shadow w-12 h-12 rounded-lg flex justify-center items-center z-10 cursor-pointer bg-white hover:shadow-lg transition-all dark:bg-gray-500 dark:text-gray-200"
+      @click="backToUp" v-show="scrolled">
+      <i class="ri-arrow-up-circle-fill"></i>
+    </div>
+  </div>
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+  <!-- Background of PhotoSwipe. 
+        It's a separate element as animating opacity is faster than rgba(). -->
+  <div class="pswp__bg">
+  </div>
+  <!-- Slides wrapper with overflow:hidden. -->
+  <div class="pswp__scroll-wrap">
+    <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+    <div class="pswp__container">
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+    </div>
+    <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+    <div class="pswp__ui pswp__ui--hidden">
+      <div class="pswp__top-bar">
+        <!--  Controls are self-explanatory. Order can be changed. -->
+        <div class="pswp__counter">
+        </div>
+        <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+        <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+        <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+        <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+        <!-- element will get class pswp__preloader--active when preloader is running -->
+        <div class="pswp__preloader">
+          <div class="pswp__preloader__icn">
+            <div class="pswp__preloader__cut">
+              <div class="pswp__preloader__donut">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+        <div class="pswp__share-tooltip">
+        </div>
+      </div>
+      <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+      </button>
+      <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+      </button>
+      <div class="pswp__caption">
+        <div class="pswp__caption__center">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>-->
+  <script src="https://wherelse.cc/media/scripts/vue.min.js"></script>
+  <script src="https://wherelse.cc/media/scripts/main.js"></script>
+
+  <!--根据内容动态加载-->
+  <script type="text/javascript">
+    window.onload = function () {
+      //根据内容动态加载mermiad
+      if (document.getElementsByClassName("language-mermaid").length != 0) {
+        console.log("find mermaid")
+        for (let x of document.getElementsByClassName("language-mermaid")) {
+          if (x.nodeName == "CODE") {
+            let m = document.createElement("div");
+            m.classList.add("mermaid");
+            m.textContent = x.textContent;
+            x.parentNode.insertAdjacentElement("beforebegin", m);
+          }
+        }
+        let script = document.createElement('script');
+        defer = "defer";
+        script.src =
+          "https://wherelse.cc/media/scripts/mermaid.min.js";
+        document.body.append(script);
+        script.onload = function () {
+          mermaid.initialize({
+            startOnLoad: false
+          });
+          mermaid.init();
+          console.log("mermaid init done");
+        }
+      }
+
+      //bilibili 视频支持
+      var content = document.getElementsByClassName("language-bilibili")[0];
+      if (content != null) {
+        var m = document.createElement("div");
+        m.classList.add("bilibili-video");
+        m.innerHTML = content.textContent;
+        content.parentNode.insertAdjacentElement("beforeend", m);
+      }
+      //katex自适应加载
+      if (document.getElementsByClassName("katex").length != 0) {
+        let script = document.createElement('script');
+        script.defer = "defer"
+        script.src =
+          "https://wherelse.cc/media/scripts/katex.min.js";
+        document.body.append(script);
+        script = document.createElement('script');
+        script.defer = "defer"
+        script.src =
+          "https://wherelse.cc/media/scripts/copy-tex.min.js";
+        document.body.append(script);
+        let link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.defer = "defer"
+        link.href =
+          "https://wherelse.cc/media/css/katex.min.css";
+        document.body.append(link);
+        link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.defer = "defer"
+        link.href =
+          "https://wherelse.cc/media/css/copy-tex.css";
+        document.body.append(link);
+      }
+
+      script = document.createElement('script');
+      script.defer = "defer"
+      script.src =
+        "https://cdn.staticfile.org/twikoo/1.6.7/twikoo.all.min.js";
+      document.body.append(script);
+      script.onload = function () {
+        let scripts = document.createElement('script');
+        scripts.append(document.createTextNode(
+          " twikoo.init({envId: \"https://twikoo.vlieo.com\",el: \"#tcomment\",});"));
+        var parentDiv = document.getElementById("toc").parentNode;
+        var sp = document.getElementById("toc");
+        parentDiv.insertBefore(scripts, sp);
+      }
+    }
+  </script>
+  <script>
+    comment_collapse();
+  </script>
+
+ <script>
+    //拿到预览框架，也就是上面的html代码
+    var pswpElement = document.querySelectorAll(".pswp")[0];
+    //定义图片数组变量
+    var imgitems;
+    /**
+     * 用于显示预览界面
+     * @param index 图片数组下标
+     */
+    function viewImg(index) {
+      //其它选项这里不做过多阐述，详情见官网
+      var pswpoptions = {
+        index: parseInt(index, 10), // 开始幻灯片索引。0是第一张幻灯片。必须是整数，而不是字符串。
+        bgOpacity: 0.7, // 背景透明度，0-1
+        maxSpreadZoom: 3, // 缩放级别，不要太大
+      };
+      //初始化并打开PhotoSwipe，pswpElement对应上面预览框架，PhotoSwipeUI_Default为皮肤，imgitems为图片数组，pswpoptions为选项
+      var gallery = new PhotoSwipe(
+        pswpElement,
+        PhotoSwipeUI_Default,
+        imgitems,
+        pswpoptions
+      );
+      gallery.init();
+    }
+    /**
+     * 用于添加图片点击事件
+     * @param img 图片元素
+     * @param index 所属下标（在imgitems中的位置）
+     */
+    function addImgClick(img, index) {
+      img.onclick = function () {
+        viewImg(index);
+      };
+    }
+    /**
+     * 轮询所有图片，获取src、width、height等数据，加入imgitems，并给图片元素添加事件
+     * 最好在onload中执行该方法，本站因放在最底部，所以直接初始化
+     * 异步加载图片可在图片元素创建完成后调用此方法
+     */
+    function initImg() {
+      //重置图片数组
+      imgitems = [];
+      //查找class:markdown 下的所有img元素并遍历
+      var imgs = document.querySelectorAll(".markdown img");
+      for (var i = 0; i < imgs.length; i++) {
+        var img = imgs[i];
+        //本站相册初始为loading图片，真实图片放在data-src
+        var ds = img.getAttribute("src");
+        //创建image对象，用于获取图片宽高
+        var imgtemp = new Image();
+        //判断是否存在data-src
+        if (ds != null && ds.length > 0) {
+          imgtemp.src = ds;
+        } else {
+          imgtemp.src = img.src;
+        }
+        //判断是否存在缓存
+        if (imgtemp.complete) {
+          var imgobj = {
+            src: imgtemp.src,
+            w: imgtemp.width,
+            h: imgtemp.height,
+          };
+          imgitems[i] = imgobj;
+          addImgClick(img, i);
+        } else {
+          // console.log("进来了2");
+          imgtemp.index = i;
+          imgtemp.img = img;
+          imgtemp.onload = function () {
+            var imgobj = {
+              src: this.src,
+              w: this.width,
+              h: this.height,
+            };
+            //不要使用push，因为onload前后顺序会不同
+            imgitems[this.index] = imgobj;
+            //添加点击事件
+            addImgClick(this.img, this.index);
+          };
+        }
+      }
+    }
+    //初始化
+    initImg();
+  </script>
+</body>
+
+</html>

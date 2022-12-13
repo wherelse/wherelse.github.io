@@ -1,0 +1,611 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://wherelse.cc</id>
+    <title>Wherelse Blog</title>
+    <updated>2022-12-13T12:57:52.921Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://wherelse.cc"/>
+    <link rel="self" href="https://wherelse.cc/atom.xml"/>
+    <subtitle>Everything always needs to be studied to be understood</subtitle>
+    <logo>https://wherelse.cc/images/avatar.png</logo>
+    <icon>https://wherelse.cc/favicon.ico</icon>
+    <rights>All rights reserved 2022, Wherelse Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[FreshRSS Half Months First Experience]]></title>
+        <id>https://wherelse.cc/post/freshrss-half-months-first-experience/</id>
+        <link href="https://wherelse.cc/post/freshrss-half-months-first-experience/">
+        </link>
+        <updated>2022-10-23T14:27:16.000Z</updated>
+        <content type="html"><![CDATA[<p>RSS is a long-established way of reading, but it's gradually declining, and now that recommendation algorithms are the norm, it's becoming difficult to get back to the basics of RSS subscriptions. In the domestic Internet environment, each platform is constantly pursuing private domain traffic, resulting in a large amount of quality content being bound within a small environment, out of reach of many people. In this environment, why did I start to try RSS?</p>
+<p>First is the RSS way of reading, reading environment is pure, not disturbed by other factors, also will not be like the cell phone APP to see a thing when looking at the distraction by other things, and keep brushing, can effectively improve the reading efficiency and memory depth. The second is the use of RSS way to read, the content is completely in accordance with their own preferences to add, at the same time because of its regular update state, will not be wrong unread content, like the video of B station, some like watching the video, temporarily no time to watch, will be a large number of other videos flooded down, and then forgotten, and RSS reader support has read unread filtering, to avoid content omission. Lastly, I think RSS is the best way to read blog posts and public articles. Individual independent blogs and publics have high uncertainty about the update time and period, so using RSS can efficiently read new blog posts and not miss them.</p>
+<p>After deciding to start using RSS, after some screening, I finally chose FreshRSS, which is simple to build, easy to build using Docker, while the interface is more modern and at the same time fully functional. FreshRSS also supports multiple users, so if you want an account to experience it, you can leave a message and I can send you an account to experience it. In half a month of use, the biggest feeling is still the immersive reading experience, you can focus on reading the content of the article, greatly improving the reading experience.</p>
+<p>However, there are some disadvantages.</p>
+<ol>
+<li>because of the traffic, many sites do not support RSS feeds, and can not find a subscription source.</li>
+<li>quality subscription sources/websites take time to find, which is somewhat time-consuming and difficult to obtain widely.</li>
+<li>There are no good domestic RSS subscription services, and foreign services are difficult to access, so you must build and maintain your own if you want to use them.</li>
+</ol>
+<p>Finally, although RSS is becoming more and more niche, but there are still many people love this way of reading, will certainly always exist, if you see this article, also feel like, welcome to join. Also recommended are a few ways to get RSS feeds.</p>
+<ol>
+<li><a href="https://feeddd.org/">Feeded Free RSS Feed</a></li>
+<li><a href="https://rss-source.com/">RSS Source | RSS feed recommendations </a></li>
+<li>RSSHub</li>
+</ol>
+<p>Translated with www.DeepL.com/Translator (free version)</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Invisible fiber optics for hidden cabling]]></title>
+        <id>https://wherelse.cc/post/invisible-fiber-for-hidden-wiring/</id>
+        <link href="https://wherelse.cc/post/invisible-fiber-for-hidden-wiring/">
+        </link>
+        <updated>2022-09-28T12:50:52.000Z</updated>
+        <content type="html"><![CDATA[<p>After graduating and returning home, my family has lived in a house for many years, and there was no network cable before. Now I can only rely on wifi to access the computer at home. Normal web browsing is definitely no problem, but if you want to play some games, wireless The stability of the network is really unsatisfactory. There will always be delays and jitters, which make the game become stuck. So how to get wired internet in my own room was on the agenda.</p>
+<p>The easiest way is definitely to pull a network cable directly from the router to the room, but the network cable is relatively thick, and the exposed line will be particularly obvious, which is ugly, and the position of the door of the room will affect the normal closing of the door. The cost is about the price of a 10m network cable, about 30 yuan.</p>
+<p>The second method is to use optical fiber with optical fiber transceiver. The optical fiber is much thinner than the network cable, and the invisible optical fiber is not only thin, but also transparent in color. The price of optical fiber is cheap, less than 20 yuan, but the optical fiber transceiver is expensive. A side + B side need 100+RMB.</p>
+<p>After weighing, I still chose the more expensive but better fiber + fiber optic transceiver solution.</p>
+<p>Invisible optical fiber 10m, Taobao 18 yuan free shipping, fiber optic transceiver small yellow croaker brand new 116 yuan, single network port A end + 4 network port B end, a total cost of 134 yuan. After receiving the goods, run along the baseboards and corners, unless you stare very closely, otherwise you won't see it at all, and the effect is very nice. The network cables on both sides were connected, and I tried to play a game, and it was silky smooth, and there was no network lag at all.</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[trilium notes, the note software that suits me at the moment]]></title>
+        <id>https://wherelse.cc/post/trilium-notes-the-note-software-that-suits-me-at-the-moment/</id>
+        <link href="https://wherelse.cc/post/trilium-notes-the-note-software-that-suits-me-at-the-moment/">
+        </link>
+        <updated>2022-09-07T12:29:04.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="personal-feeling">Personal feeling</h2>
+<p>I found this note/knowledge base software when I was searching for what services were running on everyone's servers, and then searched for relevant information, and it seemed to suit my appetite. Why is it suitable for me at the moment, because I am not sure whether my needs will change in the future, but it basically meets my needs at the moment. After all, there is only the most suitable, not the best.<br>
+I think there are mainly the following advantages:</p>
+<ol>
+<li>Natively supports various commonly used functions such as formulas, tables, mermaid diagrams, etc., and the rich text editor also supports markdown syntax.</li>
+<li>The tree-like multi-layer nested note structure is extremely convenient for notes, and supports references, links, etc. between notes. The native image management based on the database does not have a lot of troublesome problems in processing images like markdown-based software. (markdown is good anywhere, but the pictures are really a headache)</li>
+<li>Supports local use and server deployment, natively supports multi-terminal synchronization, and also supports direct use on the browser side, which makes it easy to use even when the company computer cannot install software at will, which directly adds points to me.</li>
+</ol>
+<h2 id="install-and-deploy">Install and deploy</h2>
+<p>Tilium does not officially support Chinese, but some domestic developers have provided a Chinese version: <a href="https://github.com/Nriver/trilium-translation">https://github.com/Nriver/trilium-translation</a><br>
+At the same time, a docker image is also provided, which can be deployed conveniently. For details, see: [https://hub.docker.com/r/nriver/trilium-cn](https://hub.docker.com/r/nriver/trilium -cn)</p>
+<p>Here I use the command to deploy the docker image directly.</p>
+<blockquote>
+<p>(Docker installation can refer to: <a href="https://yeasy.gitbook.io/docker_practice/install">https://yeasy.gitbook.io/docker_practice/install</a>):</p>
+</blockquote>
+<p>First pull the image:</p>
+<pre><code class="language-shell">docker pull nriver/trilium-cn
+</code></pre>
+<p>Run the mirror:</p>
+<pre><code class="language-shell">docker run -d --name trilium-server \
+     --rm \
+     -p 8080:8080 \
+     -v /home/trilium-data:/root/trilium-data \
+     -e TRILIUM_DATA_DIR=/root/trilium-data \
+     nriver/trilium-cn
+
+     % port, the data path can be modified as needed
+</code></pre>
+<p>In this way, it should be accessed directly through <code>address: port</code>. I also configured reverse proxy and https with caddy, which is convenient to use. The relevant configuration is also placed here for reference. For the installation and use of caddy, please refer to the article: with Hosting of Static Blogs](/post/Caddy2-installation-hosting-of-static-blogs):</p>
+<pre><code class="language-caddyfile">(TLS_CONFIG) {
+     # TLS config generated using https://mozilla.github.io/server-side-tls/ssl-config-generator/, SSL Labs rated A+
+     protocolstls1.2tls1.3
+    
+}
+
+# Refer to the Caddy docs for more information:
+# https://caddyserver.com/docs/caddyfile
+(LOG) {
+     log {
+         output file &quot;{args.0}&quot; {
+                 roll_size 500MiB
+                 roll_local_time
+                 roll_keep 20
+                 roll_keep_for 30d
+         }
+     }
+}
+
+
+(HSTS) {
+     # HSTS (63072000 seconds)
+     header / Strict-Transport-Security &quot;max-age=63072000&quot;
+}
+
+(ERROR_HANDLE) {
+         handle_errors {
+                 @404 {
+                         expression {http.error.status_code} == 404
+                 }
+                 handle @404 {
+                         rewrite * /404.html
+                         file_server
+                 }
+         }
+}
+
+(GENERAL_CONFIG) {
+         tls xxx@xxx.com {
+             import TLS_CONFIG
+         }
+         #HSTS
+         import HSTS
+         # compression support
+         encode zstd gzip
+         # error handling
+         import ERROR_HANDLE
+}
+
+# globe config
+{
+         servers: 443 {
+                 protocol {
+                                 experimental_http3
+                 }
+         }
+}
+trilium.xxx.com {
+         reverse_proxy {
+                 to localhost:8080
+                 header_up X-Real-IP {remote_host}
+         }
+          header / {
+          # Disable rendering of sites inside frames (clickjacking protection)}
+          X-Frame-Options &quot;DENY&quot;
+          # Prevent indexing by search engines (optional) # Introduce other specific site configuration
+          X-Robots-Tag &quot;none&quot;
+          # server name removed
+          -Server
+         }
+          import LOG &quot;/home/database/logs/trilium.log&quot;
+          import GENERAL_CONFIG
+}
+
+import /etc/caddy/*.caddy
+
+</code></pre>
+<h2 id="postscript">Postscript</h2>
+<ol>
+<li>Diary function: One-click to generate the diary notes of the day, which is very suitable as a diary application or work record.</li>
+<li>Webpage clipping: Install a chrome extension to realize one-click webpage clipping. It supports two ways of clipping pictures and webpage content directly. Recording artifact, chrome extension: [Trilium Web Clipper](https://chrome. google.com/webstore/detail/trilium-web-clipper/dfhgmnfclbebfobmblelddiejjcijbjm)</li>
+<li>Note cloning function: You can clone a note in another location for easy viewing and organization. You can also use this function to clone the official sample script and use it directly.</li>
+<li>One-click sharing. If server deployment is used, it supports one-click generation of the page link you want to share, which is convenient for sharing, and you can customize the css style of the sub-item page.</li>
+</ol>
+<h2 id="skills">skills</h2>
+<p>Use the #clipperInbox attribute to implement clipping and archiving of web pages to a specified location<br>
+Use the #sortDirection=desc or #sortDirection=asc attribute to achieve ascending or descending control within the folder</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Password manager bitwarden service setup]]></title>
+        <id>https://wherelse.cc/post/password-manager-bitwarden-service-setup/</id>
+        <link href="https://wherelse.cc/post/password-manager-bitwarden-service-setup/">
+        </link>
+        <updated>2022-08-14T01:42:59.000Z</updated>
+        <content type="html"><![CDATA[<p>Bitwarden supports self-hosting and official website hosting. The official website service server is located outside the country, and the access speed is relatively slow. Here, choose self-hosting. Vaultwarden is an open source implementation of bitwarden server, formerly known as bitwarden_rs.</p>
+<h2 id="deployment">deployment</h2>
+<p>Pull the vaultwarden image from docker hub</p>
+<pre><code class="language-bash">docker pull vaultwarden/server
+</code></pre>
+<p>Create a folder for vaultwarden to store vaultwarden data, including password databases, etc. Then run the mirror.</p>
+<pre><code class="language-bash">mkdir /data/bitwarden
+docker run -d \
+             --name vaultwarden \
+             -p 8192:80 \
+             -p 3012:3012 \
+             -e SIGNUPS_ALLOWED=true \
+             -e WEB_VAULT_ENABLED=true \
+             -e DOMAIN=https://mydomain.cn \
+             -v /data/bitwarden:/data \
+             vaultwarden/server
+
+The meanings of the parameters of the above command are as follows:
+-d run in background
+--rm After the container stops running, automatically delete the container file
+--name vaultwarden The name of the container is vaultwarden
+-p 8192:80 port 80 of the container is mapped to 8192
+-p 3012:3012 port 3012 of the container is mapped to 3012
+-e SIGNUPS_ALLOWED=true Set the environment variable SIGNUPS_ALLOWED=true to allow users to register
+-e WBE_VAULT_ENABLE=true Set environment variable WBE_VAULT_ENABLE=true
+-e DOMAIN=https://mydomain.cn set the domain name, you need to replace it with your own domain name
+-v /data/bitwarden:/data The /data/ directory of the container is mapped to the host's /data/bitwarden directory
+</code></pre>
+<p>In this way, the vaultwarden will run. For the convenience of subsequent restarts, you can save the running command as an sh script.</p>
+<h2 id="configure-reverse-proxy-and-https">Configure reverse proxy and HTTPS</h2>
+<p>In order to ensure password security, bitwarden must use https to access the password library. In order to facilitate access and enable https, here I use caddy for reverse generation. For usage related to caddy, please refer to my article <a href="/post/Caddy2-installation-hosting-of-static-blogs/">Caddy2 Installation and Hosting Static Blog</a>, my caddy configuration file is as follows:</p>
+<pre><code class="language-caddyfile">(TLS_CONFIG) {
+     # TLS config generated using https://mozilla.github.io/server-side-tls/ssl-config-generator/, SSL Labs rated A+
+     protocolstls1.2tls1.3
+    
+}
+
+# Refer to the Caddy docs for more information:
+# https://caddyserver.com/docs/caddyfile
+(LOG) {
+     log {
+         output file &quot;{args.0}&quot; {
+                 roll_size 500MiB
+                 roll_local_time
+                 roll_keep 20
+                 roll_keep_for 30d
+         }
+     }
+}
+
+
+(HSTS) {
+     # HSTS (63072000 seconds)
+     header / Strict-Transport-Security &quot;max-age=63072000&quot;
+}
+
+(ERROR_HANDLE) {
+         handle_errors {
+                 @404 {
+                         expression {http.error.status_code} == 404
+                 }
+                 handle @404 {
+                         rewrite * /404.html
+                         file_server
+                 }
+         }
+}
+
+(GENERAL_CONFIG) {
+         tls xxx@xxx.com {
+             import TLS_CONFIG
+         }
+         #HSTS
+         import HSTS
+         # compression support
+         encode zstd gzip
+         # error handling
+         import ERROR_HANDLE
+}
+
+# globe config
+{
+         servers: 443 {
+                 protocol {
+                                 experimental_http3
+                 }
+         }
+}
+
+myconfig.com {
+         reverse_proxy /notifications/hub {
+                 to localhost:3012
+         }
+         reverse_proxy /notifications/hub/negotiate {
+                 to localhost:8192
+         }
+
+         reverse_proxy localhost:8192 {
+                 # Send the real remote IP to Rocket so that vaultwarden can send it
+                 # Put in logs so fail2ban can ban the correct IP.
+                 header_up X-Real-IP {remote_host}
+         }
+         header / {
+                 # Disable rendering of websites inside frames (clickjacking protection)
+                 X-Frame-Options &quot;DENY&quot;
+                 # Prevent indexing by search engines (optional)
+                 X-Robots-Tag &quot;none&quot;
+                 # server name removed
+                 -Server
+         }
+         import LOG &quot;/home/ubuntu/database/logs/myconfig.com.log&quot;
+         import GENERAL_CONFIG
+}
+
+# Introduce other specific site configurations
+import /etc/caddy/*.caddy
+</code></pre>
+<p>Port 3012 is for notification via websocket. WebSocket notification is used to notify Bitwarden's browser and desktop clients of some relevant events that have occurred, such as entries in the password database being modified or deleted. To enable WebSockets notifications, an external reverse proxy must be used and the following configuration actions must be performed:</p>
+<ul>
+<li>Route the /notifications/hub endpoint to the WebSocket server, by default on port 3012, making sure to pass the Connection and Upgrade headers. (Hint: the port can be changed using the WEBSOCKET_PORT variable)</li>
+<li>Route all others (including /notifications/hub/negotiate) to the standard Rocket server, on port 80 by default.</li>
+<li>If using Docker, you may also need to use the -p flag to map both ports.</li>
+</ul>
+<p>**After the configuration is complete, you can access the bitwarden service on the configured domain name page. **</p>
+<h2 id="disable-registration-and-enable-management-pages">Disable registration and enable management pages</h2>
+<p>By default, anyone who can access can register a new account. After we have registered the account, in order to ensure security and the account will not be abused, to disable this function, please set the SIGNUPS_ALLOWED environment variable to false, and run the docker run command Add a line after:</p>
+<pre><code class="language-bash">-e SIGNUPS_ALLOWED=false \
+</code></pre>
+<p>But the Vaultwarden administrator can invite anyone through the management page (SMTP needs to be configured), without the above restrictions.</p>
+<p>To enable the admin pages, a set of authentication tokens need to be set. The token can be any character, but a long, randomly generated string is recommended. Add a line after the docker run command:</p>
+<pre><code class="language-bash">-e ADMIN_TOKEN=some_random_token_as_per_above_explanation \
+</code></pre>
+<p>Restart docker, and then enter <code>yourconfig.com/admin</code> to enter the management page. In the management page, you can configure smtp, invite others to register, and other configurations can be selected.</p>
+<h2 id="network-connection-exception-handling">Network connection exception handling</h2>
+<p>If in the Diagnostics option of the vaulatwarden administrator page, it is found that the Internet access status is No (the figure below is the correct status)<br>
+<img src="https://wherelse.cc/post-images/1660461583557.png" alt="" loading="lazy"><br>
+Then you need to release the firewall on the network segment where the docker network is located, and configure it as follows:</p>
+<pre><code class="language-bash">sudo ufw allow from 172.17.0.0/16
+sudo ufw allow to 172.17.0.0/16
+</code></pre>
+<h2 id="data-backup">Data backup</h2>
+<p>The password vault stores all our passwords. If there is a problem, all the passwords will be lost, so we must make a backup. Here I use the encryption and compression of the docker data folder as a whole, and then back it up to Tencent Cloud cos regularly. At the same time, through the life cycle setting of cos, the automatic deletion of expired backups is realized. The script configuration is as follows:</p>
+<pre><code class="language-bash">#!/bin/sh
+currentdate=$(date +%Y%m%d) #Get the current time
+#Compress the specified directory to the date compressed package, the password is backupdata
+zip -P backupdata\
+     -r backup_${currentdate}.zip \
+     /data/bitwarden\
+
+coscmd upload backup_${currentdate}.zip /
+rm backup_${currentdate}.zip
+</code></pre>
+<p>coscmd is a cos tool of Tencent Cloud, which needs to be installed by itself, see: <a href="https://cloud.tencent.com/document/product/436/10976">https://cloud.tencent.com/document/product/436/10976</a></p>
+<p>Then set crontab to perform data backup regularly every morning:</p>
+<pre><code class="language-bash">15 4 * * * bash /home/ubuntu/backup/backup.sh
+</code></pre>
+<p>The following figure shows the cos backup life cycle settings:<br>
+<img src="https://wherelse.cc/post-images/1660464770138.png" alt="" loading="lazy"></p>
+<blockquote>
+<p>https://zhuanlan.zhihu.com/p/349524829<br>
+https://rs.ppgg.in/</p>
+</blockquote>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[ffmpeg batch video compression, video stitching, video slicing]]></title>
+        <id>https://wherelse.cc/post/ffmpeg-batch-video-compression-video-stitching-video-slicing/</id>
+        <link href="https://wherelse.cc/post/ffmpeg-batch-video-compression-video-stitching-video-slicing/">
+        </link>
+        <updated>2022-05-31T05:46:36.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="batch-video-compression">Batch video compression</h2>
+<p>Set bit rate and output location.</p>
+<pre><code class="language-bat">@echo off
+:: Set the video or audio format to be processed below, some main video formats are listed here
+set Ext=*.avi,*.mp4,*.wmv,*.flv,*.mkv,*.rmvb,*.rm,*.3gp
+md output
+echo start video conversion
+:: Set the output format below, here the output is mp4, you can change it yourself.
+:: Set the output folder and output bit rate below.
+for %%a in (%Ext%) do (
+echo Converting: %%a
+ffmpeg -i &quot;%%a&quot; -f mp4 -b:v 2000k &quot;output\%%~na.mp4&quot; -y
+)
+echo conversion complete
+pause
+</code></pre>
+<h2 id="video-stitching">Video stitching</h2>
+<p>Create a filelist.txt under the folder where the videos need to be stitched together, and write the videos to be stitched in the file in the following format:</p>
+<pre><code class="language-bat">file '11.mp4'
+file '22.mp4'
+</code></pre>
+<p>Then run the following command, where xxx is the file name, which can be changed as needed:</p>
+<pre><code class="language-bash">ffmpeg -f concat -safe 0 -i filelist.txt -y xxx.mp4
+</code></pre>
+<h2 id="video-slice">video slice</h2>
+<p>Set the source video, set the first start time, the second end time, set the output file name and format.</p>
+<pre><code class="language-bat">ffmpeg -ss 00:00:00 -i source video.mp4 -c copy -t 00:04:00 output video.mp4
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[matlab plot code skill point]]></title>
+        <id>https://wherelse.cc/post/matlab-plot-code-skill-point/</id>
+        <link href="https://wherelse.cc/post/matlab-plot-code-skill-point/">
+        </link>
+        <updated>2022-01-03T13:07:47.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="set-horizontal-and-vertical-coordinate-labels">Set horizontal and vertical coordinate labels</h2>
+<pre><code class="language-matlab">xlabel('Frequency','FontSize',16);
+%Set the abscissa as 'frequency', font size: 16
+ylabel('$|sinc(f*T_{coh})|$','Interpreter','latex','FontSize',18);
+%Set the ordinate to the specified formula, the syntax interpreter is latex, font size: 18
+xlim([-200 200]),ylim([0 1]);
+%Set the vertical coordinate range to 0~1, and the horizontal coordinate range to -200~200;
+</code></pre>
+<h2 id="set-horizontal-and-vertical-coordinate-scales">Set horizontal and vertical coordinate scales</h2>
+<pre><code class="language-matlab">set(gca,'FontSize',14,'FontName','Times New Roman');
+%Set horizontal and vertical coordinates font, size
+</code></pre>
+<h2 id="set-the-legend-label">Set the legend label</h2>
+<pre><code class="language-matlab">legend({'label 1','label 2','label 3'});
+% set the label
+legend('boxoff');
+%Close the label box
+</code></pre>
+<h2 id="scale-line-and-outline-control">Scale line and outline control</h2>
+<pre><code class="language-matlab">grid on;
+%Open the tick marks in the drawing area
+grid minor;
+%Open the fine tick marks in the drawing area
+
+box off;
+%Close the drawing outline
+axis off;
+%Close the horizontal and vertical scale marks
+</code></pre>
+<h2 id="image-annotation-and-annotation-hiding">Image annotation and annotation hiding</h2>
+<pre><code class="language-matlab">plot(x,'-o','MarkerIndices',[520 770],'MarkerEdgeColor','r','LineWidth',1.5);
+% Draw the curve of x, and mark the 520th and 770th points with red circles
+
+set(gca,'xtick',[],'xticklabel',[]); % hide the label of the x-axis scale
+set(gca,'ytick',[],'yticklabel',[]); % hide the label of the y-axis scale
+axis off; % turn off the axis and background
+</code></pre>
+<h2 id="draw-a-barhistogram">Draw a bar/histogram</h2>
+<pre><code class="language-matlab">c = categorical({'VLD','ML','DCML'}); % set the x-axis category label
+num = [100 800 900]; % set each value
+b=bar(c,num,'FaceColor','flat','EdgeColor','none'); % draw histogram/bar chart
+b.CData(1,:) = [1 0.37 0.36]; % Set the color of each bar separately
+b.CData(2,:) = [0 0.8 0.75];
+b.CData(3,:) = [0.45 0.49 0.49];
+</code></pre>
+<p>Effect:<br>
+<img src="https://wherelse.cc/post-images/1645240052646.svg" alt="" loading="lazy"></p>
+<h2 id="set-the-figure-bed-size">Set the figure bed size</h2>
+<pre><code class="language-matlab">set(gcf,'unit','normalized','position',[0.2,0.2,0.5,0.15]);
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[office click to run version and volume authorization version visio coexist installation]]></title>
+        <id>https://wherelse.cc/post/office-click-to-run-version-and-volume-authorization-version-visio-coexist-installation/</id>
+        <link href="https://wherelse.cc/post/office-click-to-run-version-and-volume-authorization-version-visio-coexist-installation/">
+        </link>
+        <updated>2022-01-02T11:10:11.000Z</updated>
+        <content type="html"><![CDATA[<p>If you have already installed the Office 365 version of Office, or other Click-to-Run versions of Office, and then want to install the volume-licensed version of Visio and other software, you will be prompted during installation that it cannot coexist with Click-to-Run Office, and you will be prompted to uninstall Install it again, but since there is already an installed office, it is definitely impossible to uninstall it, and it is troublesome. If you use the volume authorized version, the original genuine version will not work.<br>
+But Microsoft officially gave a solution.</p>
+<p>Specific steps are as follows:</p>
+<ol>
+<li>
+<p>Free download <a href="https://www.microsoft.com/download/details.aspx?id=49117">Office Deployment Tool</a> from the Microsoft Download Center</p>
+</li>
+<li>
+<p>Run the downloaded file and extract it to any location</p>
+</li>
+<li>
+<p>Create a new xml config configuration file in the decompressed folder, for example, name it configuration-visio.xml</p>
+</li>
+<li>
+<p>Add the following content to the file</p>
+<pre><code class="language-xml">&lt;Configuration&gt;
+&lt;Add OfficeClientEdition=&quot;64&quot;&gt;
+    &lt;Product ID=&quot;VisioPro2019Volume&quot; PIDKEY=&quot;69WXN-MBYV6-22PQG-3WGHK-RM6XC&quot;&gt;
+        &lt;Language ID=&quot;zh-CN&quot; /&gt;
+    &lt;/Product&gt;
+&lt;/Add&gt;
+&lt;/Configuration&gt;
+</code></pre>
+<p>Among them: <code>OfficeClientEdition</code> is the 32 or 64-bit version code, <code>Language ID</code> is the software installation language</p>
+</li>
+<li>
+<p>Press and hold the shift right button, choose to run powershell, enter <code>./setup.exe /download configuration-visio.xml</code>, wait for the command to run, and download the installation file until the command is executed. The waiting time may be a little longer, which is related to the network .</p>
+</li>
+<li>
+<p>Enter and run <code>./setup.exe /configure configuration-visio.xml</code> to install and install.</p>
+</li>
+</ol>
+<p>By modifying the Prouduct ID in the xml file, you can specify the installed version and install visio or project program</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Product</th>
+<th style="text-align:center">Prouduct ID</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Project Standard 2016</td>
+<td style="text-align:center">ProjectStdXVolume</td>
+</tr>
+<tr>
+<td style="text-align:center">Project Professional 2016</td>
+<td style="text-align:center">ProjectProXVolume</td>
+</tr>
+<tr>
+<td style="text-align:center">Visio Standard 2016</td>
+<td style="text-align:center">VisioStdXVolume</td>
+</tr>
+<tr>
+<td style="text-align:center">Visio Professional 2016</td>
+<td style="text-align:center">VisioProXVolume</td>
+</tr>
+<tr>
+<td style="text-align:center">Office Professional Plus 2019</td>
+<td style="text-align:center">ProPlus2019Volume</td>
+</tr>
+<tr>
+<td style="text-align:center">Visio Professional 2019</td>
+<td style="text-align:center">VisioPro2019Volume</td>
+</tr>
+<tr>
+<td style="text-align:center">Visio Standard 2019</td>
+<td style="text-align:center">VisioStd2019Volume</td>
+</tr>
+</tbody>
+</table>
+<p>For more supported ProductIDs, see: <a href="https://docs.microsoft.com/zh-cn/office365/troubleshoot/installation/product-ids-supported-office-deployment-click-to-run">Product ID List</a></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[2021to2022]]></title>
+        <id>https://wherelse.cc/post/2021to2022/</id>
+        <link href="https://wherelse.cc/post/2021to2022/">
+        </link>
+        <updated>2022-01-01T13:46:14.000Z</updated>
+        <content type="html"><![CDATA[<p>The Next<br>
+&lt;! -- more --&gt;<br>
+At the beginning of last year, I set a few goals for the New Year, and as I expected, I didn't achieve them all.</p>
+<blockquote>
+<h2 id="to-2021">To 2021</h2>
+</blockquote>
+<p>In 2021, I started the year with a couple of wishes and flags: &gt; 1.</p>
+<blockquote>
+<ol>
+<li>find a job to go home to</li>
+<li>to get that girl</li>
+<li>Read more books and less cell phones</li>
+<li>Work hard to update the blog</li>
+</ol>
+</blockquote>
+<p>After 2021, I successfully found a job back home and updated a long and short 21 blogs, the remaining two were not achieved as expected. At the same time I asked myself what I had gained and improved, but I hesitated.</p>
+<h2 id="to-2022">To 2022</h2>
+<p>By 2022, I continue to hope that the goals I set for myself will be achieved.<br>
+A few wishes for 2022:</p>
+<ol>
+<li>read more and think more</li>
+<li>persist in doing something that I have been trying to do before, but have not been able to do it</li>
+<li>strengthen exercise and try to go to bed early</li>
+<li>continue to update the blog</li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Matlab generates arbitrary frequency sine wave]]></title>
+        <id>https://wherelse.cc/post/matlab-generates-arbitrary-frequency-sine-wave/</id>
+        <link href="https://wherelse.cc/post/matlab-generates-arbitrary-frequency-sine-wave/">
+        </link>
+        <updated>2021-12-24T12:33:44.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="generate-a-real-sine-wave">Generate a real sine wave</h2>
+<pre><code class="language-matlab">A=1; %amplitude
+f=5; % frequency unit: Hz
+w=2*pi*f; % angular frequency
+phase=0; %phase
+T=1; %observation time unit: s
+fs=200*f; %Sampling frequency unit: Hz
+d=1/fs; % sampling interval unit: s
+t=0:d:T; % discrete time t
+sinwave=A*sin(w*t+phase); % sine signal
+ 
+figure,plot(t,sinwave); %drawing
+</code></pre>
+<p>The following effect is an effect diagram with a generation frequency of 5Hz and an initial phase of 0:<br>
+<img src="https://wherelse.cc/post-images/1640349561562.svg" alt="" loading="lazy"></p>
+<h2 id="generate-a-complex-sine-wave">Generate a complex sine wave</h2>
+<pre><code class="language-matlab">% generate complex sine
+A=1; %amplitude
+f=5; % frequency unit: Hz
+w=2*pi*f; % angular frequency
+phase=0; %phase
+T=1; %observation time unit: s
+fs=200*f; %Sampling frequency unit: Hz
+d=1/fs; % sampling interval unit: s
+t=0:d:T; % discrete time t
+
+% The following two generation methods are available
+sinwave_complex=A*cos(w*t+phase)+1i*sin(w*t+phase); % Euler formula form
+% sinwave_complex = exp(1i*w*t); % complex exponential form
+figure,plot(t,real(sinwave_complex)); hold on; plot(t,imag(sinwave_complex));
+</code></pre>
+<p>The following effect is an effect diagram with a generation frequency of 5Hz and an initial phase of 0:<br>
+<img src="https://wherelse.cc/post-images/1640350658148.svg" alt="" loading="lazy"></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Python: regular expression multi-line matching pattern]]></title>
+        <id>https://wherelse.cc/post/python-regular-expression-multiline-matching-pattern/</id>
+        <link href="https://wherelse.cc/post/python-regular-expression-multiline-matching-pattern/">
+        </link>
+        <updated>2021-12-17T03:10:10.000Z</updated>
+        <content type="html"><![CDATA[<p>The re.compile() function takes a flag argument <code>re.DOTALL</code>, which allows the dot (.) in a regular expression to match any character, including newlines.</p>
+<pre><code class="language-python">pattern = re.compile(r'(tow)=([0-9]*)',re.DOTALL)
+m = pattern.findall(text)
+</code></pre>
+<p>Then you can match content across lines</p>
+<p>Multi-line replacement of content.<br>
+re.sub can only replace one line of content by default, if you need to replace multiple lines of content, you need to use the compile method</p>
+<pre><code class="language-python">pattern = re.compile('---\n(. *)\n---', re.S)
+content = re.sub(pattern, repalcetxt, content)
+</code></pre>
+<pre><code></code></pre>
+]]></content>
+    </entry>
+</feed>

@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Rime输入法初体验 -
+    Wherelse Blog</title>
+<meta name="ThemeName" content="Gridea Theme Rocky by EryouHao" />
+<meta name="referrer" content="always" />
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<link rel="manifest" href="/site.webmanifest">
+<!-- <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet preload" as="style"> -->
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"> -->
+<!-- <link rel="stylesheet" href="https://cdn.staticfile.org/animate.css/3.7.2/animate.min.css" as="style" /> -->
+<link href="/media/css/remixicon.css" rel="stylesheet" as="style">
+<link rel="stylesheet" href="/media/css/tailwind.css">
+<link rel="stylesheet" href="/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Rime输入法初体验 -
+    Wherelse Blog - Atom Feed" href="/atom.xml">
+
+  
+  <script defer src="https://www.googletagmanager.com/gtag/js?id=G-4449R7TQN5"></script>
+  <script>
+  var host = window.location.hostname;
+  if(host != "localhost")
+  {
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4449R7TQN5');
+  }
+  </script>
+    
+
+  <!-- <title name="Rime输入法初体验"> </title> -->
+  <meta name="socialText" content="记录学习与折腾，网络，博客，嵌入式相关；Record learning and toss, network, blog, embedded related" />
+  <meta name="description" content="一番折腾后还是放弃了它
+
+从有智能手机之后，就一直把百度输入法作为主力输入法使用，电脑上因为使用习惯和词库的原因也同样在使用百度输入法。一段时间之前，因为在部分软件里输入法有些奇奇怪怪的问题，就想找一个替代一下，在寻找查阅的过程中看到有人推..." />
+  <meta name="referrer" content="always" />
+  <link rel="canonical" href="https://wherelse.cc/post/First-experience-of-Rime/" />
+  <link rel="preconnect" href="https://cdn.staticfile.org" />
+  <script src="https://wherelse.cc/media/scripts/photoswipe.min.js"></script>
+  <script src="https://wherelse.cc/media/scripts/photoswipe-ui-default.min.js"></script>
+  <link rel="stylesheet" href="https://wherelse.cc/media/css/photoswipe.css" as="style" />
+  <link rel="stylesheet" href="https://wherelse.cc/media/css/default-skin.css" as="style" />
+  <!-- Code Highlight -->
+  
+  <script src="https://wherelse.cc/media/prism.js"></script>
+  <script>
+    Prism.highlightAll();
+  </script>
+  
+  
+  <link rel="stylesheet preload"
+    href="https://wherelse.cc/media/css/prism-github.css"
+    as="style" />
+  
+</head>
+
+<body>
+  <div class="antialiased flex flex-col min-h-screen" id="app">
+    <a href="https://wherelse.cc"
+      class="fixed top-0 left-0 mt-4 bg-black text-white dark:text-gray-700 dark:bg-yellow-50 dark:hover:bg-black dark:hover:text-white inline-flex p-2 pl-8 hover:text-gray-700 hover:bg-yellow-50 font-bold z-10 transition-fast animated fadeInLeft">
+      Wherelse Blog
+    </a>
+    <div class="max-w-4xl w-full mx-auto">
+      <div
+        class="shadow-box bg-white dark:bg-gray-600 rounded-lg pt-32 md:pt-32 px-4 md:px-8 pb-8 animated fadeIn mb-8">
+        <h1 class="text-5xl font-semibold leading-normal pb-8 mb-8 border-b-8 border-gray-700">
+          Rime输入法初体验
+        </h1>
+        
+        <img src="https://wherelse.cc/post-images/First-experience-of-Rime.png" alt="Rime输入法初体验" class="block w-full mb-8" />
+        
+        <div class="mb-8 flex flex-wrap">
+          <div class="text-gray-400 text-sm mr-4">
+            2020-12-03 · 3 min read
+          </div>
+          
+          <a href="https://wherelse.cc/tag/K2mKTnDKr/"
+            class="text-gray-700 text-sm border-b-2 border-dotted border-gray-200 hover:border-gray-600 transition-all duration-100 inline-flex mr-2">
+            <i class="ri-hashtag"></i>
+            碎碎念
+          </a>
+          
+        </div>
+        <div class="markdown mb-16" v-pre>
+          <p>一番折腾后还是放弃了它</p>
+<!-- more -->
+<p>从有智能手机之后，就一直把百度输入法作为主力输入法使用，电脑上因为使用习惯和词库的原因也同样在使用百度输入法。一段时间之前，因为在部分软件里输入法有些奇奇怪怪的问题，就想找一个替代一下，在寻找查阅的过程中看到有人推荐的Rime小狼毫输入法。遂下载下来试了试。</p>
+<p>在初步接触后，给人的第一感知：</p>
+<ol>
+<li>高度可定制化，从词库到输入方案，到皮肤，都可以实现自主的完全定制。</li>
+<li>支持的输入方式多样，包括普通的拼音，双拼，到繁体常用的注音等，都有相关的输入方案支持。</li>
+<li>支持各个平台和系统的同步，可以保证相同的体验。</li>
+</ol>
+<p>但是当我开始准备调整配置，想让输入法用的顺手一点开始，就感觉到这个输入法的门槛还是相当高的，将默认的配置修改成为自己想要的配置可以说是十分的繁琐。</p>
+<ol>
+<li>首先所有的配置都是基于yaml语言去配置的，每一项配置都要编程实现，这就意味着即时要实现一个简单的，常规输入法一键的配置都需要去搜索，查阅文档，然后进行修改，可以说是很浪费时间的。</li>
+<li>然后是词库的导入还需要按照一定的格式进行转换，然后通过yaml配置进入输入法，也是比较的麻烦。</li>
+<li>当然这都只是繁琐，但只需要在第一次使用的时候配置。最让我觉得使用不舒服的还是输入法对候选词的自动排序，提频做的不够好，或许是我不会配置，但是使用起来就非常的不方便，每次都要翻很久才能翻到想要的字和词。</li>
+</ol>
+<p>最终在折腾了一两天之后，我还是换回了百度的输入法，目前用起来最顺手的，估计一时半会是换不了了。体验的感受就是，这个输入法是个好输入法，给予了用户高度的可定制性，但是同时也可以说正是高度的可定制性导致使用的门槛过高，不易于上手，这最终还是属于一小部分人的输入法。</p>
+
+        </div>
+
+        <!-- copyright -->
+        <div class="copyright">
+          <div class="container">
+            <p><small class="text-gray-400">
+                The copyright of the articles on this website is owned by me. Without consent, it is not allowed to copy without permission. Reasonable reprints are welcome to indicate the source of the quotation. Please leave a message for reprinting pictures. The content of the article is only used for technical research and exploration, and shall not be used for illegal purposes.
+             </small></p>
+          </div>
+        </div>
+
+        <div class="text-center text-gray-300">
+          
+          <span id="/post/First-experience-of-Rime/" class="leancloud_visitors views-counter meta-info">
+            <a class="text-center">📋阅读量:</a>
+            <span id="twikoo_visitors">0</span>
+          </span>
+          
+        </div>
+      </div>
+
+      
+
+      
+        <button type="button" class="collapsible">
+          <i class="ri-message-2-line"></i>
+        </button>
+        <div class="tcomment rounded-lg px-4 py-4">
+          <div id="tcomment"></div>
+        </div>  
+      
+
+      <footer class="py-12 text-center px-4 md:px-0" v-pre>
+  <a href="/atom.xml" target="_blank">RSS
+</a> | Powered by <a href="https://github.com/getgridea/gridea" 
+target="_blank">Gridea</a> &nbsp;&nbsp;
+<br>
+©2020 Wherelse All Right Reserved 
+</footer>
+
+    </div>
+
+
+    <!-- TOC Container -->
+    <div id="toc"
+      class="fixed right-0 bottom-0 mb-20 mr-6 shadow w-12 h-12 rounded-lg flex justify-center items-center z-10 cursor-pointer bg-white dark:bg-gray-500 dark:text-gray-200 hover:shadow-lg transition-all animated fadeInRight"
+      @click="showToc = true">
+      <i class="ri-menu-line font-bold"></i>
+    </div>
+
+    <div
+      class="fixed right-0 top-0 bottom-0 overflow-y-auto w-64 rounded-lg p-4 m-4  shadow-md bg-white dark:bg-gray-800 p-4 border-l border-gray-100 dark:border-gray-600 z-10 transition-fast"
+      :class="{ '-mr-64': !showToc }">
+      <div class="flex mb-4 justify-end">
+        <div
+          class="w-8 h-8 inline-flex justify-center items-center rounded-full cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-fast"
+          @click="showToc = false">
+          <i class="ri-close-circle-fill"></i>
+        </div>
+      </div>
+      <div class="post-toc-container"></div>
+    </div>
+
+    <!-- Back to top -->
+    <div
+      class="fixed right-0 bottom-0 mb-4 mr-6 shadow w-12 h-12 rounded-lg flex justify-center items-center z-10 cursor-pointer bg-white hover:shadow-lg transition-all dark:bg-gray-500 dark:text-gray-200"
+      @click="backToUp" v-show="scrolled">
+      <i class="ri-arrow-up-circle-fill"></i>
+    </div>
+  </div>
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+  <!-- Background of PhotoSwipe. 
+        It's a separate element as animating opacity is faster than rgba(). -->
+  <div class="pswp__bg">
+  </div>
+  <!-- Slides wrapper with overflow:hidden. -->
+  <div class="pswp__scroll-wrap">
+    <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+    <div class="pswp__container">
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+    </div>
+    <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+    <div class="pswp__ui pswp__ui--hidden">
+      <div class="pswp__top-bar">
+        <!--  Controls are self-explanatory. Order can be changed. -->
+        <div class="pswp__counter">
+        </div>
+        <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+        <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+        <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+        <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+        <!-- element will get class pswp__preloader--active when preloader is running -->
+        <div class="pswp__preloader">
+          <div class="pswp__preloader__icn">
+            <div class="pswp__preloader__cut">
+              <div class="pswp__preloader__donut">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+        <div class="pswp__share-tooltip">
+        </div>
+      </div>
+      <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+      </button>
+      <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+      </button>
+      <div class="pswp__caption">
+        <div class="pswp__caption__center">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>-->
+  <script src="https://wherelse.cc/media/scripts/vue.min.js"></script>
+  <script src="https://wherelse.cc/media/scripts/main.js"></script>
+
+  <!--根据内容动态加载-->
+  <script type="text/javascript">
+    window.onload = function () {
+      //根据内容动态加载mermiad
+      if (document.getElementsByClassName("language-mermaid").length != 0) {
+        console.log("find mermaid")
+        for (let x of document.getElementsByClassName("language-mermaid")) {
+          if (x.nodeName == "CODE") {
+            let m = document.createElement("div");
+            m.classList.add("mermaid");
+            m.textContent = x.textContent;
+            x.parentNode.insertAdjacentElement("beforebegin", m);
+          }
+        }
+        let script = document.createElement('script');
+        defer = "defer";
+        script.src =
+          "https://wherelse.cc/media/scripts/mermaid.min.js";
+        document.body.append(script);
+        script.onload = function () {
+          mermaid.initialize({
+            startOnLoad: false
+          });
+          mermaid.init();
+          console.log("mermaid init done");
+        }
+      }
+
+      //bilibili 视频支持
+      var content = document.getElementsByClassName("language-bilibili")[0];
+      if (content != null) {
+        var m = document.createElement("div");
+        m.classList.add("bilibili-video");
+        m.innerHTML = content.textContent;
+        content.parentNode.insertAdjacentElement("beforeend", m);
+      }
+      //katex自适应加载
+      if (document.getElementsByClassName("katex").length != 0) {
+        let script = document.createElement('script');
+        script.defer = "defer"
+        script.src =
+          "https://wherelse.cc/media/scripts/katex.min.js";
+        document.body.append(script);
+        script = document.createElement('script');
+        script.defer = "defer"
+        script.src =
+          "https://wherelse.cc/media/scripts/copy-tex.min.js";
+        document.body.append(script);
+        let link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.defer = "defer"
+        link.href =
+          "https://wherelse.cc/media/css/katex.min.css";
+        document.body.append(link);
+        link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.defer = "defer"
+        link.href =
+          "https://wherelse.cc/media/css/copy-tex.css";
+        document.body.append(link);
+      }
+
+      script = document.createElement('script');
+      script.defer = "defer"
+      script.src =
+        "https://cdn.staticfile.org/twikoo/1.6.7/twikoo.all.min.js";
+      document.body.append(script);
+      script.onload = function () {
+        let scripts = document.createElement('script');
+        scripts.append(document.createTextNode(
+          " twikoo.init({envId: \"https://twikoo.vlieo.com\",el: \"#tcomment\",});"));
+        var parentDiv = document.getElementById("toc").parentNode;
+        var sp = document.getElementById("toc");
+        parentDiv.insertBefore(scripts, sp);
+      }
+    }
+  </script>
+  <script>
+    comment_collapse();
+  </script>
+
+ <script>
+    //拿到预览框架，也就是上面的html代码
+    var pswpElement = document.querySelectorAll(".pswp")[0];
+    //定义图片数组变量
+    var imgitems;
+    /**
+     * 用于显示预览界面
+     * @param index 图片数组下标
+     */
+    function viewImg(index) {
+      //其它选项这里不做过多阐述，详情见官网
+      var pswpoptions = {
+        index: parseInt(index, 10), // 开始幻灯片索引。0是第一张幻灯片。必须是整数，而不是字符串。
+        bgOpacity: 0.7, // 背景透明度，0-1
+        maxSpreadZoom: 3, // 缩放级别，不要太大
+      };
+      //初始化并打开PhotoSwipe，pswpElement对应上面预览框架，PhotoSwipeUI_Default为皮肤，imgitems为图片数组，pswpoptions为选项
+      var gallery = new PhotoSwipe(
+        pswpElement,
+        PhotoSwipeUI_Default,
+        imgitems,
+        pswpoptions
+      );
+      gallery.init();
+    }
+    /**
+     * 用于添加图片点击事件
+     * @param img 图片元素
+     * @param index 所属下标（在imgitems中的位置）
+     */
+    function addImgClick(img, index) {
+      img.onclick = function () {
+        viewImg(index);
+      };
+    }
+    /**
+     * 轮询所有图片，获取src、width、height等数据，加入imgitems，并给图片元素添加事件
+     * 最好在onload中执行该方法，本站因放在最底部，所以直接初始化
+     * 异步加载图片可在图片元素创建完成后调用此方法
+     */
+    function initImg() {
+      //重置图片数组
+      imgitems = [];
+      //查找class:markdown 下的所有img元素并遍历
+      var imgs = document.querySelectorAll(".markdown img");
+      for (var i = 0; i < imgs.length; i++) {
+        var img = imgs[i];
+        //本站相册初始为loading图片，真实图片放在data-src
+        var ds = img.getAttribute("src");
+        //创建image对象，用于获取图片宽高
+        var imgtemp = new Image();
+        //判断是否存在data-src
+        if (ds != null && ds.length > 0) {
+          imgtemp.src = ds;
+        } else {
+          imgtemp.src = img.src;
+        }
+        //判断是否存在缓存
+        if (imgtemp.complete) {
+          var imgobj = {
+            src: imgtemp.src,
+            w: imgtemp.width,
+            h: imgtemp.height,
+          };
+          imgitems[i] = imgobj;
+          addImgClick(img, i);
+        } else {
+          // console.log("进来了2");
+          imgtemp.index = i;
+          imgtemp.img = img;
+          imgtemp.onload = function () {
+            var imgobj = {
+              src: this.src,
+              w: this.width,
+              h: this.height,
+            };
+            //不要使用push，因为onload前后顺序会不同
+            imgitems[this.index] = imgobj;
+            //添加点击事件
+            addImgClick(this.img, this.index);
+          };
+        }
+      }
+    }
+    //初始化
+    initImg();
+  </script>
+</body>
+
+</html>

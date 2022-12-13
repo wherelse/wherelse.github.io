@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Wherelse Blog</title>
+<meta name="ThemeName" content="Gridea Theme Rocky by EryouHao" />
+<meta name="referrer" content="always" />
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<link rel="manifest" href="/site.webmanifest">
+<!-- <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet preload" as="style"> -->
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"> -->
+<!-- <link rel="stylesheet" href="https://cdn.staticfile.org/animate.css/3.7.2/animate.min.css" as="style" /> -->
+<link href="/media/css/remixicon.css" rel="stylesheet" as="style">
+<link rel="stylesheet" href="/media/css/tailwind.css">
+<link rel="stylesheet" href="/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Wherelse Blog - Atom Feed" href="/atom.xml">
+
+  
+  <script defer src="https://www.googletagmanager.com/gtag/js?id=G-4449R7TQN5"></script>
+  <script>
+  var host = window.location.hostname;
+  if(host != "localhost")
+  {
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4449R7TQN5');
+  }
+  </script>
+    
+
+  <meta name="socialText" content="Everything always needs to be studied to be understood" />
+  <meta name="description" content="记录学习与折腾，网络，博客，嵌入式相关；Record learning and toss, network, blog, embedded related" />
+  <meta name="keywords" content=" 碎碎念,笔记,编程,matlab,python,网络,FPGA,电路,VSCode,荔枝派,数据结构与算法,Gridea,STM32,矿渣,linux,Latax," />
+  <link rel="canonical" href="https://wherelse.cc/" />
+   <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css" /> -->
+   <!-- <link rel="preload"  href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css" as="font"/> -->
+</head>
+
+<body>
+  <div class="antialiased flex flex-col min-h-screen" id="app">
+    <div class="nav py-3 md:py-8 fixed w-full z-10 bg-gray-50 dark:bg-gray-700 transition-all duration-300" :class="{ 'scroll': scrolled }">
+  <div class="flex justify-end px-4">
+    <div class="w-8 h-8 flex justify-center items-center rounded-full md:hidden" @click="showMenu = !showMenu">
+      <i class="ri-close-circle-fill" v-show="showMenu"></i>
+      <i class="ri-menu-line" v-show="!showMenu"></i>
+    </div>
+  </div>
+  <nav class="max-w-4xl w-full mx-auto text-center flex flex-col md:flex-row justify-center md:block" :class="`${ showMenu ? 'block' : 'hidden' }`">
+    
+      <a href="/" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        home
+      </a>
+    
+      <a href="/archives" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        achives
+      </a>
+    
+      <a href="/tags" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        tags
+      </a>
+    
+      <a href="/gallery" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        gallery
+      </a>
+    
+      <a href="/friends" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        friends
+      </a>
+    
+      <a href="/post/about" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        about
+      </a>
+    
+   <!--<a href="https://wherelse.cc/atom.xml" target="_blank" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+      RSS
+    </a>-->
+  </nav>
+</div>
+
+    <div class="max-w-4xl w-full mx-auto pt-32">
+      
+
+      <div
+        class="shadow-box bg-white dark:bg-gray-600 border-gray-300 rounded-none md:rounded-lg -mx-1 md:mx-0 md:px-0">
+        
+<div
+  class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+  
+  <div class="flex-1 order-2 md:order-1">
+    <h2 class="text-2xl font-semibold mb-4">
+      <a href="https://wherelse.cc/post/licheepi-zero-notes-uboot-compilation/"
+        class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+        LicheePi Zero Notes -2 uboot compilation
+      </a>
+    </h2>
+    <div class="mb-4 text-xs text-gray-500">2021-04-28</div>
+    <div class="mb-4 text-gray-500 dark:text-gray-300">
+      Initial configuration
+cd u-boot
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- 
+LicheePi_Zero_defconfig ## load templa...
+    </div>
+    <div class="overflow-hidden">
+      
+      <a href="https://wherelse.cc/tag/Y3f38Upqt/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        荔枝派
+      </a>
+      
+      <a href="https://wherelse.cc/tag/bVOkvqw2z/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        笔记
+      </a>
+      
+
+    </div>
+  </div>
+  
+  <img
+    class="flex-shrink-0 self-start md:ml-4 mb-4 md:mb-0 rounded-lg shadow-lg object-cover featured-img order-1 md:order-2 w-full h-40 md:w-56 md:h-32"
+    loading="lazy" src="https://wherelse.cc/post-images/licheepi-zero-notes-uboot-compilation.jpg" alt="LicheePi Zero Notes -2 uboot compilation">
+  
+</div>
+
+<div
+  class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+  
+  <div class="flex-1 order-2 md:order-1">
+    <h2 class="text-2xl font-semibold mb-4">
+      <a href="https://wherelse.cc/post/google-analytics-excludes-localhost-access/"
+        class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+        Google Analytics排除localhost访问
+      </a>
+    </h2>
+    <div class="mb-4 text-xs text-gray-500">2021-04-27</div>
+    <div class="mb-4 text-gray-500 dark:text-gray-300">
+      <p>Google Analytics excludes localhost access</p>
+
+    </div>
+    <div class="overflow-hidden">
+      
+      <a href="https://wherelse.cc/tag/Hg2wOF7pj/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        网络
+      </a>
+      
+
+    </div>
+  </div>
+  
+</div>
+
+<div
+  class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+  
+  <div class="flex-1 order-2 md:order-1">
+    <h2 class="text-2xl font-semibold mb-4">
+      <a href="https://wherelse.cc/post/git-clone-tips/"
+        class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+        Git Clone小技巧
+      </a>
+    </h2>
+    <div class="mb-4 text-xs text-gray-500">2021-04-27</div>
+    <div class="mb-4 text-gray-500 dark:text-gray-300">
+      <p>git clone tips</p>
+
+    </div>
+    <div class="overflow-hidden">
+      
+      <a href="https://wherelse.cc/tag/bVOkvqw2z/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        笔记
+      </a>
+      
+
+    </div>
+  </div>
+  
+</div>
+
+<div
+  class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+  
+  <div class="flex-1 order-2 md:order-1">
+    <h2 class="text-2xl font-semibold mb-4">
+      <a href="https://wherelse.cc/post/licheepi-zero-notes-environment-construction/"
+        class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+        荔枝派Zero笔记（一）环境搭建
+      </a>
+    </h2>
+    <div class="mb-4 text-xs text-gray-500">2021-04-26</div>
+    <div class="mb-4 text-gray-500 dark:text-gray-300">
+      <p>LicheePi Zero Notes -1 Environment Construction</p>
+
+    </div>
+    <div class="overflow-hidden">
+      
+      <a href="https://wherelse.cc/tag/Y3f38Upqt/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        荔枝派
+      </a>
+      
+      <a href="https://wherelse.cc/tag/bVOkvqw2z/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        笔记
+      </a>
+      
+
+    </div>
+  </div>
+  
+  <img
+    class="flex-shrink-0 self-start md:ml-4 mb-4 md:mb-0 rounded-lg shadow-lg object-cover featured-img order-1 md:order-2 w-full h-40 md:w-56 md:h-32"
+    loading="lazy" src="https://wherelse.cc/post-images/licheepi-zero-notes-environment-construction.jpg" alt="荔枝派Zero笔记（一）环境搭建">
+  
+</div>
+
+<div
+  class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+  
+  <div class="flex-1 order-2 md:order-1">
+    <h2 class="text-2xl font-semibold mb-4">
+      <a href="https://wherelse.cc/post/hash-table-notes/"
+        class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+        散列笔记
+      </a>
+    </h2>
+    <div class="mb-4 text-xs text-gray-500">2021-04-13</div>
+    <div class="mb-4 text-gray-500 dark:text-gray-300">
+      <p>notes of hash table</p>
+
+    </div>
+    <div class="overflow-hidden">
+      
+      <a href="https://wherelse.cc/tag/2vax5kEID/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        数据结构与算法
+      </a>
+      
+      <a href="https://wherelse.cc/tag/-AWGj9akS/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        编程
+      </a>
+      
+
+    </div>
+  </div>
+  
+</div>
+
+<div
+  class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+  
+  <div class="flex-1 order-2 md:order-1">
+    <h2 class="text-2xl font-semibold mb-4">
+      <a href="https://wherelse.cc/post/c-language-storage-period-and-scope/"
+        class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+        C语言的存储期与作用域
+      </a>
+    </h2>
+    <div class="mb-4 text-xs text-gray-500">2021-03-17</div>
+    <div class="mb-4 text-gray-500 dark:text-gray-300">
+      <p>C language storage period and scope</p>
+
+    </div>
+    <div class="overflow-hidden">
+      
+      <a href="https://wherelse.cc/tag/bVOkvqw2z/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        笔记
+      </a>
+      
+      <a href="https://wherelse.cc/tag/-AWGj9akS/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        编程
+      </a>
+      
+
+    </div>
+  </div>
+  
+</div>
+
+<div
+  class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+  
+  <div class="flex-1 order-2 md:order-1">
+    <h2 class="text-2xl font-semibold mb-4">
+      <a href="https://wherelse.cc/post/add-twikoo-comment-support-for-gridea-theme/"
+        class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+        为Gridea主题添加Twikoo评论支持
+      </a>
+    </h2>
+    <div class="mb-4 text-xs text-gray-500">2021-02-09</div>
+    <div class="mb-4 text-gray-500 dark:text-gray-300">
+      <p>Add Twikoo comment support for Gridea theme</p>
+
+    </div>
+    <div class="overflow-hidden">
+      
+      <a href="https://wherelse.cc/tag/sx7g1O9Qg/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        Gridea
+      </a>
+      
+
+    </div>
+  </div>
+  
+</div>
+
+<div
+  class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+  
+  <div class="flex-1 order-2 md:order-1">
+    <h2 class="text-2xl font-semibold mb-4">
+      <a href="https://wherelse.cc/post/Caddy2-installation-hosting-of-static-blogs/"
+        class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+        Caddy2安装与托管静态博客
+      </a>
+    </h2>
+    <div class="mb-4 text-xs text-gray-500">2021-01-17</div>
+    <div class="mb-4 text-gray-500 dark:text-gray-300">
+      <p>Caddy2 installation and hosting of static blogs</p>
+
+    </div>
+    <div class="overflow-hidden">
+      
+      <a href="https://wherelse.cc/tag/bVOkvqw2z/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        笔记
+      </a>
+      
+      <a href="https://wherelse.cc/tag/Hg2wOF7pj/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        网络
+      </a>
+      
+
+    </div>
+  </div>
+  
+</div>
+
+<div
+  class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+  
+  <div class="flex-1 order-2 md:order-1">
+    <h2 class="text-2xl font-semibold mb-4">
+      <a href="https://wherelse.cc/post/2020-to-2021/"
+        class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+        2020 To 2021
+      </a>
+    </h2>
+    <div class="mb-4 text-xs text-gray-500">2021-01-01</div>
+    <div class="mb-4 text-gray-500 dark:text-gray-300">
+      <p>The Next</p>
+
+    </div>
+    <div class="overflow-hidden">
+      
+      <a href="https://wherelse.cc/tag/K2mKTnDKr/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        碎碎念
+      </a>
+      
+
+    </div>
+  </div>
+  
+</div>
+
+<div
+  class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+  
+  <div class="flex-1 order-2 md:order-1">
+    <h2 class="text-2xl font-semibold mb-4">
+      <a href="https://wherelse.cc/post/windows-linux-esp8266-erash-flash/"
+        class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+        Windows/linux 下擦除 ESP8266 Flash方法
+      </a>
+    </h2>
+    <div class="mb-4 text-xs text-gray-500">2020-12-21</div>
+    <div class="mb-4 text-gray-500 dark:text-gray-300">
+      <p>Windows/linux erase ESP8266 Flash</p>
+
+    </div>
+    <div class="overflow-hidden">
+      
+      <a href="https://wherelse.cc/tag/bVOkvqw2z/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        笔记
+      </a>
+      
+
+    </div>
+  </div>
+  
+</div>
+
+      </div>
+
+      
+  <div class="my-4 flex justify-between px-4 md:px-0">
+    
+      <a href="https://wherelse.cc/page/2/" class="btn btn-white">
+        <i class="ri-arrow-left-line mr-4"></i>
+        上一页
+      </a>
+    
+    
+      <a href="https://wherelse.cc/page/4/" class="btn btn-white">
+        下一页
+        <i class="ri-arrow-right-line ml-4"></i>
+      </a>
+    
+  </div>
+
+
+      <footer class="py-12 text-center px-4 md:px-0" v-pre>
+  <a href="/atom.xml" target="_blank">RSS
+</a> | Powered by <a href="https://github.com/getgridea/gridea" 
+target="_blank">Gridea</a> &nbsp;&nbsp;
+<br>
+©2020 Wherelse All Right Reserved 
+</footer>
+
+    </div>
+  </div>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script> -->
+  <script src="https://wherelse.cc/media/scripts/vue.min.js"></script>
+  <script src="https://wherelse.cc/media/scripts/main.js"></script>
+</body>
+
+
+</html>

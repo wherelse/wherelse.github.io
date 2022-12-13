@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>贝壳云P1 刷机 -
+    Wherelse Blog</title>
+<meta name="ThemeName" content="Gridea Theme Rocky by EryouHao" />
+<meta name="referrer" content="always" />
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<link rel="manifest" href="/site.webmanifest">
+<!-- <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet preload" as="style"> -->
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"> -->
+<!-- <link rel="stylesheet" href="https://cdn.staticfile.org/animate.css/3.7.2/animate.min.css" as="style" /> -->
+<link href="/media/css/remixicon.css" rel="stylesheet" as="style">
+<link rel="stylesheet" href="/media/css/tailwind.css">
+<link rel="stylesheet" href="/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="贝壳云P1 刷机 -
+    Wherelse Blog - Atom Feed" href="/atom.xml">
+
+  
+  <script defer src="https://www.googletagmanager.com/gtag/js?id=G-4449R7TQN5"></script>
+  <script>
+  var host = window.location.hostname;
+  if(host != "localhost")
+  {
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4449R7TQN5');
+  }
+  </script>
+    
+
+  <!-- <title name="贝壳云P1 刷机"> </title> -->
+  <meta name="socialText" content="记录学习与折腾，网络，博客，嵌入式相关；Record learning and toss, network, blog, embedded related" />
+  <meta name="description" content="beike yun flash system
+
+转载自hanwckf的博客
+刷机方法
+暂无免拆机刷机法，必须要拆机引出USB进行线刷
+刷机工具：https://pan.baidu.com/s/1aOAIZ3vyG8mgipj726Bhgg ..." />
+  <meta name="referrer" content="always" />
+  <link rel="canonical" href="https://wherelse.cc/post/bei-ke-yun-p1-shua-ji/" />
+  <link rel="preconnect" href="https://cdn.staticfile.org" />
+  <script src="https://wherelse.cc/media/scripts/photoswipe.min.js"></script>
+  <script src="https://wherelse.cc/media/scripts/photoswipe-ui-default.min.js"></script>
+  <link rel="stylesheet" href="https://wherelse.cc/media/css/photoswipe.css" as="style" />
+  <link rel="stylesheet" href="https://wherelse.cc/media/css/default-skin.css" as="style" />
+  <!-- Code Highlight -->
+  
+  <script src="https://wherelse.cc/media/prism.js"></script>
+  <script>
+    Prism.highlightAll();
+  </script>
+  
+  
+  <link rel="stylesheet preload"
+    href="https://wherelse.cc/media/css/prism-github.css"
+    as="style" />
+  
+</head>
+
+<body>
+  <div class="antialiased flex flex-col min-h-screen" id="app">
+    <a href="https://wherelse.cc"
+      class="fixed top-0 left-0 mt-4 bg-black text-white dark:text-gray-700 dark:bg-yellow-50 dark:hover:bg-black dark:hover:text-white inline-flex p-2 pl-8 hover:text-gray-700 hover:bg-yellow-50 font-bold z-10 transition-fast animated fadeInLeft">
+      Wherelse Blog
+    </a>
+    <div class="max-w-4xl w-full mx-auto">
+      <div
+        class="shadow-box bg-white dark:bg-gray-600 rounded-lg pt-32 md:pt-32 px-4 md:px-8 pb-8 animated fadeIn mb-8">
+        <h1 class="text-5xl font-semibold leading-normal pb-8 mb-8 border-b-8 border-gray-700">
+          贝壳云P1 刷机
+        </h1>
+        
+        <div class="mb-8 flex flex-wrap">
+          <div class="text-gray-400 text-sm mr-4">
+            2019-12-18 · 5 min read
+          </div>
+          
+          <a href="https://wherelse.cc/tag/pzG81SEzw/"
+            class="text-gray-700 text-sm border-b-2 border-dotted border-gray-200 hover:border-gray-600 transition-all duration-100 inline-flex mr-2">
+            <i class="ri-hashtag"></i>
+            矿渣
+          </a>
+          
+        </div>
+        <div class="markdown mb-16" v-pre>
+          <p>beike yun flash system</p>
+<!-- more -->
+<p>转载自hanwckf的博客</p>
+<h2 id="刷机方法">刷机方法</h2>
+<p>暂无免拆机刷机法，必须要拆机引出USB进行线刷</p>
+<p>刷机工具：<a href="https://pan.baidu.com/s/1aOAIZ3vyG8mgipj726Bhgg">https://pan.baidu.com/s/1aOAIZ3vyG8mgipj726Bhgg</a> 提取码: 7eee<br>
+固件发布：<a href="https://github.com/hanwckf/build-beikeyun/releases/latest">https://github.com/hanwckf/build-beikeyun/releases/latest</a></p>
+<h2 id="准备工作">准备工作</h2>
+<ol>
+<li>
+<p>去Github Release下载你喜欢的固件，解压xz包得到img镜像</p>
+</li>
+<li>
+<p>剪一根废旧的USB线，焊接到USB焊盘上，或者焊接一个排针在焊盘上，注意线序（可以从背面焊接，VCC可以不焊）</p>
+</li>
+<li>
+<p>进入maskrom模式</p>
+</li>
+</ol>
+<ul>
+<li>对于已经刷过第三方固件的机器，可按照本文后面的方法快速进入maskrom模式</li>
+<li>对于从未刷机的原厂固件，按照以下步骤操作以进入maskrom模式：将USB线连接到电脑，然后用镊子短接主板背面的maskrom触点，最后再接入12V电源，等待两秒钟后松开镊子。</li>
+</ul>
+<ol start="4">
+<li>下载安装线刷驱动 (DriverAssitant_v4.5.zip)和AndroidTool，然后运行AndroidTool，如果没有出现&quot;发现一个MASKROM设备&quot;的提示，请重新进行准备工作</li>
+</ol>
+<p>选择img镜像刷入即可（loader已经预先设置无需更改）</p>
+<ol start="5">
+<li>armbian默认root密码为1234，第一次登陆后会让你设置新密码</li>
+</ol>
+<h2 id="其他注意">其他注意</h2>
+<p>已经刷入Rock64的armbian固件后，可以在上电时长按主板正面的微动开关进入maskrom模式而无需短接触点，此时ttl输出如下（波特率：1500000）：</p>
+<pre><code class="language-shell">DDR version 1.13 20180428
+ID:0xFFF
+In
+SRX
+DDR3
+786MHz
+Bus Width=32 Col=10 Bank=8 Row=15 CS=1 Die Bus-Width=16 Size=1024MB
+ddrconfig:1
+OUT
+Boot1 Release Time: Feb  2 2018 15:41:39, version: 2.46
+ChipType = 0x11, 209
+SdmmcInit=2 0
+BootCapSize=2000
+UserCapSize=7456MB
+FwPartOffset=2000 , 2000
+SdmmcInit=0 2
+StorageInit ok = 19161
+Raw SecureMode = 0
+SecureInit read PBA: 0x4
+SecureInit read PBA: 0x404
+SecureInit read PBA: 0x804
+SecureInit read PBA: 0xc04
+SecureInit read PBA: 0x1004
+SecureInit ret = 0, SecureMode = 0
+LoadTrustBL
+No find bl30.bin
+No find bl32.bin
+Load uboot, ReadLba = 2000
+Load OK, addr=0x200000, size=0xa4e00
+RunBL31 0x10000
+NOTICE:  BL31: v1.3(debug):f947c7e
+NOTICE:  BL31: Built : 20:41:40, Nov 26 2018
+NOTICE:  BL31:Rockchip release version: v1.3
+INFO:    ARM GICv2 driver initialized
+INFO:    Using rkfiq sec cpu_context!
+INFO:    boot cpu mask: 1
+INFO:    plat_rockchip_pmu_init: pd status 0xe
+INFO:    BL31: Initializing runtime services
+INFO:    BL31: Preparing for EL3 exit to normal world
+INFO:    Entry point address = 0x200000
+INFO:    SPSR = 0x3c9
+
+
+U-Boot 2017.09-armbian (Feb 08 2019 - 11:49:32 +0100)
+
+Model: Pine64 Rock64
+DRAM:  1022 MiB
+MMC:   rksdmmc@ff520000: 0, rksdmmc@ff500000: 1
+SF: unrecognized JEDEC id bytes: ff, ff, ff
+*** Warning - spi_flash_probe_bus_cs() failed, using default environment
+
+In:    serial@ff130000
+Out:   serial@ff130000
+Err:   serial@ff130000
+Model: Pine64 Rock64
+misc_init_r
+cpuid=55524b50303930323200000000192205
+serial=433a170c2728fd1
+rockchip_dnl_mode = 1 mode
+LED 'power' operation failed (err=-121)
+LED 'power' operation failed (err=-121)
+rockchip_dnl_mode = 2 mode
+LED 'power' operation failed (err=-121)
+LED 'power' operation failed (err=-121)
+LED 'power' operation failed (err=-121)
+LED 'power' operation failed (err=-121)
+rockchip_dnl_mode = 3 mode
+LED 'power' operation failed (err=-121)
+LED 'power' operation failed (err=-121)
+LED 'power' operation failed (err=-121)
+LED 'power' operation failed (err=-121)
+LED 'power' operation failed (err=-121)
+LED 'power' operation failed (err=-121)
+rockchip_dnl_mode = 4 mode
+LED 'power' operation failed (err=-121)
+LED 'power' operation failed (err=-121)
+LED 'power' operation failed (err=-121)
+LED 'power' operation failed (err=-121)
+LED 'power' operation failed (err=-121)
+LED 'power' operation failed (err=-121)
+LED 'power' operation failed (err=-121)
+LED 'power' operation failed (err=-121)
+LED 'power' operation failed (err=-121)
+LED 'standby' operation failed (err=-121)
+entering maskrom mode...
+</code></pre>
+<p>对于已经刷入任一第三方固件的机器，可以采用以下方法进入maskrom模式：<br>
+接好TTL（波特率：1500000），上电后在U-boot倒计时结束前按任意键进入U-boot命令行，输入以下指令擦除emmc前面的内容：</p>
+<pre><code class="language-shell">mmc erase 0 100
+</code></pre>
+<p>然后复位</p>
+<pre><code class="language-shell">reset
+</code></pre>
+<p>复位后就进入maskrom模式了</p>
+<p>作者：libgcc<br>
+链接：https://www.jianshu.com/p/21d3954231dc<br>
+来源：简书</p>
+
+        </div>
+
+        <!-- copyright -->
+        <div class="copyright">
+          <div class="container">
+            <p><small class="text-gray-400">
+                The copyright of the articles on this website is owned by me. Without consent, it is not allowed to copy without permission. Reasonable reprints are welcome to indicate the source of the quotation. Please leave a message for reprinting pictures. The content of the article is only used for technical research and exploration, and shall not be used for illegal purposes.
+             </small></p>
+          </div>
+        </div>
+
+        <div class="text-center text-gray-300">
+          
+          <span id="/post/bei-ke-yun-p1-shua-ji/" class="leancloud_visitors views-counter meta-info">
+            <a class="text-center">📋阅读量:</a>
+            <span id="twikoo_visitors">0</span>
+          </span>
+          
+        </div>
+      </div>
+
+      
+
+      
+        <button type="button" class="collapsible">
+          <i class="ri-message-2-line"></i>
+        </button>
+        <div class="tcomment rounded-lg px-4 py-4">
+          <div id="tcomment"></div>
+        </div>  
+      
+
+      <footer class="py-12 text-center px-4 md:px-0" v-pre>
+  <a href="/atom.xml" target="_blank">RSS
+</a> | Powered by <a href="https://github.com/getgridea/gridea" 
+target="_blank">Gridea</a> &nbsp;&nbsp;
+<br>
+©2020 Wherelse All Right Reserved 
+</footer>
+
+    </div>
+
+
+    <!-- TOC Container -->
+    <div id="toc"
+      class="fixed right-0 bottom-0 mb-20 mr-6 shadow w-12 h-12 rounded-lg flex justify-center items-center z-10 cursor-pointer bg-white dark:bg-gray-500 dark:text-gray-200 hover:shadow-lg transition-all animated fadeInRight"
+      @click="showToc = true">
+      <i class="ri-menu-line font-bold"></i>
+    </div>
+
+    <div
+      class="fixed right-0 top-0 bottom-0 overflow-y-auto w-64 rounded-lg p-4 m-4  shadow-md bg-white dark:bg-gray-800 p-4 border-l border-gray-100 dark:border-gray-600 z-10 transition-fast"
+      :class="{ '-mr-64': !showToc }">
+      <div class="flex mb-4 justify-end">
+        <div
+          class="w-8 h-8 inline-flex justify-center items-center rounded-full cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-fast"
+          @click="showToc = false">
+          <i class="ri-close-circle-fill"></i>
+        </div>
+      </div>
+      <div class="post-toc-container"><ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E5%88%B7%E6%9C%BA%E6%96%B9%E6%B3%95">刷机方法</a></li>
+<li><a href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C">准备工作</a></li>
+<li><a href="#%E5%85%B6%E4%BB%96%E6%B3%A8%E6%84%8F">其他注意</a></li>
+</ul>
+</li>
+</ul>
+</div>
+    </div>
+
+    <!-- Back to top -->
+    <div
+      class="fixed right-0 bottom-0 mb-4 mr-6 shadow w-12 h-12 rounded-lg flex justify-center items-center z-10 cursor-pointer bg-white hover:shadow-lg transition-all dark:bg-gray-500 dark:text-gray-200"
+      @click="backToUp" v-show="scrolled">
+      <i class="ri-arrow-up-circle-fill"></i>
+    </div>
+  </div>
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+  <!-- Background of PhotoSwipe. 
+        It's a separate element as animating opacity is faster than rgba(). -->
+  <div class="pswp__bg">
+  </div>
+  <!-- Slides wrapper with overflow:hidden. -->
+  <div class="pswp__scroll-wrap">
+    <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+    <div class="pswp__container">
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+    </div>
+    <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+    <div class="pswp__ui pswp__ui--hidden">
+      <div class="pswp__top-bar">
+        <!--  Controls are self-explanatory. Order can be changed. -->
+        <div class="pswp__counter">
+        </div>
+        <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+        <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+        <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+        <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+        <!-- element will get class pswp__preloader--active when preloader is running -->
+        <div class="pswp__preloader">
+          <div class="pswp__preloader__icn">
+            <div class="pswp__preloader__cut">
+              <div class="pswp__preloader__donut">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+        <div class="pswp__share-tooltip">
+        </div>
+      </div>
+      <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+      </button>
+      <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+      </button>
+      <div class="pswp__caption">
+        <div class="pswp__caption__center">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>-->
+  <script src="https://wherelse.cc/media/scripts/vue.min.js"></script>
+  <script src="https://wherelse.cc/media/scripts/main.js"></script>
+
+  <!--根据内容动态加载-->
+  <script type="text/javascript">
+    window.onload = function () {
+      //根据内容动态加载mermiad
+      if (document.getElementsByClassName("language-mermaid").length != 0) {
+        console.log("find mermaid")
+        for (let x of document.getElementsByClassName("language-mermaid")) {
+          if (x.nodeName == "CODE") {
+            let m = document.createElement("div");
+            m.classList.add("mermaid");
+            m.textContent = x.textContent;
+            x.parentNode.insertAdjacentElement("beforebegin", m);
+          }
+        }
+        let script = document.createElement('script');
+        defer = "defer";
+        script.src =
+          "https://wherelse.cc/media/scripts/mermaid.min.js";
+        document.body.append(script);
+        script.onload = function () {
+          mermaid.initialize({
+            startOnLoad: false
+          });
+          mermaid.init();
+          console.log("mermaid init done");
+        }
+      }
+
+      //bilibili 视频支持
+      var content = document.getElementsByClassName("language-bilibili")[0];
+      if (content != null) {
+        var m = document.createElement("div");
+        m.classList.add("bilibili-video");
+        m.innerHTML = content.textContent;
+        content.parentNode.insertAdjacentElement("beforeend", m);
+      }
+      //katex自适应加载
+      if (document.getElementsByClassName("katex").length != 0) {
+        let script = document.createElement('script');
+        script.defer = "defer"
+        script.src =
+          "https://wherelse.cc/media/scripts/katex.min.js";
+        document.body.append(script);
+        script = document.createElement('script');
+        script.defer = "defer"
+        script.src =
+          "https://wherelse.cc/media/scripts/copy-tex.min.js";
+        document.body.append(script);
+        let link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.defer = "defer"
+        link.href =
+          "https://wherelse.cc/media/css/katex.min.css";
+        document.body.append(link);
+        link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.defer = "defer"
+        link.href =
+          "https://wherelse.cc/media/css/copy-tex.css";
+        document.body.append(link);
+      }
+
+      script = document.createElement('script');
+      script.defer = "defer"
+      script.src =
+        "https://cdn.staticfile.org/twikoo/1.6.7/twikoo.all.min.js";
+      document.body.append(script);
+      script.onload = function () {
+        let scripts = document.createElement('script');
+        scripts.append(document.createTextNode(
+          " twikoo.init({envId: \"https://twikoo.vlieo.com\",el: \"#tcomment\",});"));
+        var parentDiv = document.getElementById("toc").parentNode;
+        var sp = document.getElementById("toc");
+        parentDiv.insertBefore(scripts, sp);
+      }
+    }
+  </script>
+  <script>
+    comment_collapse();
+  </script>
+
+ <script>
+    //拿到预览框架，也就是上面的html代码
+    var pswpElement = document.querySelectorAll(".pswp")[0];
+    //定义图片数组变量
+    var imgitems;
+    /**
+     * 用于显示预览界面
+     * @param index 图片数组下标
+     */
+    function viewImg(index) {
+      //其它选项这里不做过多阐述，详情见官网
+      var pswpoptions = {
+        index: parseInt(index, 10), // 开始幻灯片索引。0是第一张幻灯片。必须是整数，而不是字符串。
+        bgOpacity: 0.7, // 背景透明度，0-1
+        maxSpreadZoom: 3, // 缩放级别，不要太大
+      };
+      //初始化并打开PhotoSwipe，pswpElement对应上面预览框架，PhotoSwipeUI_Default为皮肤，imgitems为图片数组，pswpoptions为选项
+      var gallery = new PhotoSwipe(
+        pswpElement,
+        PhotoSwipeUI_Default,
+        imgitems,
+        pswpoptions
+      );
+      gallery.init();
+    }
+    /**
+     * 用于添加图片点击事件
+     * @param img 图片元素
+     * @param index 所属下标（在imgitems中的位置）
+     */
+    function addImgClick(img, index) {
+      img.onclick = function () {
+        viewImg(index);
+      };
+    }
+    /**
+     * 轮询所有图片，获取src、width、height等数据，加入imgitems，并给图片元素添加事件
+     * 最好在onload中执行该方法，本站因放在最底部，所以直接初始化
+     * 异步加载图片可在图片元素创建完成后调用此方法
+     */
+    function initImg() {
+      //重置图片数组
+      imgitems = [];
+      //查找class:markdown 下的所有img元素并遍历
+      var imgs = document.querySelectorAll(".markdown img");
+      for (var i = 0; i < imgs.length; i++) {
+        var img = imgs[i];
+        //本站相册初始为loading图片，真实图片放在data-src
+        var ds = img.getAttribute("src");
+        //创建image对象，用于获取图片宽高
+        var imgtemp = new Image();
+        //判断是否存在data-src
+        if (ds != null && ds.length > 0) {
+          imgtemp.src = ds;
+        } else {
+          imgtemp.src = img.src;
+        }
+        //判断是否存在缓存
+        if (imgtemp.complete) {
+          var imgobj = {
+            src: imgtemp.src,
+            w: imgtemp.width,
+            h: imgtemp.height,
+          };
+          imgitems[i] = imgobj;
+          addImgClick(img, i);
+        } else {
+          // console.log("进来了2");
+          imgtemp.index = i;
+          imgtemp.img = img;
+          imgtemp.onload = function () {
+            var imgobj = {
+              src: this.src,
+              w: this.width,
+              h: this.height,
+            };
+            //不要使用push，因为onload前后顺序会不同
+            imgitems[this.index] = imgobj;
+            //添加点击事件
+            addImgClick(this.img, this.index);
+          };
+        }
+      }
+    }
+    //初始化
+    initImg();
+  </script>
+</body>
+
+</html>

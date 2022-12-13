@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>FPGA秋招学习笔记整理（2） -
+    Wherelse Blog</title>
+<meta name="ThemeName" content="Gridea Theme Rocky by EryouHao" />
+<meta name="referrer" content="always" />
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<link rel="manifest" href="/site.webmanifest">
+<!-- <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet preload" as="style"> -->
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"> -->
+<!-- <link rel="stylesheet" href="https://cdn.staticfile.org/animate.css/3.7.2/animate.min.css" as="style" /> -->
+<link href="/media/css/remixicon.css" rel="stylesheet" as="style">
+<link rel="stylesheet" href="/media/css/tailwind.css">
+<link rel="stylesheet" href="/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="FPGA秋招学习笔记整理（2） -
+    Wherelse Blog - Atom Feed" href="/atom.xml">
+
+  
+  <script defer src="https://www.googletagmanager.com/gtag/js?id=G-4449R7TQN5"></script>
+  <script>
+  var host = window.location.hostname;
+  if(host != "localhost")
+  {
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4449R7TQN5');
+  }
+  </script>
+    
+
+  <!-- <title name="FPGA秋招学习笔记整理（2）"> </title> -->
+  <meta name="socialText" content="记录学习与折腾，网络，博客，嵌入式相关；Record learning and toss, network, blog, embedded related" />
+  <meta name="description" content="FPGA autumn recruitment study notes (2): FPGA hardware composition and logic circuit
+FPGA秋招学习笔记整理（2）：FPGA硬件构成与逻辑电路
+
+FPGA..." />
+  <meta name="referrer" content="always" />
+  <link rel="canonical" href="https://wherelse.cc/post/fpga-autumn-recruit-study-notes-2/" />
+  <link rel="preconnect" href="https://cdn.staticfile.org" />
+  <script src="https://wherelse.cc/media/scripts/photoswipe.min.js"></script>
+  <script src="https://wherelse.cc/media/scripts/photoswipe-ui-default.min.js"></script>
+  <link rel="stylesheet" href="https://wherelse.cc/media/css/photoswipe.css" as="style" />
+  <link rel="stylesheet" href="https://wherelse.cc/media/css/default-skin.css" as="style" />
+  <!-- Code Highlight -->
+  
+  <script src="https://wherelse.cc/media/prism.js"></script>
+  <script>
+    Prism.highlightAll();
+  </script>
+  
+  
+  <link rel="stylesheet preload"
+    href="https://wherelse.cc/media/css/prism-github.css"
+    as="style" />
+  
+</head>
+
+<body>
+  <div class="antialiased flex flex-col min-h-screen" id="app">
+    <a href="https://wherelse.cc"
+      class="fixed top-0 left-0 mt-4 bg-black text-white dark:text-gray-700 dark:bg-yellow-50 dark:hover:bg-black dark:hover:text-white inline-flex p-2 pl-8 hover:text-gray-700 hover:bg-yellow-50 font-bold z-10 transition-fast animated fadeInLeft">
+      Wherelse Blog
+    </a>
+    <div class="max-w-4xl w-full mx-auto">
+      <div
+        class="shadow-box bg-white dark:bg-gray-600 rounded-lg pt-32 md:pt-32 px-4 md:px-8 pb-8 animated fadeIn mb-8">
+        <h1 class="text-5xl font-semibold leading-normal pb-8 mb-8 border-b-8 border-gray-700">
+          FPGA秋招学习笔记整理（2）
+        </h1>
+        
+        <div class="mb-8 flex flex-wrap">
+          <div class="text-gray-400 text-sm mr-4">
+            2021-10-13 · 18 min read
+          </div>
+          
+          <a href="https://wherelse.cc/tag/mkjIAt7jy/"
+            class="text-gray-700 text-sm border-b-2 border-dotted border-gray-200 hover:border-gray-600 transition-all duration-100 inline-flex mr-2">
+            <i class="ri-hashtag"></i>
+            FPGA
+          </a>
+          
+          <a href="https://wherelse.cc/tag/bVOkvqw2z/"
+            class="text-gray-700 text-sm border-b-2 border-dotted border-gray-200 hover:border-gray-600 transition-all duration-100 inline-flex mr-2">
+            <i class="ri-hashtag"></i>
+            笔记
+          </a>
+          
+        </div>
+        <div class="markdown mb-16" v-pre>
+          <p>FPGA autumn recruitment study notes (2): FPGA hardware composition and logic circuit<br>
+FPGA秋招学习笔记整理（2）：FPGA硬件构成与逻辑电路</p>
+<!-- more -->
+<h2 id="fpga的组成">FPGA的组成</h2>
+<p>包括可编程输入/输出单元、基本可编程逻辑单元、嵌入式块RAM、丰富的布线资源、底层嵌入功能单元和内嵌专用硬核。</p>
+<p>可编程输入/输出单元作用是为FPGA提供内部资源与外围电路之间的接口，提供输入缓冲、输出驱动、接口电平转换、阻抗匹配、延迟控制等功能。高端FPGA的输入/输出模块还提供了DDR输入/输出接口、高速串行接口（SERDES)。<br>
+嵌入式块RAM，大多数FPGA都有内嵌的块RAM。嵌入式块RAM可以配置为单端口RAM、双端口RAM、伪双端口RAM、CAM、FIFO等存储结构。<br>
+丰富的布线资源，在设计过程中，由布局布线器自动根据输入的逻辑网表的拓扑结构和约束条件选择可用的布线资源连通所用的底层单元模块。</p>
+<p>FPGA的基本可编程逻辑单元是由查找表（LUT）和寄存器（Register）组成的，查找表完成纯组合逻辑功能。比较经典的基本可编程单元的配置是一个寄存器加一个查找表。</p>
+<p>LUT 本质上是一个SRAM，里面存储的数据类似于真值表。对于4输入的LUT而言，实际上就是4位地址位，一位数据位的存储器，即 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><msup><mn>2</mn><mn>4</mn></msup><mo>)</mo><mo>∗</mo><mn>1</mn><mo>=</mo><mn>16</mn></mrow><annotation encoding="application/x-tex">(2^4)*1 = 16</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">4</span></span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">6</span></span></span></span>，能够存储16位数据。6输入的LUT相当于是6位地址线一位数据位，能够存储64bit的数据。</p>
+<p>FPGA芯片内有两种存储器资源：一种是BLOCK RAM（嵌入式块RAM）,另一种是由LUT配置成的内部存储器（也就是分布式RAM）</p>
+<h2 id="锁存器latch和触发器flip-flop">锁存器（latch）和触发器（flip-flop）</h2>
+<p>锁存器（latch）是电平触发的存储单元，数据存储的动作取决于输入时钟（或者使能）信号的电平值，仅当锁存器处于使能状态时，输出才会随着数据输入发生变化。<br>
+触发器（Flip-Flop，简写为FF）也叫双稳态门，又称双稳态触发器，是一种可以在两种状态下运行的数字逻辑电路。触发器一直保持它们的状态，直到它们收到输入脉冲，又称为触发。当收到输入脉冲时，触发器输出就会根据规则改变状态，然后保持这种状态直到收到下一个触发。触发器对脉冲边沿敏感，其状态只在时钟脉冲的上升沿或下降沿的瞬间改变。</p>
+<h3 id="锁存器与触发器的区别">锁存器与触发器的区别</h3>
+<p>锁存器和触发器是具有记忆功能的二进制存储器件，是组成各种时序逻辑电路的基本器件之一。<br>
+锁存器（ latch）是电平触发的存储单元，数据存储的动作取决于输入时钟（或者使能）信号的电平值，尽当锁存器处于使能状态时，输出才会随着数据输入发生变化。触发器（Flip-Flop）也是数字电路中的一种具有记忆功能的逻辑元件。<br>
+触发器对脉冲边沿敏感的存储单元电路，它只在触发脉冲的上升沿（或下降沿）瞬间改变其状态。<br>
+其区别在于，latch同其所有的输入信号相关，当输入信号变化时latch就变化，没有时钟端；flip-flop受时钟控制，只有在时钟触发时才采样当前的输入，产生输出。</p>
+<h2 id="组合逻辑电路与时序逻辑电路">组合逻辑电路与时序逻辑电路</h2>
+<p>数字电路根据逻辑功能的不同特点，可以分成两大类：一类叫做组合逻辑电路，简称组合电路或组合逻辑；另一类叫做时序逻辑电路，简称时序电路或时序逻辑。</p>
+<p>组合逻辑电路在逻辑功能上的特点是任意时刻的输出仅仅取决于该时刻的输入，与电路原来的状态无关。 组合逻辑电路没有记忆功能，没有反馈环路。时序逻辑电路在逻辑功能上的特点是任意时刻的输出不仅取决于当时的输入信号，而且还取决于电路原来的状态，或者说，还与以前的输入有关。组合逻辑的逻辑级数不能太长，逻辑级数太长就会导致总的延迟太大。</p>
+<p>时序电路是有记忆功能的， 它在任何时刻的输出，不仅与该时刻的输入信号有关，而且还与该时刻以前的输入信号有关。</p>
+<p>时序逻辑电路和组合逻辑电路并不是完全割裂开来的，而更像是一种包含关系，即时序逻辑电路中肯定有组合逻辑的成分存在，但组合逻辑电路中却不可能有时序逻辑的成分存在</p>
+<h2 id="组合逻辑电路的竞争与冒险">组合逻辑电路的竞争与冒险</h2>
+<p>数字电路中的竞争与冒险出现在组合逻辑电路中。 组合逻辑电路中，同一信号经不同的路径传输后，到达电路中某一会合点的时间有先有后，这种现象称为逻辑竞争，而因此产生输出干扰脉冲的现象称为冒险。</p>
+<h3 id="产生原因">产生原因</h3>
+<p>信号在组合逻辑电路内部通过连线和逻辑单元时，都有一定的延时。延时的大小与连线的长短和逻辑单元的数目有关，同时还受器件的制造工艺、工作电压、温度等条件的影响。此外，信号的高低电平转换也需要一定的过渡时间。由于存在这两方面因素，多路信号的电平值发生变化时，在信号变化的瞬间，组合逻辑的输出有先后顺序，并不是同时变化。<br>
+由于竞争往往会出现一些不正确的尖峰信号，这些尖峰信号称为“毛刺”。 如果一个组合逻辑电路中有“毛刺”出现，就说明该电路存在“冒险”。</p>
+<h3 id="解决办法">解决办法</h3>
+<p>消除竞争冒险常用方法有：增加冗余项、接入滤波电容和引入封锁脉冲或选通脉冲等。</p>
+<ul>
+<li>增加冗余项消除竞争冒险，增加冗余项的方法是通过在函数表达式中“加”上多余的“与”项或“乘”上多余的“或”项，使原函数不可能在某种条件下化成X+X或X·X的形式，从而消除可能产生的竞争冒险，冗余项的选择可用代数法或卡诺图法。</li>
+<li>输出端并联电容器消除竞争冒险，竞争冒险所产生的干扰脉冲一般很窄。逻辑电路在较慢速度下工作时，可以在输出端并接一个不大的滤波电容。并用门电路的输出电阻和电容器构成低通滤波电路，对很窄的尖峰脉冲（其频率很高）起到了平波的作用。这时在输出端便不会出现逻辑错误。接人滤波电容的方法简单易行，但输出电压波形随之变化，故只适用于对输出波形前后沿无严格要求的场合。</li>
+<li>引入封锁脉冲消除竞争冒险，封锁脉冲是在输入信号发生竞争的时间内，引入一个脉冲将可能产生尖峰干扰脉冲的门封锁住，从而消除竞争冒险。封锁脉冲应在输入信号转换前到来，转换结束后消失。</li>
+<li>加选通脉冲消除竞争冒险，选通脉冲是当电路输出端达到新的稳定状态之后，引人选通脉冲，从而使输出信号是正确的逻辑信号而不包含干扰脉冲。引入封锁脉冲或者选通脉冲的方法比较简单，而且不增加器件数目。但这种方法有一个局限性，就是必须找到一个合适的封锁脉冲或选通脉冲。</li>
+<li>用格雷码替代二进制代码消除竞争冒险，确保每一时刻只有一个代码变化</li>
+</ul>
+<h2 id="同步逻辑电路与异步逻辑电路">同步逻辑电路与异步逻辑电路</h2>
+<p>同步逻辑电路：存储电路中所有触发器的时钟输入端都接同一个时钟脉冲源，因而所有触发器的状态的变化都与所加的时钟脉冲信号同步。<br>
+异步逻辑电路：电路没有统一的时钟，有些触发器的时钟输入端与时钟脉冲源相连，只有这些触发器的状态变化与时钟脉冲同步，而其他的触发器的状态变化不与时钟脉冲同步。</p>
+<h2 id="软核-固核和硬核">软核、固核和硬核</h2>
+<h3 id="什么是ip核">什么是IP核</h3>
+<p>IP核是具有知识产权的集成电路芯核总称，是经过反复验证过的、具有特定功能的宏模块，与芯片制造工艺无关，可以移植到不同的半导体工艺中。到了SOC 阶段，IP 核设计已成为ASIC 电路设计公司和FPGA 提供商的重要任务，也是其实力体现。对于FPGA 开发软件，其提供的IP 核越丰富，用户的设计就越方便，其市场占用率就越高。目前，IP 核已经变成系统设计的基本单元，并作为独立设计成果被交换、转让和销售。</p>
+<h3 id="核的分类">核的分类</h3>
+<p>从IP核的提供方式上，通常将其分为软核、固核和硬核这3类。从完成IP核所花费的成本来讲，硬核代价最大； 从使用灵活性来讲，软核的可复用使用性最高。与软核实现方式相比，硬核可以把功耗降低5~10 倍, 节约将近90%的逻辑资源。</p>
+<h3 id="软核">软核</h3>
+<p>软核(Soft IP Core) : 软核在EDA 设计领域指的是综合之前的寄存器传输级(RTL) 模型；具体在FPGA 设计中指的是对电路的硬件语言描述，包括逻辑描述、网表和帮助文档等。软核只经过功能仿真，需要经过综合以及布局布线才能使用。其优点是灵活性高、可移植性强，允许用户自配置；缺点是对模块的预测性较低，在后续设计中存在发生错误的可能性，有一定的设计风险。软核是IP 核应用最广泛的形式。</p>
+<h3 id="固核">固核</h3>
+<p>固核(Firm IP Core) :固核在EDA 设计领域指的是带有平面规划信息的网表；具体在FPGA 设计中可以看做带有布局规划的软核，通常以RTL 代码和对应具体工艺网表的混合形式提供。将RTL 描述结合具体标准单元库进行综合优化设计，形成门级网表，再通过布局布线工具即可使用。和软核相比，固核的设计灵活性稍差，但在可靠性上有较大提高。 目前，固核也是IP 核的主流形式之一。</p>
+<h3 id="硬核">硬核</h3>
+<p>硬核 (Hard IP Core) :硬核在EDA 设计领域指经过验证的设计版图；具体在FPGA 设计中指布局和工艺固定、经过前端和后端验证的设计，设计人员不能对其修改。不能修改的原因有两个：首先是系统设计对各个模块的时序要求很严格，不允许打乱已有的物理版图；其次是保护知识产权的要求，不允许设计人员对其有任何改动。IP 硬核不允许修改的特点使其复用有一定的困难，因此只能用于某些特定应用，使用范围较窄。</p>
+<h2 id="fpga的常用电平标准">FPGA的常用电平标准</h2>
+<p>常用的电平标准有:<br>
+TTL、CMOS、LVTTL、LVCMOS、ECL、PECL、LVPECL、RS232、RS485等，还有一些速度比较高的LVDS、GTL、PGTL、CML、HSTL、SSTL等。</p>
+<ol>
+<li>
+<p><strong>TTL</strong>：Transistor-Transistor Logic 三极管结构。<br>
+<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>V</mi><mi>C</mi><mi>C</mi><mo>=</mo><mn>5</mn><mi>V</mi><mo separator="true">,</mo><msub><mi>V</mi><mrow><mi>O</mi><mi>H</mi></mrow></msub><mo>≥</mo><mn>2.4</mn><mi>V</mi><mo separator="true">,</mo><msub><mi>V</mi><mrow><mi>O</mi><mi>L</mi></mrow></msub><mo>≤</mo><mn>0.5</mn><mi>V</mi><mo separator="true">,</mo><msub><mi>V</mi><mrow><mi>I</mi><mi>H</mi></mrow></msub><mo>=</mo><mn>2</mn><mi>V</mi><mo separator="true">,</mo><msub><mi>V</mi><mrow><mi>I</mi><mi>L</mi></mrow></msub><mo>≤</mo><mn>0.8</mn><mi>V</mi></mrow><annotation encoding="application/x-tex">VCC=5V,V_{OH} \geq 2.4V,V_{OL}\leq 0.5V,V_{IH}=2V,V_{IL}\leq 0.8V</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">5</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">O</span><span class="mord mathdefault mtight" style="margin-right:0.08125em;">H</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">2</span><span class="mord">.</span><span class="mord">4</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">O</span><span class="mord mathdefault mtight">L</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">5</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.07847em;">I</span><span class="mord mathdefault mtight" style="margin-right:0.08125em;">H</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">2</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.07847em;">I</span><span class="mord mathdefault mtight">L</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">8</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span></span></span></span><br>
+因为2.4V与5V之间还有很大空闲，对改善噪声容限并没什么好处，又会白白增大系统功耗，还会 影响速度。所以后来就把一部分“砍”掉了,也就是LVTTL。</p>
+</li>
+<li>
+<p><strong>LVTTL</strong> 又分3.3V、2.5V以及更低电压的 LVTTL (Low Voltage TTL)。<br>
+3.3V LVTTL：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>V</mi><mi>C</mi><mi>C</mi><mo>=</mo><mn>3.3</mn><mi>V</mi><mo separator="true">,</mo><msub><mi>V</mi><mrow><mi>O</mi><mi>H</mi></mrow></msub><mo>≥</mo><mn>2.4</mn><mi>V</mi><mo separator="true">,</mo><msub><mi>V</mi><mrow><mi>O</mi><mi>L</mi></mrow></msub><mo>≤</mo><mn>0.4</mn><mi>V</mi><mo separator="true">,</mo><msub><mi>V</mi><mrow><mi>I</mi><mi>H</mi></mrow></msub><mo>≥</mo><mn>2</mn><mi>V</mi><mo separator="true">,</mo><msub><mi>V</mi><mrow><mi>I</mi><mi>L</mi></mrow></msub><mo>≤</mo><mn>0.8</mn><mi>V</mi></mrow><annotation encoding="application/x-tex">VCC=3.3V,V_{OH}\geq 2.4V,V_{OL}\leq 0.4V,V_{IH}\geq 2V,V_{IL}\leq 0.8V</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">3</span><span class="mord">.</span><span class="mord">3</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">O</span><span class="mord mathdefault mtight" style="margin-right:0.08125em;">H</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">2</span><span class="mord">.</span><span class="mord">4</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">O</span><span class="mord mathdefault mtight">L</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">4</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.07847em;">I</span><span class="mord mathdefault mtight" style="margin-right:0.08125em;">H</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">2</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.07847em;">I</span><span class="mord mathdefault mtight">L</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">8</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span></span></span></span><br>
+2.5V LVTTL：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>V</mi><mi>C</mi><mi>C</mi><mo>=</mo><mn>2.5</mn><mi>V</mi><mo separator="true">,</mo><msub><mi>V</mi><mrow><mi>O</mi><mi>H</mi></mrow></msub><mo>≥</mo><mn>2.0</mn><mi>V</mi><mo separator="true">,</mo><msub><mi>V</mi><mrow><mi>O</mi><mi>L</mi></mrow></msub><mo>≤</mo><mn>0.2</mn><mi>V</mi><mo separator="true">,</mo><msub><mi>V</mi><mrow><mi>I</mi><mi>H</mi></mrow></msub><mo>≥</mo><mn>1.7</mn><mi>V</mi><mo separator="true">,</mo><msub><mi>V</mi><mrow><mi>I</mi><mi>L</mi></mrow></msub><mo>≤</mo><mn>0.7</mn><mi>V</mi></mrow><annotation encoding="application/x-tex">VCC=2.5V,V_{OH}\geq 2.0V,V_{OL}\leq 0.2V,V_{IH}\geq 1.7V,V_{IL}\leq 0.7V</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">2</span><span class="mord">.</span><span class="mord">5</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">O</span><span class="mord mathdefault mtight" style="margin-right:0.08125em;">H</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">2</span><span class="mord">.</span><span class="mord">0</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">O</span><span class="mord mathdefault mtight">L</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">2</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.07847em;">I</span><span class="mord mathdefault mtight" style="margin-right:0.08125em;">H</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">1</span><span class="mord">.</span><span class="mord">7</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.07847em;">I</span><span class="mord mathdefault mtight">L</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">7</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span></span></span></span><br>
+TTL使用注意：  TTL电平一般过冲都会比较严重，可能在始端串22欧或33欧电阻； TTL电平输入脚悬空时是内部认为是高电平。要下拉的话应用1k以下电阻下拉。 TTL输出不能驱动CMOS输入。</p>
+</li>
+<li>
+<p><strong>CMOS</strong>：Complementary Metal Oxide Semiconductor PMOS NMOS。<br>
+<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>V</mi><mi>C</mi><mi>C</mi><mo>=</mo><mn>5</mn><mi>V</mi><mo separator="true">,</mo><msub><mi>V</mi><mrow><mi>O</mi><mi>H</mi></mrow></msub><mo>≥</mo><mn>4.45</mn><mi>V</mi><mo separator="true">,</mo><msub><mi>V</mi><mrow><mi>O</mi><mi>L</mi></mrow></msub><mo>≤</mo><mn>0.5</mn><mi>V</mi><mo separator="true">,</mo><msub><mi>V</mi><mrow><mi>I</mi><mi>H</mi></mrow></msub><mo>≥</mo><mn>3.5</mn><mi>V</mi><mo separator="true">,</mo><msub><mi>V</mi><mrow><mi>I</mi><mi>L</mi></mrow></msub><mo>≤</mo><mn>1.5</mn><mi>V</mi></mrow><annotation encoding="application/x-tex">VCC=5V,V_{OH}\geq 4.45V,V_{OL}\leq 0.5V,V_{IH}\geq 3.5V,V
+_{IL}\leq 1.5V</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">5</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">O</span><span class="mord mathdefault mtight" style="margin-right:0.08125em;">H</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">4</span><span class="mord">.</span><span class="mord">4</span><span class="mord">5</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">O</span><span class="mord mathdefault mtight">L</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">5</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.07847em;">I</span><span class="mord mathdefault mtight" style="margin-right:0.08125em;">H</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">3</span><span class="mord">.</span><span class="mord">5</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.07847em;">I</span><span class="mord mathdefault mtight">L</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">.</span><span class="mord">5</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span></span></span></span> CMOS相对TTL有了更大的噪声容限，输入阻抗远大于TTL输入阻抗。</p>
+</li>
+<li>
+<p><strong>LVCMOS</strong>: 对应3.3V LVTTL，出现了LVCMOS，可以与3.3V的LVTTL直接相互驱动。<br>
+3.3V LVCMOS：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>V</mi><mi>C</mi><mi>C</mi><mo>=</mo><mn>3.3</mn><mi>V</mi><mo separator="true">,</mo><msub><mi>V</mi><mrow><mi>O</mi><mi>H</mi></mrow></msub><mo>≥</mo><mn>3.2</mn><mi>V</mi><mo separator="true">,</mo><msub><mi>V</mi><mrow><mi>O</mi><mi>L</mi></mrow></msub><mo>≤</mo><mn>0.1</mn><mi>V</mi><mo separator="true">,</mo><msub><mi>V</mi><mrow><mi>I</mi><mi>H</mi></mrow></msub><mo>≥</mo><mn>2.0</mn><mi>V</mi><mo separator="true">,</mo><msub><mi>V</mi><mrow><mi>I</mi><mi>L</mi></mrow></msub><mo>≤</mo><mn>0.7</mn><mi>V</mi></mrow><annotation encoding="application/x-tex">VCC=3.3V,V_{OH}\geq 3.2V,V_{OL}\leq 0.1V,V_{IH}\geq 2.0V,V_{IL}\leq 0.7V</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">3</span><span class="mord">.</span><span class="mord">3</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">O</span><span class="mord mathdefault mtight" style="margin-right:0.08125em;">H</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">3</span><span class="mord">.</span><span class="mord">2</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">O</span><span class="mord mathdefault mtight">L</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">1</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.07847em;">I</span><span class="mord mathdefault mtight" style="margin-right:0.08125em;">H</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">2</span><span class="mord">.</span><span class="mord">0</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.07847em;">I</span><span class="mord mathdefault mtight">L</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">7</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span></span></span></span><br>
+2.5V LVCMOS：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>V</mi><mi>C</mi><mi>C</mi><mo>=</mo><mn>2.5</mn><mi>V</mi><mo separator="true">,</mo><msub><mi>V</mi><mrow><mi>O</mi><mi>H</mi></mrow></msub><mo>≥</mo><mn>2</mn><mi>V</mi><mo separator="true">,</mo><msub><mi>V</mi><mrow><mi>O</mi><mi>L</mi></mrow></msub><mo>≤</mo><mn>0.1</mn><mi>V</mi><mo separator="true">,</mo><msub><mi>V</mi><mrow><mi>I</mi><mi>H</mi></mrow></msub><mo>≥</mo><mn>1.7</mn><mi>V</mi><mo separator="true">,</mo><msub><mi>V</mi><mrow><mi>I</mi><mi>L</mi></mrow></msub><mo>≤</mo><mn>0.7</mn><mi>V</mi></mrow><annotation encoding="application/x-tex">VCC=2.5V,V_{OH}\geq 2V,V_{OL}\leq 0.1V,V_{IH}\geq 1.7V,V_{IL}\leq 0.7V</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">2</span><span class="mord">.</span><span class="mord">5</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">O</span><span class="mord mathdefault mtight" style="margin-right:0.08125em;">H</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">2</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">O</span><span class="mord mathdefault mtight">L</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">1</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.07847em;">I</span><span class="mord mathdefault mtight" style="margin-right:0.08125em;">H</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">1</span><span class="mord">.</span><span class="mord">7</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.07847em;">I</span><span class="mord mathdefault mtight">L</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">7</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span></span></span></span><br>
+CMOS使用注意： CMOS结构内部寄生有可控硅结构，当输入或输入管脚高于VCC一定值(比如一些芯片是0.7V)时，电流足够大的话，可能引起闩锁效应，导致芯片的烧毁。</p>
+</li>
+<li>
+<p><strong>ECL</strong> ：Emitter Coupled Logic 发射极耦合逻辑电路(差分结构)<br>
+<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>V</mi><mi>C</mi><mi>C</mi><mo>=</mo><mn>0</mn><mi>V</mi><mo separator="true">,</mo><mi>V</mi><mi>E</mi><mi>E</mi><mo>=</mo><mo>−</mo><mn>5.2</mn><mi>V</mi><mo separator="true">,</mo><msub><mi>V</mi><mrow><mi>O</mi><mi>H</mi></mrow></msub><mo>=</mo><mo>−</mo><mn>0.88</mn><mi>V</mi><mo separator="true">,</mo><msub><mi>V</mi><mrow><mi>O</mi><mi>L</mi></mrow></msub><mo>=</mo><mo>−</mo><mn>1.72</mn><mi>V</mi><mo separator="true">,</mo><msub><mi>V</mi><mrow><mi>I</mi><mi>H</mi></mrow></msub><mo>=</mo><mo>−</mo><mn>1.24</mn><mi>V</mi><mo separator="true">,</mo><msub><mi>V</mi><mrow><mi>I</mi><mi>L</mi></mrow></msub><mo>=</mo><mo>−</mo><mn>1.36</mn><mi>V</mi></mrow><annotation encoding="application/x-tex">VCC=0V,VEE=-5.2V,V_{OH}=-0.88V,V_{OL}=-1.72V,V_{IH}=-1.24V,V_{IL}=-1.36V</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">0</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">−</span><span class="mord">5</span><span class="mord">.</span><span class="mord">2</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">O</span><span class="mord mathdefault mtight" style="margin-right:0.08125em;">H</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">−</span><span class="mord">0</span><span class="mord">.</span><span class="mord">8</span><span class="mord">8</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">O</span><span class="mord mathdefault mtight">L</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">−</span><span class="mord">1</span><span class="mord">.</span><span class="mord">7</span><span class="mord">2</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.07847em;">I</span><span class="mord mathdefault mtight" style="margin-right:0.08125em;">H</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">−</span><span class="mord">1</span><span class="mord">.</span><span class="mord">2</span><span class="mord">4</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.07847em;">I</span><span class="mord mathdefault mtight">L</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mord">1</span><span class="mord">.</span><span class="mord">3</span><span class="mord">6</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span></span></span></span> 速度快，驱动能力强，噪声小，很容易达到几百M的应用。但是功耗大，需要负电源。</p>
+</li>
+<li>
+<p><strong>PECL</strong> ：Pseudo/Positive ECL,为简化电源 出现了PECL(ECL结构，改用正电压供电)和LVPECL。<br>
+PECL: <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>V</mi><mi>C</mi><mi>C</mi><mo>=</mo><mn>5</mn><mi>V</mi><mo separator="true">,</mo><msub><mi>V</mi><mrow><mi>O</mi><mi>H</mi></mrow></msub><mo>=</mo><mn>4.12</mn><mi>V</mi><mo separator="true">,</mo><msub><mi>V</mi><mrow><mi>O</mi><mi>L</mi></mrow></msub><mo>=</mo><mn>3.28</mn><mi>V</mi><mo separator="true">,</mo><msub><mi>V</mi><mrow><mi>I</mi><mi>H</mi></mrow></msub><mo>=</mo><mn>3.78</mn><mi>V</mi><mo separator="true">,</mo><msub><mi>V</mi><mrow><mi>I</mi><mi>L</mi></mrow></msub><mo>=</mo><mn>3.64</mn><mi>V</mi></mrow><annotation encoding="application/x-tex">VCC=5V,V_{OH}=4.12V,V_{OL}=3.28V,V_{IH}=3.78V,V_{IL}=3.64V</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">5</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">O</span><span class="mord mathdefault mtight" style="margin-right:0.08125em;">H</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">4</span><span class="mord">.</span><span class="mord">1</span><span class="mord">2</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">O</span><span class="mord mathdefault mtight">L</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">3</span><span class="mord">.</span><span class="mord">2</span><span class="mord">8</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.07847em;">I</span><span class="mord mathdefault mtight" style="margin-right:0.08125em;">H</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">3</span><span class="mord">.</span><span class="mord">7</span><span class="mord">8</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.07847em;">I</span><span class="mord mathdefault mtight">L</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">3</span><span class="mord">.</span><span class="mord">6</span><span class="mord">4</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span></span></span></span><br>
+LVPELC：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>V</mi><mi>C</mi><mi>C</mi><mo>=</mo><mn>3.3</mn><mi>V</mi><mo separator="true">,</mo><msub><mi>V</mi><mrow><mi>O</mi><mi>H</mi></mrow></msub><mo>=</mo><mn>2.42</mn><mi>V</mi><mo separator="true">,</mo><msub><mi>V</mi><mrow><mi>O</mi><mi>L</mi></mrow></msub><mo>=</mo><mn>1.58</mn><mi>V</mi><mo separator="true">,</mo><msub><mi>V</mi><mrow><mi>I</mi><mi>H</mi></mrow></msub><mo>=</mo><mn>2.06</mn><mi>V</mi><mo separator="true">,</mo><msub><mi>V</mi><mrow><mi>I</mi><mi>L</mi></mrow></msub><mo>=</mo><mn>1.94</mn><mi>V</mi></mrow><annotation encoding="application/x-tex">VCC=3.3V,V_{OH}=2.42V,V_{OL}=1.58V,V_{IH}=2.06V,V_{IL}=1.94V</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">3</span><span class="mord">.</span><span class="mord">3</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">O</span><span class="mord mathdefault mtight" style="margin-right:0.08125em;">H</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">2</span><span class="mord">.</span><span class="mord">4</span><span class="mord">2</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">O</span><span class="mord mathdefault mtight">L</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">1</span><span class="mord">.</span><span class="mord">5</span><span class="mord">8</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.07847em;">I</span><span class="mord mathdefault mtight" style="margin-right:0.08125em;">H</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">2</span><span class="mord">.</span><span class="mord">0</span><span class="mord">6</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.07847em;">I</span><span class="mord mathdefault mtight">L</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">.</span><span class="mord">9</span><span class="mord">4</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span></span></span></span><br>
+ECL、PECL、LVPECL使用注意：不同电平不能直接驱动。中间可用交流耦合、电阻网络或专用芯片 进行转换。以上三种均为射随输出结构，必须有电阻拉到一个直流偏置电压。(如多用于时钟的LVPECL： 直流匹配时用130欧上拉，同时用82欧下拉；交流匹配时用82欧上拉，同时用130欧下拉。但两种方式工作后直流电平都在1.95V左右。)</p>
+</li>
+<li>
+<p><strong>LVDS</strong> ：前面的电平标准摆幅都比较大，为降低电磁辐射，同时提高开关速度又推出LVDS电平标准。 Low Voltage Differential Signaling,差分对输入输出，内部有一个恒流源3.5-4mA，在差分线上改变方向来表示0和1。通过外部的100欧 匹配电阻(并在差分线上靠近接收端)转换为±350mV的差分电平。<br>
+LVDS使用注意：可以达到600M以上，PCB要求较高，差分线要求严格等长，差最好不超过10mil(0.25mm)。100欧电阻离接收端距离不能超过500mil，最好控制在300mil以内。</p>
+</li>
+<li>
+<p><strong>CML</strong> ：是内部做好匹配的一种电路，不需再进行匹配。三极管结构，也是差分线，速度能达到3G以上。只能点对点传输。</p>
+</li>
+<li>
+<p><strong>GTL</strong> ：类似CMOS的一种结构，输入为比较器结构，比较器一端接参考电平，另一端接输入信号。1.2V电源供电。<br>
+GTL：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>V</mi><mi>C</mi><mi>C</mi><mo>=</mo><mn>1.2</mn><mi>V</mi><mo separator="true">,</mo><msub><mi>V</mi><mrow><mi>O</mi><mi>H</mi></mrow></msub><mo>≥</mo><mn>1.1</mn><mi>V</mi><mo separator="true">,</mo><msub><mi>V</mi><mrow><mi>O</mi><mi>L</mi></mrow></msub><mo>≤</mo><mn>0.4</mn><mi>V</mi><mo separator="true">,</mo><msub><mi>V</mi><mrow><mi>I</mi><mi>H</mi></mrow></msub><mo>≥</mo><mn>0.85</mn><mi>V</mi><mo separator="true">,</mo><msub><mi>V</mi><mrow><mi>I</mi><mi>L</mi></mrow></msub><mo>≤</mo><mn>0.75</mn><mi>V</mi></mrow><annotation encoding="application/x-tex">VCC=1.2V,V_{OH}\geq 1.1V,V_{OL}\leq 0.4V,V_{IH}\geq 0.85V,V_{IL}\leq 0.75V</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">1</span><span class="mord">.</span><span class="mord">2</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">O</span><span class="mord mathdefault mtight" style="margin-right:0.08125em;">H</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">1</span><span class="mord">.</span><span class="mord">1</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">O</span><span class="mord mathdefault mtight">L</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">4</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.07847em;">I</span><span class="mord mathdefault mtight" style="margin-right:0.08125em;">H</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">8</span><span class="mord">5</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.07847em;">I</span><span class="mord mathdefault mtight">L</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">7</span><span class="mord">5</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span></span></span></span><br>
+PGTL/GTL ：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>V</mi><mi>C</mi><mi>C</mi><mo>=</mo><mn>1.5</mn><mi>V</mi><mo separator="true">,</mo><msub><mi>V</mi><mrow><mi>O</mi><mi>H</mi></mrow></msub><mo>≥</mo><mn>1.4</mn><mi>V</mi><mo separator="true">,</mo><msub><mi>V</mi><mrow><mi>O</mi><mi>L</mi></mrow></msub><mo>≤</mo><mn>0.46</mn><mi>V</mi><mo separator="true">,</mo><msub><mi>V</mi><mrow><mi>I</mi><mi>H</mi></mrow></msub><mo>≥</mo><mn>1.2</mn><mi>V</mi><mo separator="true">,</mo><msub><mi>V</mi><mrow><mi>I</mi><mi>L</mi></mrow></msub><mo>≤</mo><mn>0.8</mn><mi>V</mi></mrow><annotation encoding="application/x-tex">VCC=1.5V,V_{OH}\geq 1.4V,V_{OL}\leq 0.46V,V_{IH}\geq 1.2V,V_{IL}\leq 0.8V</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">1</span><span class="mord">.</span><span class="mord">5</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">O</span><span class="mord mathdefault mtight" style="margin-right:0.08125em;">H</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">1</span><span class="mord">.</span><span class="mord">4</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">O</span><span class="mord mathdefault mtight">L</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">4</span><span class="mord">6</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.07847em;">I</span><span class="mord mathdefault mtight" style="margin-right:0.08125em;">H</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">1</span><span class="mord">.</span><span class="mord">2</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.07847em;">I</span><span class="mord mathdefault mtight">L</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">8</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span></span></span></span></p>
+</li>
+<li>
+<p><strong>HSTL</strong> 是主要用于QDR存储器的一种电平标准：一般有<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>V</mi><mrow><mi>C</mi><mi>C</mi><mi>I</mi><mi>O</mi></mrow></msub><mo>=</mo><mn>1.8</mn><mi>V</mi></mrow><annotation encoding="application/x-tex">V_{CCIO}=1.8V</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.07153em;">C</span><span class="mord mathdefault mtight" style="margin-right:0.07153em;">C</span><span class="mord mathdefault mtight" style="margin-right:0.07847em;">I</span><span class="mord mathdefault mtight" style="margin-right:0.02778em;">O</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">.</span><span class="mord">8</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span></span></span></span>和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>V</mi><mrow><mi>C</mi><mi>C</mi><mi>I</mi><mi>O</mi></mrow></msub><mo>=</mo><mn>1.5</mn><mi>V</mi></mrow><annotation encoding="application/x-tex">V_{CCIO}=1.5V</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.07153em;">C</span><span class="mord mathdefault mtight" style="margin-right:0.07153em;">C</span><span class="mord mathdefault mtight" style="margin-right:0.07847em;">I</span><span class="mord mathdefault mtight" style="margin-right:0.02778em;">O</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">.</span><span class="mord">5</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span></span></span></span>。和上面的GTL相 似，输入为输入为比较器结构，比较器一端接参考电平(VCCIO/2)，另一端接输入信号。对参考电平 要求比较高(1%精度)。</p>
+</li>
+<li>
+<p><strong>SSTL</strong> 主要用于DDR存储器。和HSTL基本相同。<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>V</mi><mrow><mi>C</mi><mi>C</mi><mi>I</mi><mi>O</mi></mrow></msub><mo>=</mo><mn>2.5</mn><mi>V</mi></mrow><annotation encoding="application/x-tex">V_{CCIO}=2.5V</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">V</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.22222em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.07153em;">C</span><span class="mord mathdefault mtight" style="margin-right:0.07153em;">C</span><span class="mord mathdefault mtight" style="margin-right:0.07847em;">I</span><span class="mord mathdefault mtight" style="margin-right:0.02778em;">O</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord">.</span><span class="mord">5</span><span class="mord mathdefault" style="margin-right:0.22222em;">V</span></span></span></span>，输入为输入为比较器结构，比较器一端接参考电平1.25V，另一端接输入信号。对参考电平要求比较高(1%精度)。HSTL和SSTL大多用在300M以下。</p>
+</li>
+</ol>
+<blockquote>
+<p>http://xilinx.eetrend.com/blog/2020/100050325.html<br>
+https://www.toutiao.com/i6725600653655147012/<br>
+https://blog.51cto.com/u_15338162/3555927<br>
+http://blog.sina.com.cn/s/blog_66cd026c0102viwi.html</p>
+</blockquote>
+<blockquote>
+<p>若需要md版本或者pdf版本，请邮件联系本人<a href="mailto:blog@wherelse.cc">邮箱</a>，或者于下方留言。</p>
+</blockquote>
+
+        </div>
+
+        <!-- copyright -->
+        <div class="copyright">
+          <div class="container">
+            <p><small class="text-gray-400">
+                The copyright of the articles on this website is owned by me. Without consent, it is not allowed to copy without permission. Reasonable reprints are welcome to indicate the source of the quotation. Please leave a message for reprinting pictures. The content of the article is only used for technical research and exploration, and shall not be used for illegal purposes.
+             </small></p>
+          </div>
+        </div>
+
+        <div class="text-center text-gray-300">
+          
+          <span id="/post/fpga-autumn-recruit-study-notes-2/" class="leancloud_visitors views-counter meta-info">
+            <a class="text-center">📋阅读量:</a>
+            <span id="twikoo_visitors">0</span>
+          </span>
+          
+        </div>
+      </div>
+
+      
+
+      
+        <button type="button" class="collapsible">
+          <i class="ri-message-2-line"></i>
+        </button>
+        <div class="tcomment rounded-lg px-4 py-4">
+          <div id="tcomment"></div>
+        </div>  
+      
+
+      <footer class="py-12 text-center px-4 md:px-0" v-pre>
+  <a href="/atom.xml" target="_blank">RSS
+</a> | Powered by <a href="https://github.com/getgridea/gridea" 
+target="_blank">Gridea</a> &nbsp;&nbsp;
+<br>
+©2020 Wherelse All Right Reserved 
+</footer>
+
+    </div>
+
+
+    <!-- TOC Container -->
+    <div id="toc"
+      class="fixed right-0 bottom-0 mb-20 mr-6 shadow w-12 h-12 rounded-lg flex justify-center items-center z-10 cursor-pointer bg-white dark:bg-gray-500 dark:text-gray-200 hover:shadow-lg transition-all animated fadeInRight"
+      @click="showToc = true">
+      <i class="ri-menu-line font-bold"></i>
+    </div>
+
+    <div
+      class="fixed right-0 top-0 bottom-0 overflow-y-auto w-64 rounded-lg p-4 m-4  shadow-md bg-white dark:bg-gray-800 p-4 border-l border-gray-100 dark:border-gray-600 z-10 transition-fast"
+      :class="{ '-mr-64': !showToc }">
+      <div class="flex mb-4 justify-end">
+        <div
+          class="w-8 h-8 inline-flex justify-center items-center rounded-full cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-fast"
+          @click="showToc = false">
+          <i class="ri-close-circle-fill"></i>
+        </div>
+      </div>
+      <div class="post-toc-container"><ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#fpga%E7%9A%84%E7%BB%84%E6%88%90">FPGA的组成</a></li>
+<li><a href="#%E9%94%81%E5%AD%98%E5%99%A8latch%E5%92%8C%E8%A7%A6%E5%8F%91%E5%99%A8flip-flop">锁存器（latch）和触发器（flip-flop）</a>
+<ul>
+<li><a href="#%E9%94%81%E5%AD%98%E5%99%A8%E4%B8%8E%E8%A7%A6%E5%8F%91%E5%99%A8%E7%9A%84%E5%8C%BA%E5%88%AB">锁存器与触发器的区别</a></li>
+</ul>
+</li>
+<li><a href="#%E7%BB%84%E5%90%88%E9%80%BB%E8%BE%91%E7%94%B5%E8%B7%AF%E4%B8%8E%E6%97%B6%E5%BA%8F%E9%80%BB%E8%BE%91%E7%94%B5%E8%B7%AF">组合逻辑电路与时序逻辑电路</a></li>
+<li><a href="#%E7%BB%84%E5%90%88%E9%80%BB%E8%BE%91%E7%94%B5%E8%B7%AF%E7%9A%84%E7%AB%9E%E4%BA%89%E4%B8%8E%E5%86%92%E9%99%A9">组合逻辑电路的竞争与冒险</a>
+<ul>
+<li><a href="#%E4%BA%A7%E7%94%9F%E5%8E%9F%E5%9B%A0">产生原因</a></li>
+<li><a href="#%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95">解决办法</a></li>
+</ul>
+</li>
+<li><a href="#%E5%90%8C%E6%AD%A5%E9%80%BB%E8%BE%91%E7%94%B5%E8%B7%AF%E4%B8%8E%E5%BC%82%E6%AD%A5%E9%80%BB%E8%BE%91%E7%94%B5%E8%B7%AF">同步逻辑电路与异步逻辑电路</a></li>
+<li><a href="#%E8%BD%AF%E6%A0%B8-%E5%9B%BA%E6%A0%B8%E5%92%8C%E7%A1%AC%E6%A0%B8">软核、固核和硬核</a>
+<ul>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AFip%E6%A0%B8">什么是IP核</a></li>
+<li><a href="#%E6%A0%B8%E7%9A%84%E5%88%86%E7%B1%BB">核的分类</a></li>
+<li><a href="#%E8%BD%AF%E6%A0%B8">软核</a></li>
+<li><a href="#%E5%9B%BA%E6%A0%B8">固核</a></li>
+<li><a href="#%E7%A1%AC%E6%A0%B8">硬核</a></li>
+</ul>
+</li>
+<li><a href="#fpga%E7%9A%84%E5%B8%B8%E7%94%A8%E7%94%B5%E5%B9%B3%E6%A0%87%E5%87%86">FPGA的常用电平标准</a></li>
+</ul>
+</li>
+</ul>
+</div>
+    </div>
+
+    <!-- Back to top -->
+    <div
+      class="fixed right-0 bottom-0 mb-4 mr-6 shadow w-12 h-12 rounded-lg flex justify-center items-center z-10 cursor-pointer bg-white hover:shadow-lg transition-all dark:bg-gray-500 dark:text-gray-200"
+      @click="backToUp" v-show="scrolled">
+      <i class="ri-arrow-up-circle-fill"></i>
+    </div>
+  </div>
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+  <!-- Background of PhotoSwipe. 
+        It's a separate element as animating opacity is faster than rgba(). -->
+  <div class="pswp__bg">
+  </div>
+  <!-- Slides wrapper with overflow:hidden. -->
+  <div class="pswp__scroll-wrap">
+    <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+    <div class="pswp__container">
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+    </div>
+    <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+    <div class="pswp__ui pswp__ui--hidden">
+      <div class="pswp__top-bar">
+        <!--  Controls are self-explanatory. Order can be changed. -->
+        <div class="pswp__counter">
+        </div>
+        <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+        <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+        <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+        <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+        <!-- element will get class pswp__preloader--active when preloader is running -->
+        <div class="pswp__preloader">
+          <div class="pswp__preloader__icn">
+            <div class="pswp__preloader__cut">
+              <div class="pswp__preloader__donut">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+        <div class="pswp__share-tooltip">
+        </div>
+      </div>
+      <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+      </button>
+      <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+      </button>
+      <div class="pswp__caption">
+        <div class="pswp__caption__center">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>-->
+  <script src="https://wherelse.cc/media/scripts/vue.min.js"></script>
+  <script src="https://wherelse.cc/media/scripts/main.js"></script>
+
+  <!--根据内容动态加载-->
+  <script type="text/javascript">
+    window.onload = function () {
+      //根据内容动态加载mermiad
+      if (document.getElementsByClassName("language-mermaid").length != 0) {
+        console.log("find mermaid")
+        for (let x of document.getElementsByClassName("language-mermaid")) {
+          if (x.nodeName == "CODE") {
+            let m = document.createElement("div");
+            m.classList.add("mermaid");
+            m.textContent = x.textContent;
+            x.parentNode.insertAdjacentElement("beforebegin", m);
+          }
+        }
+        let script = document.createElement('script');
+        defer = "defer";
+        script.src =
+          "https://wherelse.cc/media/scripts/mermaid.min.js";
+        document.body.append(script);
+        script.onload = function () {
+          mermaid.initialize({
+            startOnLoad: false
+          });
+          mermaid.init();
+          console.log("mermaid init done");
+        }
+      }
+
+      //bilibili 视频支持
+      var content = document.getElementsByClassName("language-bilibili")[0];
+      if (content != null) {
+        var m = document.createElement("div");
+        m.classList.add("bilibili-video");
+        m.innerHTML = content.textContent;
+        content.parentNode.insertAdjacentElement("beforeend", m);
+      }
+      //katex自适应加载
+      if (document.getElementsByClassName("katex").length != 0) {
+        let script = document.createElement('script');
+        script.defer = "defer"
+        script.src =
+          "https://wherelse.cc/media/scripts/katex.min.js";
+        document.body.append(script);
+        script = document.createElement('script');
+        script.defer = "defer"
+        script.src =
+          "https://wherelse.cc/media/scripts/copy-tex.min.js";
+        document.body.append(script);
+        let link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.defer = "defer"
+        link.href =
+          "https://wherelse.cc/media/css/katex.min.css";
+        document.body.append(link);
+        link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.defer = "defer"
+        link.href =
+          "https://wherelse.cc/media/css/copy-tex.css";
+        document.body.append(link);
+      }
+
+      script = document.createElement('script');
+      script.defer = "defer"
+      script.src =
+        "https://cdn.staticfile.org/twikoo/1.6.7/twikoo.all.min.js";
+      document.body.append(script);
+      script.onload = function () {
+        let scripts = document.createElement('script');
+        scripts.append(document.createTextNode(
+          " twikoo.init({envId: \"https://twikoo.vlieo.com\",el: \"#tcomment\",});"));
+        var parentDiv = document.getElementById("toc").parentNode;
+        var sp = document.getElementById("toc");
+        parentDiv.insertBefore(scripts, sp);
+      }
+    }
+  </script>
+  <script>
+    comment_collapse();
+  </script>
+
+ <script>
+    //拿到预览框架，也就是上面的html代码
+    var pswpElement = document.querySelectorAll(".pswp")[0];
+    //定义图片数组变量
+    var imgitems;
+    /**
+     * 用于显示预览界面
+     * @param index 图片数组下标
+     */
+    function viewImg(index) {
+      //其它选项这里不做过多阐述，详情见官网
+      var pswpoptions = {
+        index: parseInt(index, 10), // 开始幻灯片索引。0是第一张幻灯片。必须是整数，而不是字符串。
+        bgOpacity: 0.7, // 背景透明度，0-1
+        maxSpreadZoom: 3, // 缩放级别，不要太大
+      };
+      //初始化并打开PhotoSwipe，pswpElement对应上面预览框架，PhotoSwipeUI_Default为皮肤，imgitems为图片数组，pswpoptions为选项
+      var gallery = new PhotoSwipe(
+        pswpElement,
+        PhotoSwipeUI_Default,
+        imgitems,
+        pswpoptions
+      );
+      gallery.init();
+    }
+    /**
+     * 用于添加图片点击事件
+     * @param img 图片元素
+     * @param index 所属下标（在imgitems中的位置）
+     */
+    function addImgClick(img, index) {
+      img.onclick = function () {
+        viewImg(index);
+      };
+    }
+    /**
+     * 轮询所有图片，获取src、width、height等数据，加入imgitems，并给图片元素添加事件
+     * 最好在onload中执行该方法，本站因放在最底部，所以直接初始化
+     * 异步加载图片可在图片元素创建完成后调用此方法
+     */
+    function initImg() {
+      //重置图片数组
+      imgitems = [];
+      //查找class:markdown 下的所有img元素并遍历
+      var imgs = document.querySelectorAll(".markdown img");
+      for (var i = 0; i < imgs.length; i++) {
+        var img = imgs[i];
+        //本站相册初始为loading图片，真实图片放在data-src
+        var ds = img.getAttribute("src");
+        //创建image对象，用于获取图片宽高
+        var imgtemp = new Image();
+        //判断是否存在data-src
+        if (ds != null && ds.length > 0) {
+          imgtemp.src = ds;
+        } else {
+          imgtemp.src = img.src;
+        }
+        //判断是否存在缓存
+        if (imgtemp.complete) {
+          var imgobj = {
+            src: imgtemp.src,
+            w: imgtemp.width,
+            h: imgtemp.height,
+          };
+          imgitems[i] = imgobj;
+          addImgClick(img, i);
+        } else {
+          // console.log("进来了2");
+          imgtemp.index = i;
+          imgtemp.img = img;
+          imgtemp.onload = function () {
+            var imgobj = {
+              src: this.src,
+              w: this.width,
+              h: this.height,
+            };
+            //不要使用push，因为onload前后顺序会不同
+            imgitems[this.index] = imgobj;
+            //添加点击事件
+            addImgClick(this.img, this.index);
+          };
+        }
+      }
+    }
+    //初始化
+    initImg();
+  </script>
+</body>
+
+</html>

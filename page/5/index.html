@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Wherelse Blog</title>
+<meta name="ThemeName" content="Gridea Theme Rocky by EryouHao" />
+<meta name="referrer" content="always" />
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<link rel="manifest" href="/site.webmanifest">
+<!-- <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet preload" as="style"> -->
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"> -->
+<!-- <link rel="stylesheet" href="https://cdn.staticfile.org/animate.css/3.7.2/animate.min.css" as="style" /> -->
+<link href="/media/css/remixicon.css" rel="stylesheet" as="style">
+<link rel="stylesheet" href="/media/css/tailwind.css">
+<link rel="stylesheet" href="/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Wherelse Blog - Atom Feed" href="/atom.xml">
+
+  
+  <script defer src="https://www.googletagmanager.com/gtag/js?id=G-4449R7TQN5"></script>
+  <script>
+  var host = window.location.hostname;
+  if(host != "localhost")
+  {
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4449R7TQN5');
+  }
+  </script>
+    
+
+  <meta name="socialText" content="Everything always needs to be studied to be understood" />
+  <meta name="description" content="记录学习与折腾，网络，博客，嵌入式相关；Record learning and toss, network, blog, embedded related" />
+  <meta name="keywords" content=" 碎碎念,笔记,编程,matlab,python,网络,FPGA,电路,VSCode,荔枝派,数据结构与算法,Gridea,STM32,矿渣,linux,Latax," />
+  <link rel="canonical" href="https://wherelse.cc/" />
+   <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css" /> -->
+   <!-- <link rel="preload"  href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css" as="font"/> -->
+</head>
+
+<body>
+  <div class="antialiased flex flex-col min-h-screen" id="app">
+    <div class="nav py-3 md:py-8 fixed w-full z-10 bg-gray-50 dark:bg-gray-700 transition-all duration-300" :class="{ 'scroll': scrolled }">
+  <div class="flex justify-end px-4">
+    <div class="w-8 h-8 flex justify-center items-center rounded-full md:hidden" @click="showMenu = !showMenu">
+      <i class="ri-close-circle-fill" v-show="showMenu"></i>
+      <i class="ri-menu-line" v-show="!showMenu"></i>
+    </div>
+  </div>
+  <nav class="max-w-4xl w-full mx-auto text-center flex flex-col md:flex-row justify-center md:block" :class="`${ showMenu ? 'block' : 'hidden' }`">
+    
+      <a href="/" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        home
+      </a>
+    
+      <a href="/archives" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        achives
+      </a>
+    
+      <a href="/tags" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        tags
+      </a>
+    
+      <a href="/gallery" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        gallery
+      </a>
+    
+      <a href="/friends" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        friends
+      </a>
+    
+      <a href="/post/about" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        about
+      </a>
+    
+   <!--<a href="https://wherelse.cc/atom.xml" target="_blank" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+      RSS
+    </a>-->
+  </nav>
+</div>
+
+    <div class="max-w-4xl w-full mx-auto pt-32">
+      
+
+      <div
+        class="shadow-box bg-white dark:bg-gray-600 border-gray-300 rounded-none md:rounded-lg -mx-1 md:mx-0 md:px-0">
+        
+<div
+  class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+  
+  <div class="flex-1 order-2 md:order-1">
+    <h2 class="text-2xl font-semibold mb-4">
+      <a href="https://wherelse.cc/post/GDOCK-Repair-hardware-bug/"
+        class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+        Competitive gdock 2.0 hard change, hardware repair (MINI-PCIE, USB3.0)
+      </a>
+    </h2>
+    <div class="mb-4 text-xs text-gray-500">2020-03-03</div>
+    <div class="mb-4 text-gray-500 dark:text-gray-300">
+      Fix the inability to use USB 3.0 and restore MINI-PCIE functionality
+&lt;! -- more --&gt;
+The TF card only needs a drive...
+    </div>
+    <div class="overflow-hidden">
+      
+      <a href="https://wherelse.cc/tag/pzG81SEzw/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        矿渣
+      </a>
+      
+
+    </div>
+  </div>
+  
+</div>
+
+<div
+  class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+  
+  <div class="flex-1 order-2 md:order-1">
+    <h2 class="text-2xl font-semibold mb-4">
+      <a href="https://wherelse.cc/post/GPS-Navigation-Message-Format/"
+        class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+        GPS Navigation Message Format
+      </a>
+    </h2>
+    <div class="mb-4 text-xs text-gray-500">2020-02-18</div>
+    <div class="mb-4 text-gray-500 dark:text-gray-300">
+      What is a navigation message
+A satellite navigation message is a message broadcast by a navigation satellite to the user...
+    </div>
+    <div class="overflow-hidden">
+      
+      <a href="https://wherelse.cc/tag/bVOkvqw2z/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        笔记
+      </a>
+      
+
+    </div>
+  </div>
+  
+</div>
+
+<div
+  class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+  
+  <div class="flex-1 order-2 md:order-1">
+    <h2 class="text-2xl font-semibold mb-4">
+      <a href="https://wherelse.cc/post/regular-expression/"
+        class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+        Regular expression
+      </a>
+    </h2>
+    <div class="mb-4 text-xs text-gray-500">2020-02-17</div>
+    <div class="mb-4 text-gray-500 dark:text-gray-300">
+      Regular expression
+&lt;! -- more --&gt;
+What is a Regular Expression
+Regular expressions use a single string to describe...
+    </div>
+    <div class="overflow-hidden">
+      
+      <a href="https://wherelse.cc/tag/-AWGj9akS/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        编程
+      </a>
+      
+
+    </div>
+  </div>
+  
+</div>
+
+<div
+  class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+  
+  <div class="flex-1 order-2 md:order-1">
+    <h2 class="text-2xl font-semibold mb-4">
+      <a href="https://wherelse.cc/post/history-of-mobile-communication-technology-development/"
+        class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+        移动通信技术发展史
+      </a>
+    </h2>
+    <div class="mb-4 text-xs text-gray-500">2020-02-08</div>
+    <div class="mb-4 text-gray-500 dark:text-gray-300">
+      <p>History of mobile communication technology development</p>
+
+    </div>
+    <div class="overflow-hidden">
+      
+
+    </div>
+  </div>
+  
+</div>
+
+<div
+  class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+  
+  <div class="flex-1 order-2 md:order-1">
+    <h2 class="text-2xl font-semibold mb-4">
+      <a href="https://wherelse.cc/post/ipv6-dns-server/"
+        class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+        常用IPV6 DNS服务器
+      </a>
+    </h2>
+    <div class="mb-4 text-xs text-gray-500">2020-02-08</div>
+    <div class="mb-4 text-gray-500 dark:text-gray-300">
+      <p>Some IPv6 dns server in China and global</p>
+
+    </div>
+    <div class="overflow-hidden">
+      
+      <a href="https://wherelse.cc/tag/Hg2wOF7pj/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        网络
+      </a>
+      
+
+    </div>
+  </div>
+  
+</div>
+
+<div
+  class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+  
+  <div class="flex-1 order-2 md:order-1">
+    <h2 class="text-2xl font-semibold mb-4">
+      <a href="https://wherelse.cc/post/Setup-your-own-navigation-website-by-Gridea+Github-Pages/"
+        class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+        使用Gridea+Github Pages搭建自己的导航站
+      </a>
+    </h2>
+    <div class="mb-4 text-xs text-gray-500">2020-01-28</div>
+    <div class="mb-4 text-gray-500 dark:text-gray-300">
+      <p>Set up your own navigation website by Gridea+Github Pages</p>
+
+    </div>
+    <div class="overflow-hidden">
+      
+      <a href="https://wherelse.cc/tag/sx7g1O9Qg/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        Gridea
+      </a>
+      
+
+    </div>
+  </div>
+  
+</div>
+
+<div
+  class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+  
+  <div class="flex-1 order-2 md:order-1">
+    <h2 class="text-2xl font-semibold mb-4">
+      <a href="https://wherelse.cc/post/use-the-pppoe-in-linux-environment/"
+        class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+        在Linux命令环境下使用PPPOE拨号上网
+      </a>
+    </h2>
+    <div class="mb-4 text-xs text-gray-500">2020-01-06</div>
+    <div class="mb-4 text-gray-500 dark:text-gray-300">
+      <p>Use PPPOE dial-up Internet access under Linux terminal environment</p>
+
+    </div>
+    <div class="overflow-hidden">
+      
+      <a href="https://wherelse.cc/tag/Hg2wOF7pj/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        网络
+      </a>
+      
+      <a href="https://wherelse.cc/tag/FsE0TtkCt/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        linux
+      </a>
+      
+
+    </div>
+  </div>
+  
+</div>
+
+<div
+  class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+  
+  <div class="flex-1 order-2 md:order-1">
+    <h2 class="text-2xl font-semibold mb-4">
+      <a href="https://wherelse.cc/post/jing-dou-yun-v20-shua-ji-jiao-cheng/"
+        class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+        竞斗云V2.0免拆刷机教程
+      </a>
+    </h2>
+    <div class="mb-4 text-xs text-gray-500">2019-12-20</div>
+    <div class="mb-4 text-gray-500 dark:text-gray-300">
+      <p>免拆刷机方法</p>
+
+    </div>
+    <div class="overflow-hidden">
+      
+      <a href="https://wherelse.cc/tag/pzG81SEzw/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        矿渣
+      </a>
+      
+
+    </div>
+  </div>
+  
+</div>
+
+<div
+  class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+  
+  <div class="flex-1 order-2 md:order-1">
+    <h2 class="text-2xl font-semibold mb-4">
+      <a href="https://wherelse.cc/post/bei-ke-yun-p1-shua-ji/"
+        class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+        贝壳云P1 刷机
+      </a>
+    </h2>
+    <div class="mb-4 text-xs text-gray-500">2019-12-18</div>
+    <div class="mb-4 text-gray-500 dark:text-gray-300">
+      <p>beike yun flash system</p>
+
+    </div>
+    <div class="overflow-hidden">
+      
+      <a href="https://wherelse.cc/tag/pzG81SEzw/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        矿渣
+      </a>
+      
+
+    </div>
+  </div>
+  
+</div>
+
+<div
+  class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+  
+  <div class="flex-1 order-2 md:order-1">
+    <h2 class="text-2xl font-semibold mb-4">
+      <a href="https://wherelse.cc/post/markdown-center-or-other-language-style/"
+        class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+        Markdown中使用HTML实现文本居中，改变字体颜色等
+      </a>
+    </h2>
+    <div class="mb-4 text-xs text-gray-500">2019-12-15</div>
+    <div class="mb-4 text-gray-500 dark:text-gray-300">
+      <p>How to make the markdown in the middle of pages</p>
+
+    </div>
+    <div class="overflow-hidden">
+      
+      <a href="https://wherelse.cc/tag/bVOkvqw2z/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        笔记
+      </a>
+      
+
+    </div>
+  </div>
+  
+</div>
+
+      </div>
+
+      
+  <div class="my-4 flex justify-between px-4 md:px-0">
+    
+      <a href="https://wherelse.cc/page/4/" class="btn btn-white">
+        <i class="ri-arrow-left-line mr-4"></i>
+        上一页
+      </a>
+    
+    
+      <a href="https://wherelse.cc/page/6/" class="btn btn-white">
+        下一页
+        <i class="ri-arrow-right-line ml-4"></i>
+      </a>
+    
+  </div>
+
+
+      <footer class="py-12 text-center px-4 md:px-0" v-pre>
+  <a href="/atom.xml" target="_blank">RSS
+</a> | Powered by <a href="https://github.com/getgridea/gridea" 
+target="_blank">Gridea</a> &nbsp;&nbsp;
+<br>
+©2020 Wherelse All Right Reserved 
+</footer>
+
+    </div>
+  </div>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script> -->
+  <script src="https://wherelse.cc/media/scripts/vue.min.js"></script>
+  <script src="https://wherelse.cc/media/scripts/main.js"></script>
+</body>
+
+
+</html>

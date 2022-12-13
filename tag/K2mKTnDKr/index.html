@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Wherelse Blog</title>
+<meta name="ThemeName" content="Gridea Theme Rocky by EryouHao" />
+<meta name="referrer" content="always" />
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<link rel="manifest" href="/site.webmanifest">
+<!-- <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet preload" as="style"> -->
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"> -->
+<!-- <link rel="stylesheet" href="https://cdn.staticfile.org/animate.css/3.7.2/animate.min.css" as="style" /> -->
+<link href="/media/css/remixicon.css" rel="stylesheet" as="style">
+<link rel="stylesheet" href="/media/css/tailwind.css">
+<link rel="stylesheet" href="/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Wherelse Blog - Atom Feed" href="/atom.xml">
+
+  
+  <script defer src="https://www.googletagmanager.com/gtag/js?id=G-4449R7TQN5"></script>
+  <script>
+  var host = window.location.hostname;
+  if(host != "localhost")
+  {
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4449R7TQN5');
+  }
+  </script>
+    
+
+  <meta name="description" content="Everything always needs to be studied to be understood" />
+  <link rel="canonical" href="" />
+</head>
+<body>
+  <div class="antialiased flex flex-col min-h-screen" id="app">
+
+    <div class="nav py-3 md:py-8 fixed w-full z-10 bg-gray-50 dark:bg-gray-700 transition-all duration-300" :class="{ 'scroll': scrolled }">
+  <div class="flex justify-end px-4">
+    <div class="w-8 h-8 flex justify-center items-center rounded-full md:hidden" @click="showMenu = !showMenu">
+      <i class="ri-close-circle-fill" v-show="showMenu"></i>
+      <i class="ri-menu-line" v-show="!showMenu"></i>
+    </div>
+  </div>
+  <nav class="max-w-4xl w-full mx-auto text-center flex flex-col md:flex-row justify-center md:block" :class="`${ showMenu ? 'block' : 'hidden' }`">
+    
+      <a href="/" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        home
+      </a>
+    
+      <a href="/archives" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        achives
+      </a>
+    
+      <a href="/tags" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        tags
+      </a>
+    
+      <a href="/gallery" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        gallery
+      </a>
+    
+      <a href="/friends" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        friends
+      </a>
+    
+      <a href="/post/about" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        about
+      </a>
+    
+   <!--<a href="https://wherelse.cc/atom.xml" target="_blank" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+      RSS
+    </a>-->
+  </nav>
+</div>
+
+    <div class="max-w-4xl w-full mx-auto pt-32">
+      <h1 class="text-2xl font-bold pb-8 flex justify-center items-center">
+        <i class="ri-hashtag"></i>
+        碎碎念
+      </h1>
+      <div class="shadow-box bg-white dark:bg-gray-600 border-gray-300 rounded-none md:rounded-lg -mx-1 md:mx-0 md:px-0">
+        
+<div
+  class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+  
+  <div class="flex-1 order-2 md:order-1">
+    <h2 class="text-2xl font-semibold mb-4">
+      <a href="https://wherelse.cc/post/freshrss-half-months-first-experience/"
+        class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+        FreshRSS Half Months First Experience
+      </a>
+    </h2>
+    <div class="mb-4 text-xs text-gray-500">2022-10-23</div>
+    <div class="mb-4 text-gray-500 dark:text-gray-300">
+      RSS is a long-established way of reading, but it's gradually declining, and now that recommendation algorithms are the n...
+    </div>
+    <div class="overflow-hidden">
+      
+      <a href="https://wherelse.cc/tag/K2mKTnDKr/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        碎碎念
+      </a>
+      
+
+    </div>
+  </div>
+  
+</div>
+
+<div
+  class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+  
+  <div class="flex-1 order-2 md:order-1">
+    <h2 class="text-2xl font-semibold mb-4">
+      <a href="https://wherelse.cc/post/invisible-fiber-for-hidden-wiring/"
+        class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+        Invisible fiber optics for hidden cabling
+      </a>
+    </h2>
+    <div class="mb-4 text-xs text-gray-500">2022-09-28</div>
+    <div class="mb-4 text-gray-500 dark:text-gray-300">
+      After graduating and returning home, my family has lived in a house for many years, and there was no network cable befor...
+    </div>
+    <div class="overflow-hidden">
+      
+      <a href="https://wherelse.cc/tag/K2mKTnDKr/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        碎碎念
+      </a>
+      
+
+    </div>
+  </div>
+  
+  <img
+    class="flex-shrink-0 self-start md:ml-4 mb-4 md:mb-0 rounded-lg shadow-lg object-cover featured-img order-1 md:order-2 w-full h-40 md:w-56 md:h-32"
+    loading="lazy" src="https://wherelse.cc/post-images/invisible-fiber-for-hidden-wiring.jpg" alt="Invisible fiber optics for hidden cabling">
+  
+</div>
+
+<div
+  class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+  
+  <div class="flex-1 order-2 md:order-1">
+    <h2 class="text-2xl font-semibold mb-4">
+      <a href="https://wherelse.cc/post/2021to2022/"
+        class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+        2021to2022
+      </a>
+    </h2>
+    <div class="mb-4 text-xs text-gray-500">2022-01-01</div>
+    <div class="mb-4 text-gray-500 dark:text-gray-300">
+      The Next
+&lt;! -- more --&gt;
+At the beginning of last year, I set a few goals for the New Year, and as I expected, I di...
+    </div>
+    <div class="overflow-hidden">
+      
+      <a href="https://wherelse.cc/tag/K2mKTnDKr/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        碎碎念
+      </a>
+      
+
+    </div>
+  </div>
+  
+</div>
+
+<div
+  class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+  
+  <div class="flex-1 order-2 md:order-1">
+    <h2 class="text-2xl font-semibold mb-4">
+      <a href="https://wherelse.cc/post/2020-to-2021/"
+        class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+        2020 To 2021
+      </a>
+    </h2>
+    <div class="mb-4 text-xs text-gray-500">2021-01-01</div>
+    <div class="mb-4 text-gray-500 dark:text-gray-300">
+      <p>The Next</p>
+
+    </div>
+    <div class="overflow-hidden">
+      
+      <a href="https://wherelse.cc/tag/K2mKTnDKr/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        碎碎念
+      </a>
+      
+
+    </div>
+  </div>
+  
+</div>
+
+<div
+  class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+  
+  <div class="flex-1 order-2 md:order-1">
+    <h2 class="text-2xl font-semibold mb-4">
+      <a href="https://wherelse.cc/post/First-experience-of-Rime/"
+        class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+        Rime输入法初体验
+      </a>
+    </h2>
+    <div class="mb-4 text-xs text-gray-500">2020-12-03</div>
+    <div class="mb-4 text-gray-500 dark:text-gray-300">
+      <p>一番折腾后还是放弃了它</p>
+
+    </div>
+    <div class="overflow-hidden">
+      
+      <a href="https://wherelse.cc/tag/K2mKTnDKr/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        碎碎念
+      </a>
+      
+
+    </div>
+  </div>
+  
+  <img
+    class="flex-shrink-0 self-start md:ml-4 mb-4 md:mb-0 rounded-lg shadow-lg object-cover featured-img order-1 md:order-2 w-full h-40 md:w-56 md:h-32"
+    loading="lazy" src="https://wherelse.cc/post-images/First-experience-of-Rime.png" alt="Rime输入法初体验">
+  
+</div>
+
+<div
+  class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+  
+  <div class="flex-1 order-2 md:order-1">
+    <h2 class="text-2xl font-semibold mb-4">
+      <a href="https://wherelse.cc/post/bu-zhi-bu-jue-zai-jia-ai-liao-you-3-ge-yue-liao/"
+        class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+        Unknowingly stay at home for 3 months
+      </a>
+    </h2>
+    <div class="mb-4 text-xs text-gray-500">2020-04-15</div>
+    <div class="mb-4 text-gray-500 dark:text-gray-300">
+      Time goes by so fast
+&lt;! -- more --&gt;
+From January 16th home from school, to today April 15th, 3 months have passed,...
+    </div>
+    <div class="overflow-hidden">
+      
+      <a href="https://wherelse.cc/tag/K2mKTnDKr/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        碎碎念
+      </a>
+      
+
+    </div>
+  </div>
+  
+</div>
+  
+      </div>
+
+      
+      <footer class="py-12 text-center px-4 md:px-0" v-pre>
+  <a href="/atom.xml" target="_blank">RSS
+</a> | Powered by <a href="https://github.com/getgridea/gridea" 
+target="_blank">Gridea</a> &nbsp;&nbsp;
+<br>
+©2020 Wherelse All Right Reserved 
+</footer>
+
+
+    </div>
+  </div>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>-->
+  <script src="https://wherelse.cc/media/scripts/vue.min.js"></script>
+  <script src="https://wherelse.cc/media/scripts/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Wherelse Blog</title>
+<meta name="ThemeName" content="Gridea Theme Rocky by EryouHao" />
+<meta name="referrer" content="always" />
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<link rel="manifest" href="/site.webmanifest">
+<!-- <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet preload" as="style"> -->
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"> -->
+<!-- <link rel="stylesheet" href="https://cdn.staticfile.org/animate.css/3.7.2/animate.min.css" as="style" /> -->
+<link href="/media/css/remixicon.css" rel="stylesheet" as="style">
+<link rel="stylesheet" href="/media/css/tailwind.css">
+<link rel="stylesheet" href="/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Wherelse Blog - Atom Feed" href="/atom.xml">
+
+  
+  <script defer src="https://www.googletagmanager.com/gtag/js?id=G-4449R7TQN5"></script>
+  <script>
+  var host = window.location.hostname;
+  if(host != "localhost")
+  {
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4449R7TQN5');
+  }
+  </script>
+    
+
+  <meta name="description" content="Everything always needs to be studied to be understood" />
+  <link rel="canonical" href="" />
+</head>
+<body>
+  <div class="antialiased flex flex-col min-h-screen" id="app">
+
+    <div class="nav py-3 md:py-8 fixed w-full z-10 bg-gray-50 dark:bg-gray-700 transition-all duration-300" :class="{ 'scroll': scrolled }">
+  <div class="flex justify-end px-4">
+    <div class="w-8 h-8 flex justify-center items-center rounded-full md:hidden" @click="showMenu = !showMenu">
+      <i class="ri-close-circle-fill" v-show="showMenu"></i>
+      <i class="ri-menu-line" v-show="!showMenu"></i>
+    </div>
+  </div>
+  <nav class="max-w-4xl w-full mx-auto text-center flex flex-col md:flex-row justify-center md:block" :class="`${ showMenu ? 'block' : 'hidden' }`">
+    
+      <a href="/" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        home
+      </a>
+    
+      <a href="/archives" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        achives
+      </a>
+    
+      <a href="/tags" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        tags
+      </a>
+    
+      <a href="/gallery" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        gallery
+      </a>
+    
+      <a href="/friends" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        friends
+      </a>
+    
+      <a href="/post/about" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        about
+      </a>
+    
+   <!--<a href="https://wherelse.cc/atom.xml" target="_blank" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+      RSS
+    </a>-->
+  </nav>
+</div>
+
+    <div class="max-w-4xl w-full mx-auto pt-32">
+      <h1 class="text-2xl font-bold pb-8 flex justify-center items-center">
+        <i class="ri-hashtag"></i>
+        笔记
+      </h1>
+      <div class="shadow-box bg-white dark:bg-gray-600 border-gray-300 rounded-none md:rounded-lg -mx-1 md:mx-0 md:px-0">
+        
+<div
+  class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+  
+  <div class="flex-1 order-2 md:order-1">
+    <h2 class="text-2xl font-semibold mb-4">
+      <a href="https://wherelse.cc/post/trilium-notes-the-note-software-that-suits-me-at-the-moment/"
+        class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+        trilium notes, the note software that suits me at the moment
+      </a>
+    </h2>
+    <div class="mb-4 text-xs text-gray-500">2022-09-07</div>
+    <div class="mb-4 text-gray-500 dark:text-gray-300">
+      Personal feeling
+I found this note/knowledge base software when I was searching for what services were running on everyo...
+    </div>
+    <div class="overflow-hidden">
+      
+      <a href="https://wherelse.cc/tag/bVOkvqw2z/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        笔记
+      </a>
+      
+
+    </div>
+  </div>
+  
+</div>
+
+<div
+  class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+  
+  <div class="flex-1 order-2 md:order-1">
+    <h2 class="text-2xl font-semibold mb-4">
+      <a href="https://wherelse.cc/post/password-manager-bitwarden-service-setup/"
+        class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+        Password manager bitwarden service setup
+      </a>
+    </h2>
+    <div class="mb-4 text-xs text-gray-500">2022-08-14</div>
+    <div class="mb-4 text-gray-500 dark:text-gray-300">
+      Bitwarden supports self-hosting and official website hosting. The official website service server is located outside the...
+    </div>
+    <div class="overflow-hidden">
+      
+      <a href="https://wherelse.cc/tag/bVOkvqw2z/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        笔记
+      </a>
+      
+
+    </div>
+  </div>
+  
+</div>
+
+<div
+  class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+  
+  <div class="flex-1 order-2 md:order-1">
+    <h2 class="text-2xl font-semibold mb-4">
+      <a href="https://wherelse.cc/post/ffmpeg-batch-video-compression-video-stitching-video-slicing/"
+        class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+        ffmpeg batch video compression, video stitching, video slicing
+      </a>
+    </h2>
+    <div class="mb-4 text-xs text-gray-500">2022-05-31</div>
+    <div class="mb-4 text-gray-500 dark:text-gray-300">
+      Batch video compression
+Set bit rate and output location.
+@echo off
+:: Set the video or audio format to be processed bel...
+    </div>
+    <div class="overflow-hidden">
+      
+      <a href="https://wherelse.cc/tag/bVOkvqw2z/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        笔记
+      </a>
+      
+
+    </div>
+  </div>
+  
+</div>
+
+<div
+  class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+  
+  <div class="flex-1 order-2 md:order-1">
+    <h2 class="text-2xl font-semibold mb-4">
+      <a href="https://wherelse.cc/post/office-click-to-run-version-and-volume-authorization-version-visio-coexist-installation/"
+        class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+        office click to run version and volume authorization version visio coexist installation
+      </a>
+    </h2>
+    <div class="mb-4 text-xs text-gray-500">2022-01-02</div>
+    <div class="mb-4 text-gray-500 dark:text-gray-300">
+      If you have already installed the Office 365 version of Office, or other Click-to-Run versions of Office, and then want ...
+    </div>
+    <div class="overflow-hidden">
+      
+      <a href="https://wherelse.cc/tag/bVOkvqw2z/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        笔记
+      </a>
+      
+
+    </div>
+  </div>
+  
+</div>
+
+<div
+  class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+  
+  <div class="flex-1 order-2 md:order-1">
+    <h2 class="text-2xl font-semibold mb-4">
+      <a href="https://wherelse.cc/post/fpga-autumn-recruit-study-notes-4/"
+        class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+        FPGA秋招学习笔记整理（4）
+      </a>
+    </h2>
+    <div class="mb-4 text-xs text-gray-500">2021-11-21</div>
+    <div class="mb-4 text-gray-500 dark:text-gray-300">
+      <p>FPGA autumn recruit study notes (4): Common designs, calculations and problems<br>
+FPGA秋招学习笔记（4）：常用设计、计算与问题</p>
+
+    </div>
+    <div class="overflow-hidden">
+      
+      <a href="https://wherelse.cc/tag/mkjIAt7jy/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        FPGA
+      </a>
+      
+      <a href="https://wherelse.cc/tag/bVOkvqw2z/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        笔记
+      </a>
+      
+
+    </div>
+  </div>
+  
+</div>
+
+<div
+  class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+  
+  <div class="flex-1 order-2 md:order-1">
+    <h2 class="text-2xl font-semibold mb-4">
+      <a href="https://wherelse.cc/post/fpga-autumn-recruit-study-notes-3/"
+        class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+        FPGA秋招学习笔记整理（3）
+      </a>
+    </h2>
+    <div class="mb-4 text-xs text-gray-500">2021-10-17</div>
+    <div class="mb-4 text-gray-500 dark:text-gray-300">
+      <p>FPGA autumn recruit study notes (3): Verilog syntax and basic design<br>
+FPGA秋招学习笔记整理（3）：Verilog语法和基础设计</p>
+
+    </div>
+    <div class="overflow-hidden">
+      
+      <a href="https://wherelse.cc/tag/mkjIAt7jy/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        FPGA
+      </a>
+      
+      <a href="https://wherelse.cc/tag/bVOkvqw2z/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        笔记
+      </a>
+      
+
+    </div>
+  </div>
+  
+</div>
+
+<div
+  class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+  
+  <div class="flex-1 order-2 md:order-1">
+    <h2 class="text-2xl font-semibold mb-4">
+      <a href="https://wherelse.cc/post/fpga-autumn-recruit-study-notes-2/"
+        class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+        FPGA秋招学习笔记整理（2）
+      </a>
+    </h2>
+    <div class="mb-4 text-xs text-gray-500">2021-10-13</div>
+    <div class="mb-4 text-gray-500 dark:text-gray-300">
+      <p>FPGA autumn recruitment study notes (2): FPGA hardware composition and logic circuit<br>
+FPGA秋招学习笔记整理（2）：FPGA硬件构成与逻辑电路</p>
+
+    </div>
+    <div class="overflow-hidden">
+      
+      <a href="https://wherelse.cc/tag/mkjIAt7jy/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        FPGA
+      </a>
+      
+      <a href="https://wherelse.cc/tag/bVOkvqw2z/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        笔记
+      </a>
+      
+
+    </div>
+  </div>
+  
+</div>
+
+<div
+  class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+  
+  <div class="flex-1 order-2 md:order-1">
+    <h2 class="text-2xl font-semibold mb-4">
+      <a href="https://wherelse.cc/post/fpga-autumn-recruit-study-notes-1/"
+        class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+        FPGA秋招学习笔记整理（1）
+      </a>
+    </h2>
+    <div class="mb-4 text-xs text-gray-500">2021-09-26</div>
+    <div class="mb-4 text-gray-500 dark:text-gray-300">
+      <p>FPGA autumn recruit study notes  (one) : Fundamentals of Digital Circuits<br>
+FPGA秋招学习笔记整理(1)：数电基础知识</p>
+
+    </div>
+    <div class="overflow-hidden">
+      
+      <a href="https://wherelse.cc/tag/mkjIAt7jy/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        FPGA
+      </a>
+      
+      <a href="https://wherelse.cc/tag/bVOkvqw2z/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        笔记
+      </a>
+      
+
+    </div>
+  </div>
+  
+</div>
+
+<div
+  class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+  
+  <div class="flex-1 order-2 md:order-1">
+    <h2 class="text-2xl font-semibold mb-4">
+      <a href="https://wherelse.cc/post/dcdc-basic/"
+        class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+        basics of buck and boost circuits
+      </a>
+    </h2>
+    <div class="mb-4 text-xs text-gray-500">2021-09-20</div>
+    <div class="mb-4 text-gray-500 dark:text-gray-300">
+      buck circuits
+
+When the switching tube Q is controlled by the driving pulse to conduct, the renewal diode D is cut off a...
+    </div>
+    <div class="overflow-hidden">
+      
+      <a href="https://wherelse.cc/tag/R7mKi9MnI/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        电路
+      </a>
+      
+      <a href="https://wherelse.cc/tag/bVOkvqw2z/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        笔记
+      </a>
+      
+
+    </div>
+  </div>
+  
+</div>
+
+<div
+  class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+  
+  <div class="flex-1 order-2 md:order-1">
+    <h2 class="text-2xl font-semibold mb-4">
+      <a href="https://wherelse.cc/post/vivado-ila-waveform-readback/"
+        class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+        vivado ILA waveform look
+      </a>
+    </h2>
+    <div class="mb-4 text-xs text-gray-500">2021-09-01</div>
+    <div class="mb-4 text-gray-500 dark:text-gray-300">
+      In the tcl command window, type 123 as the name of the file to be saved, with the path
+read_hw_ila_data 123.ila
+display_...
+    </div>
+    <div class="overflow-hidden">
+      
+      <a href="https://wherelse.cc/tag/mkjIAt7jy/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        FPGA
+      </a>
+      
+      <a href="https://wherelse.cc/tag/bVOkvqw2z/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        笔记
+      </a>
+      
+
+    </div>
+  </div>
+  
+</div>
+  
+      </div>
+
+      
+  <div class="my-4 flex justify-between px-4 md:px-0">
+    
+    
+      <a href="https://wherelse.cc/tag/bVOkvqw2z/page/2" class="btn btn-white">
+        下一页
+        <i class="ri-arrow-right-line ml-4"></i>
+      </a>
+    
+  </div>
+
+      <footer class="py-12 text-center px-4 md:px-0" v-pre>
+  <a href="/atom.xml" target="_blank">RSS
+</a> | Powered by <a href="https://github.com/getgridea/gridea" 
+target="_blank">Gridea</a> &nbsp;&nbsp;
+<br>
+©2020 Wherelse All Right Reserved 
+</footer>
+
+
+    </div>
+  </div>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>-->
+  <script src="https://wherelse.cc/media/scripts/vue.min.js"></script>
+  <script src="https://wherelse.cc/media/scripts/main.js"></script>
+</body>
+</html>

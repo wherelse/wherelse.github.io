@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>GPS Navigation Message Format -
+    Wherelse Blog</title>
+<meta name="ThemeName" content="Gridea Theme Rocky by EryouHao" />
+<meta name="referrer" content="always" />
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<link rel="manifest" href="/site.webmanifest">
+<!-- <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet preload" as="style"> -->
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"> -->
+<!-- <link rel="stylesheet" href="https://cdn.staticfile.org/animate.css/3.7.2/animate.min.css" as="style" /> -->
+<link href="/media/css/remixicon.css" rel="stylesheet" as="style">
+<link rel="stylesheet" href="/media/css/tailwind.css">
+<link rel="stylesheet" href="/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="GPS Navigation Message Format -
+    Wherelse Blog - Atom Feed" href="/atom.xml">
+
+  
+  <script defer src="https://www.googletagmanager.com/gtag/js?id=G-4449R7TQN5"></script>
+  <script>
+  var host = window.location.hostname;
+  if(host != "localhost")
+  {
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4449R7TQN5');
+  }
+  </script>
+    
+
+  <!-- <title name="GPS Navigation Message Format"> </title> -->
+  <meta name="socialText" content="记录学习与折腾，网络，博客，嵌入式相关；Record learning and toss, network, blog, embedded related" />
+  <meta name="description" content="What is a navigation message
+A satellite navigation message is a message broadcast by a navigation satellite to the user..." />
+  <meta name="referrer" content="always" />
+  <link rel="canonical" href="https://wherelse.cc/post/GPS-Navigation-Message-Format/" />
+  <link rel="preconnect" href="https://cdn.staticfile.org" />
+  <script src="https://wherelse.cc/media/scripts/photoswipe.min.js"></script>
+  <script src="https://wherelse.cc/media/scripts/photoswipe-ui-default.min.js"></script>
+  <link rel="stylesheet" href="https://wherelse.cc/media/css/photoswipe.css" as="style" />
+  <link rel="stylesheet" href="https://wherelse.cc/media/css/default-skin.css" as="style" />
+  <!-- Code Highlight -->
+  
+  <script src="https://wherelse.cc/media/prism.js"></script>
+  <script>
+    Prism.highlightAll();
+  </script>
+  
+  
+  <link rel="stylesheet preload"
+    href="https://wherelse.cc/media/css/prism-github.css"
+    as="style" />
+  
+</head>
+
+<body>
+  <div class="antialiased flex flex-col min-h-screen" id="app">
+    <a href="https://wherelse.cc"
+      class="fixed top-0 left-0 mt-4 bg-black text-white dark:text-gray-700 dark:bg-yellow-50 dark:hover:bg-black dark:hover:text-white inline-flex p-2 pl-8 hover:text-gray-700 hover:bg-yellow-50 font-bold z-10 transition-fast animated fadeInLeft">
+      Wherelse Blog
+    </a>
+    <div class="max-w-4xl w-full mx-auto">
+      <div
+        class="shadow-box bg-white dark:bg-gray-600 rounded-lg pt-32 md:pt-32 px-4 md:px-8 pb-8 animated fadeIn mb-8">
+        <h1 class="text-5xl font-semibold leading-normal pb-8 mb-8 border-b-8 border-gray-700">
+          GPS Navigation Message Format
+        </h1>
+        
+        <div class="mb-8 flex flex-wrap">
+          <div class="text-gray-400 text-sm mr-4">
+            2020-02-18 · 8 min read
+          </div>
+          
+          <a href="https://wherelse.cc/tag/bVOkvqw2z/"
+            class="text-gray-700 text-sm border-b-2 border-dotted border-gray-200 hover:border-gray-600 transition-all duration-100 inline-flex mr-2">
+            <i class="ri-hashtag"></i>
+            笔记
+          </a>
+          
+        </div>
+        <div class="markdown mb-16" v-pre>
+          <h2 id="what-is-a-navigation-message">What is a navigation message</h2>
+<p>A satellite navigation message is a message broadcast by a navigation satellite to the user describing the parameters of the navigation satellite's operation status, including the system time, ephemeris, ephemeris, correction parameters of the satellite clock, the health of the navigation satellite and the ionospheric delay model parameters. The parameters of the navigation message provide time information to the user, and the position coordinates and velocity of the user can be calculated using the parameters of the navigation message</p>
+<h2 id="structure-of-a-navigation-message">Structure of a navigation message</h2>
+<p>Each frame is 1500 bits long and has a duration of 30 s. Each frame consists of 5 subframes, each of which is 300 bits long and has a duration of 6 s. Each subframe consists of 10 words, each of which is 30 bits long. The first two words of each subframe are telemetry word (TLW) and handover word (HOW), and the last 8 words are data blocks. The following diagram shows the structure of the navigation message<br>
+<img src="https://wherelse.cc/post-images/1582033304239.jpg" alt="" loading="lazy"></p>
+<figure data-type="image" tabindex="1"><img src="https://wherelse.cc/post-images/1582033324086.png" alt="" loading="lazy"></figure>
+<h3 id="telemetry-word-tlm">Telemetry word (TLM)</h3>
+<p>Of the 30 bits of the telemetry word, the first 8 bits have a fixed value of <code>10001011</code> sync code, 9-22 bits are telemetry codes containing telemetry information, 23 and 24 bits are reserved, and the last 6 bits are parity codes. The synchronization code is used to match the received data code, to realize the search to determine the starting position of the subframe, and to provide the conditions for subsequent unframing.</p>
+<h3 id="handover-word-how">Handover word (HOW)</h3>
+<p>Immediately after the telemetry word, bits 1-17 of the handover word are the truncated intraperiodic count values obtained on the Z counter. The 18th bit is the warning flag, when the flag is 1, warning that the URA value provided by the first data block of this satellite may be larger than its true value, and the 19th bit is the A-S flag, when the flag is 1, indicating that anti-electronic spoofing measures are applied to this satellite. Bits 20-22 are the subframe identification flags, corresponding to <code>001-101</code>, which are used to identify which subframe this is. Bits 23 and 24 are the values that can be calculated to make the last 6 bits of the parity code end with 00. The last 6 bits are the parity bits.</p>
+<h3 id="first-data-block">First data block</h3>
+<p>The first data block includes 3-10 words of the 1st subframe, for time information, etc., providing the satellite's time correction parameters, health status, etc.</p>
+<ul>
+<li>Number of days of the week, weekly week value + 1, maximum value is 1023, if it exceeds 1023 it will return to zero.</li>
+<li>User Range Progress Accuracy (URA), a statistical value for all errors caused by the GPS ground monitoring part and the space constellation part, varies from 0 to 15, the larger the URA value, the less accurate the GPS distance measurement value obtained from this satellite.</li>
+<li>Satellite health status: 6 bits in total, the highest bit 0 indicates that the navigation message is correct, 1 indicates that there is an error in the navigation message, and the last 5 bits indicate different error states.</li>
+<li>Clock correction parameter: used to correct the clock difference of the satellite clock.</li>
+<li>Group delay correction value: The single frequency receiver uses this value to correct the group delay.</li>
+<li>Clock data period number: 10 bits of data to indicate the &quot;period number&quot; of the clock data block, telling the receiver to process the clock correction parameters in the data only when the clock correction data is updated.</li>
+</ul>
+<h3 id="second-data-block">Second data block</h3>
+<p>The second data block, consisting of subframes 2 and 3, provides the satellite ephemeris parameters that describe the spatial position and speed of the satellite at each moment. A set of ephemeris is valid for 4 hours, and the 8-bit ephemeris data period number, which is broadcasted in both subframe 2 and 3, is used to determine if it has expired.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Serial Number</th>
+<th style="text-align:left">Name</th>
+<th style="text-align:left">Function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>t</mi><mrow><mi>o</mi><mi>e</mi></mrow></msub></mrow><annotation encoding="application/x-tex">t_{oe}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.76508em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">o</span><span class="mord mathdefault mtight">e</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></td>
+<td style="text-align:left">ephemeris reference time</td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><msqrt><mi>a</mi></msqrt><mi>s</mi></msub></mrow><annotation encoding="application/x-tex">\sqrt a_s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0897000000000001em;vertical-align:-0.28942em;"></span><span class="mord"><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8002800000000001em;"><span class="svg-align" style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathdefault" style="padding-left:0.833em;">a</span></span><span style="top:-2.76028em;"><span class="pstrut" style="height:3em;"></span><span class="hide-tail" style="min-width:0.853em;height:1.08em;"><svg width='400em' height='1.08em' viewBox='0 0 400000 1080' preserveAspectRatio='xMinYMin slice'><path d='M95,702c-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,
+-10,-9.5,-14c0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54c44.2,-33.3,65.8,
+-50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10s173,378,173,378c0.7,0,
+35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429c69,-144,104.5,-217.7,106.5,
+-221c5.3,-9.3,12,-14,20,-14H400000v40H845.2724s-225.272,467,-225.272,467
+s-235,486,-235,486c-2.7,4.7,-9,7,-19,7c-6,0,-10,-1,-12,-3s-194,-422,-194,-422
+s-65,47,-65,47z M834 80H400000v40H845z'/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.23972em;"><span></span></span></span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.011971999999999983em;"><span style="top:-2.4105800000000004em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">s</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.28942em;"><span></span></span></span></span></span></span></span></span></span></td>
+<td style="text-align:left">the square root of the long half-axis of the satellite orbit <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mi>s</mi></msub></mrow><annotation encoding="application/x-tex">a_s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">s</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>e</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">e_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">e</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></td>
+<td style="text-align:left">the eccentricity of the orbit</td>
+</tr>
+<tr>
+<td style="text-align:center">4</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>i</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">i_0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.80952em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">i</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></td>
+<td style="text-align:left">the orbital inclination at <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>t</mi><mrow><mi>o</mi><mi>e</mi></mrow></msub></mrow><annotation encoding="application/x-tex">t_{oe}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.76508em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">o</span><span class="mord mathdefault mtight">e</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></td>
+</tr>
+<tr>
+<td style="text-align:center">5</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="normal">Ω</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">Ω_0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord">Ω</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></td>
+<td style="text-align:left">the equatorial longitude of the orbital ascending node when the intraperiodic time is equal to 0</td>
+</tr>
+<tr>
+<td style="text-align:center">6</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>ω</mi></mrow><annotation encoding="application/x-tex">\omega</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">ω</span></span></span></span></td>
+<td style="text-align:left">Orbital near-Earth angular distance</td>
+</tr>
+<tr>
+<td style="text-align:center">7</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>M</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">M_0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.10903em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></td>
+<td style="text-align:left">the equinox angle at <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>t</mi><mrow><mi>o</mi><mi>e</mi></mrow></msub></mrow><annotation encoding="application/x-tex">t_{oe}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.76508em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">o</span><span class="mord mathdefault mtight">e</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></td>
+</tr>
+<tr>
+<td style="text-align:center">8</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">Δ</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">\Delta n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">Δ</span><span class="mord mathdefault">n</span></span></span></span></td>
+<td style="text-align:left">Mean motion angular velocity correction</td>
+</tr>
+<tr>
+<td style="text-align:center">9</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mo><mi>i</mi></mo><mi mathvariant="normal">.</mi></msup></mrow><annotation encoding="application/x-tex">\stackrel{.} {i}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.033412em;vertical-align:-0.07976em;"></span><span class="mrel"><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.9536519999999999em;"><span style="top:-2.92024em;"><span class="pstrut" style="height:3em;"></span><span><span class="mop mathdefault">i</span></span></span><span style="top:-3.77976em;margin-left:0em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">.</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.07976em;"><span></span></span></span></span></span></span></span></span></span></td>
+<td style="text-align:left">rate of change of orbital inclination with respect to time</td>
+</tr>
+<tr>
+<td style="text-align:center">10</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mo><mi mathvariant="normal">Ω</mi></mo><mi mathvariant="normal">.</mi></msup></mrow><annotation encoding="application/x-tex">\stackrel{.} {Ω}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0572219999999999em;vertical-align:-0.091665em;"></span><span class="mrel"><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.965557em;"><span style="top:-2.908335em;"><span class="pstrut" style="height:3em;"></span><span><span class="mop">Ω</span></span></span><span style="top:-3.791665em;margin-left:0em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">.</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.091665em;"><span></span></span></span></span></span></span></span></span></span></td>
+<td style="text-align:left">the rate of change of orbital ascending node declination against time</td>
+</tr>
+<tr>
+<td style="text-align:center">11</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>C</mi><mrow><mi>u</mi><mi>c</mi></mrow></msub></mrow><annotation encoding="application/x-tex">C_{uc}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">u</span><span class="mord mathdefault mtight">c</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></td>
+<td style="text-align:left">The cosine-corrected amplitude of the ascending nodal angle</td>
+</tr>
+<tr>
+<td style="text-align:center">12</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>C</mi><mrow><mi>u</mi><mi>s</mi></mrow></msub></mrow><annotation encoding="application/x-tex">C_{us}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">u</span><span class="mord mathdefault mtight">s</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></td>
+<td style="text-align:left">Ascending sine and corrected amplitude</td>
+</tr>
+<tr>
+<td style="text-align:center">13</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>C</mi><mrow><mi>r</mi><mi>c</mi></mrow></msub></mrow><annotation encoding="application/x-tex">C_{rc}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span><span class="mord mathdefault mtight">c</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></td>
+<td style="text-align:left">Cosine of orbital radius and corrected amplitude</td>
+</tr>
+<tr>
+<td style="text-align:center">14</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>C</mi><mrow><mi>r</mi><mi>s</mi></mrow></msub></mrow><annotation encoding="application/x-tex">C_{rs}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span><span class="mord mathdefault mtight">s</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></td>
+<td style="text-align:left">Orbital radius sine and corrected amplitude</td>
+</tr>
+<tr>
+<td style="text-align:center">15</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>C</mi><mrow><mi>i</mi><mi>c</mi></mrow></msub></mrow><annotation encoding="application/x-tex">C_{ic}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mord mathdefault mtight">c</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></td>
+<td style="text-align:left">Orbital inclination cosine and corrected amplitude</td>
+</tr>
+<tr>
+<td style="text-align:center">16</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>C</mi><mrow><mi>i</mi><mi>s</mi></mrow></msub></mrow><annotation encoding="application/x-tex">C_{is}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mord mathdefault mtight">s</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></td>
+<td style="text-align:left">Orbital inclination sine and corrected amplitude</td>
+</tr>
+</tbody>
+</table>
+<h3 id="third-data-block">Third data block</h3>
+<p>The third data block consists of frames 4 and 5, which broadcast the ephemeris parameters of all satellites, ionospheric correction parameters, GPS time vs. UTC time, satellite health status, etc. The third data block consists of frames 4 and 5, which broadcast the ephemeris parameters of all satellites, ionospheric correction parameters, GPS time vs.<br>
+Subframes 4 and 5 of a frame do not have enough space to broadcast the ephemeris parameters of all satellites and are paged.</p>
+<ul>
+<li>Pages 2,3,4,5,7,8,9,10 of subframe 4 provide the ephemeris of satellites with PRN numbers 25-32.</li>
+<li>Page 18 of subframe 4 provides the ionospheric correction parameters and the parameters of the relationship between GPS time UTC.</li>
+<li>Page 25 of subframe 4 provides the satellite health status for satellites with PRN numbers 25-32.</li>
+<li>Page 1-24 of subframe 5 provides the ephemeris for satellites with PRN numbers 1-24.</li>
+<li>Page 25 provides the health status of satellites with PRN numbers 1-24, the calendar reference time and the calendar reference week number.</li>
+</ul>
+<p>The GPS satellite ephemeris parameters are listed in the following table.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Serial Number</th>
+<th style="text-align:left">Name</th>
+<th style="text-align:left">Function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>t</mi><mrow><mi>o</mi><mi>a</mi></mrow></msub></mrow><annotation encoding="application/x-tex">t_{oa}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.76508em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">o</span><span class="mord mathdefault mtight">a</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></td>
+<td style="text-align:left">Calendar reference time</td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><msqrt><mi>a</mi></msqrt><mi>s</mi></msub></mrow><annotation encoding="application/x-tex">\sqrt a_s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0897000000000001em;vertical-align:-0.28942em;"></span><span class="mord"><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8002800000000001em;"><span class="svg-align" style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathdefault" style="padding-left:0.833em;">a</span></span><span style="top:-2.76028em;"><span class="pstrut" style="height:3em;"></span><span class="hide-tail" style="min-width:0.853em;height:1.08em;"><svg width='400em' height='1.08em' viewBox='0 0 400000 1080' preserveAspectRatio='xMinYMin slice'><path d='M95,702c-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,
+-10,-9.5,-14c0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54c44.2,-33.3,65.8,
+-50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10s173,378,173,378c0.7,0,
+35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429c69,-144,104.5,-217.7,106.5,
+-221c5.3,-9.3,12,-14,20,-14H400000v40H845.2724s-225.272,467,-225.272,467
+s-235,486,-235,486c-2.7,4.7,-9,7,-19,7c-6,0,-10,-1,-12,-3s-194,-422,-194,-422
+s-65,47,-65,47z M834 80H400000v40H845z'/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.23972em;"><span></span></span></span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.011971999999999983em;"><span style="top:-2.4105800000000004em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">s</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.28942em;"><span></span></span></span></span></span></span></span></span></span></td>
+<td style="text-align:left">the square root of the long half-axis of the satellite orbit <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mi>s</mi></msub></mrow><annotation encoding="application/x-tex">a_s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">s</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>e</mi><mi>s</mi></msub></mrow><annotation encoding="application/x-tex">e_s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">e</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">s</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></td>
+<td style="text-align:left">the eccentricity of the orbit</td>
+</tr>
+<tr>
+<td style="text-align:center">4</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>δ</mi><msub><mrow></mrow><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">\delta {_i}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord mathdefault" style="margin-right:0.03785em;">δ</span><span class="mord"><span class="mord"><span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span></td>
+<td style="text-align:left">the orbital inclination with respect to <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0.3</mn></mrow><annotation encoding="application/x-tex">0.3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">3</span></span></span></span>\phi$</td>
+</tr>
+<tr>
+<td style="text-align:center">5</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi mathvariant="normal">Ω</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">Ω_0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord">Ω</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></td>
+<td style="text-align:left">the equatorial longitude of the orbital ascending node when the intraperiodic time is equal to 0</td>
+</tr>
+<tr>
+<td style="text-align:center">6</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>ω</mi></mrow><annotation encoding="application/x-tex">\omega</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">ω</span></span></span></span></td>
+<td style="text-align:left">the orbital proximal angle distance</td>
+</tr>
+<tr>
+<td style="text-align:center">7</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>M</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">M_0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.10903em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></td>
+<td style="text-align:left">the equinox angle at <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>t</mi><mrow><mi>o</mi><mi>a</mi></mrow></msub></mrow><annotation encoding="application/x-tex">t_{oa}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.76508em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">o</span><span class="mord mathdefault mtight">a</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></td>
+</tr>
+<tr>
+<td style="text-align:center">8</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mo><mi mathvariant="normal">Ω</mi></mo><mi mathvariant="normal">.</mi></msup></mrow><annotation encoding="application/x-tex">\stackrel{.} {Ω}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0572219999999999em;vertical-align:-0.091665em;"></span><span class="mrel"><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.965557em;"><span style="top:-2.908335em;"><span class="pstrut" style="height:3em;"></span><span><span class="mop">Ω</span></span></span><span style="top:-3.791665em;margin-left:0em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">.</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.091665em;"><span></span></span></span></span></span></span></span></span></span></td>
+<td style="text-align:left">rate of change of orbital ascending node declination against time</td>
+</tr>
+<tr>
+<td style="text-align:center">9</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mrow><mi>f</mi><mn>0</mn></mrow></msub></mrow><annotation encoding="application/x-tex">a_{f0}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.10764em;">f</span><span class="mord mtight">0</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span></td>
+<td style="text-align:left">satellite clock correction parameter</td>
+</tr>
+<tr>
+<td style="text-align:center">10</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mrow><mi>f</mi><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">a_{f1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.10764em;">f</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span></td>
+<td style="text-align:left">satellite clock correction parameter</td>
+</tr>
+</tbody>
+</table>
+<h2 id="reference">Reference</h2>
+<blockquote>
+<p>GPS Principles and Receiver Design - by Gang Xie</p>
+</blockquote>
+
+        </div>
+
+        <!-- copyright -->
+        <div class="copyright">
+          <div class="container">
+            <p><small class="text-gray-400">
+                The copyright of the articles on this website is owned by me. Without consent, it is not allowed to copy without permission. Reasonable reprints are welcome to indicate the source of the quotation. Please leave a message for reprinting pictures. The content of the article is only used for technical research and exploration, and shall not be used for illegal purposes.
+             </small></p>
+          </div>
+        </div>
+
+        <div class="text-center text-gray-300">
+          
+          <span id="/post/GPS-Navigation-Message-Format/" class="leancloud_visitors views-counter meta-info">
+            <a class="text-center">📋阅读量:</a>
+            <span id="twikoo_visitors">0</span>
+          </span>
+          
+        </div>
+      </div>
+
+      
+
+      
+        <button type="button" class="collapsible">
+          <i class="ri-message-2-line"></i>
+        </button>
+        <div class="tcomment rounded-lg px-4 py-4">
+          <div id="tcomment"></div>
+        </div>  
+      
+
+      <footer class="py-12 text-center px-4 md:px-0" v-pre>
+  <a href="/atom.xml" target="_blank">RSS
+</a> | Powered by <a href="https://github.com/getgridea/gridea" 
+target="_blank">Gridea</a> &nbsp;&nbsp;
+<br>
+©2020 Wherelse All Right Reserved 
+</footer>
+
+    </div>
+
+
+    <!-- TOC Container -->
+    <div id="toc"
+      class="fixed right-0 bottom-0 mb-20 mr-6 shadow w-12 h-12 rounded-lg flex justify-center items-center z-10 cursor-pointer bg-white dark:bg-gray-500 dark:text-gray-200 hover:shadow-lg transition-all animated fadeInRight"
+      @click="showToc = true">
+      <i class="ri-menu-line font-bold"></i>
+    </div>
+
+    <div
+      class="fixed right-0 top-0 bottom-0 overflow-y-auto w-64 rounded-lg p-4 m-4  shadow-md bg-white dark:bg-gray-800 p-4 border-l border-gray-100 dark:border-gray-600 z-10 transition-fast"
+      :class="{ '-mr-64': !showToc }">
+      <div class="flex mb-4 justify-end">
+        <div
+          class="w-8 h-8 inline-flex justify-center items-center rounded-full cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-fast"
+          @click="showToc = false">
+          <i class="ri-close-circle-fill"></i>
+        </div>
+      </div>
+      <div class="post-toc-container"><ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#what-is-a-navigation-message">What is a navigation message</a></li>
+<li><a href="#structure-of-a-navigation-message">Structure of a navigation message</a>
+<ul>
+<li><a href="#telemetry-word-tlm">Telemetry word (TLM)</a></li>
+<li><a href="#handover-word-how">Handover word (HOW)</a></li>
+<li><a href="#first-data-block">First data block</a></li>
+<li><a href="#second-data-block">Second data block</a></li>
+<li><a href="#third-data-block">Third data block</a></li>
+</ul>
+</li>
+<li><a href="#reference">Reference</a></li>
+</ul>
+</li>
+</ul>
+</div>
+    </div>
+
+    <!-- Back to top -->
+    <div
+      class="fixed right-0 bottom-0 mb-4 mr-6 shadow w-12 h-12 rounded-lg flex justify-center items-center z-10 cursor-pointer bg-white hover:shadow-lg transition-all dark:bg-gray-500 dark:text-gray-200"
+      @click="backToUp" v-show="scrolled">
+      <i class="ri-arrow-up-circle-fill"></i>
+    </div>
+  </div>
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+  <!-- Background of PhotoSwipe. 
+        It's a separate element as animating opacity is faster than rgba(). -->
+  <div class="pswp__bg">
+  </div>
+  <!-- Slides wrapper with overflow:hidden. -->
+  <div class="pswp__scroll-wrap">
+    <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+    <div class="pswp__container">
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+    </div>
+    <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+    <div class="pswp__ui pswp__ui--hidden">
+      <div class="pswp__top-bar">
+        <!--  Controls are self-explanatory. Order can be changed. -->
+        <div class="pswp__counter">
+        </div>
+        <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+        <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+        <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+        <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+        <!-- element will get class pswp__preloader--active when preloader is running -->
+        <div class="pswp__preloader">
+          <div class="pswp__preloader__icn">
+            <div class="pswp__preloader__cut">
+              <div class="pswp__preloader__donut">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+        <div class="pswp__share-tooltip">
+        </div>
+      </div>
+      <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+      </button>
+      <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+      </button>
+      <div class="pswp__caption">
+        <div class="pswp__caption__center">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>-->
+  <script src="https://wherelse.cc/media/scripts/vue.min.js"></script>
+  <script src="https://wherelse.cc/media/scripts/main.js"></script>
+
+  <!--根据内容动态加载-->
+  <script type="text/javascript">
+    window.onload = function () {
+      //根据内容动态加载mermiad
+      if (document.getElementsByClassName("language-mermaid").length != 0) {
+        console.log("find mermaid")
+        for (let x of document.getElementsByClassName("language-mermaid")) {
+          if (x.nodeName == "CODE") {
+            let m = document.createElement("div");
+            m.classList.add("mermaid");
+            m.textContent = x.textContent;
+            x.parentNode.insertAdjacentElement("beforebegin", m);
+          }
+        }
+        let script = document.createElement('script');
+        defer = "defer";
+        script.src =
+          "https://wherelse.cc/media/scripts/mermaid.min.js";
+        document.body.append(script);
+        script.onload = function () {
+          mermaid.initialize({
+            startOnLoad: false
+          });
+          mermaid.init();
+          console.log("mermaid init done");
+        }
+      }
+
+      //bilibili 视频支持
+      var content = document.getElementsByClassName("language-bilibili")[0];
+      if (content != null) {
+        var m = document.createElement("div");
+        m.classList.add("bilibili-video");
+        m.innerHTML = content.textContent;
+        content.parentNode.insertAdjacentElement("beforeend", m);
+      }
+      //katex自适应加载
+      if (document.getElementsByClassName("katex").length != 0) {
+        let script = document.createElement('script');
+        script.defer = "defer"
+        script.src =
+          "https://wherelse.cc/media/scripts/katex.min.js";
+        document.body.append(script);
+        script = document.createElement('script');
+        script.defer = "defer"
+        script.src =
+          "https://wherelse.cc/media/scripts/copy-tex.min.js";
+        document.body.append(script);
+        let link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.defer = "defer"
+        link.href =
+          "https://wherelse.cc/media/css/katex.min.css";
+        document.body.append(link);
+        link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.defer = "defer"
+        link.href =
+          "https://wherelse.cc/media/css/copy-tex.css";
+        document.body.append(link);
+      }
+
+      script = document.createElement('script');
+      script.defer = "defer"
+      script.src =
+        "https://cdn.staticfile.org/twikoo/1.6.7/twikoo.all.min.js";
+      document.body.append(script);
+      script.onload = function () {
+        let scripts = document.createElement('script');
+        scripts.append(document.createTextNode(
+          " twikoo.init({envId: \"https://twikoo.vlieo.com\",el: \"#tcomment\",});"));
+        var parentDiv = document.getElementById("toc").parentNode;
+        var sp = document.getElementById("toc");
+        parentDiv.insertBefore(scripts, sp);
+      }
+    }
+  </script>
+  <script>
+    comment_collapse();
+  </script>
+
+ <script>
+    //拿到预览框架，也就是上面的html代码
+    var pswpElement = document.querySelectorAll(".pswp")[0];
+    //定义图片数组变量
+    var imgitems;
+    /**
+     * 用于显示预览界面
+     * @param index 图片数组下标
+     */
+    function viewImg(index) {
+      //其它选项这里不做过多阐述，详情见官网
+      var pswpoptions = {
+        index: parseInt(index, 10), // 开始幻灯片索引。0是第一张幻灯片。必须是整数，而不是字符串。
+        bgOpacity: 0.7, // 背景透明度，0-1
+        maxSpreadZoom: 3, // 缩放级别，不要太大
+      };
+      //初始化并打开PhotoSwipe，pswpElement对应上面预览框架，PhotoSwipeUI_Default为皮肤，imgitems为图片数组，pswpoptions为选项
+      var gallery = new PhotoSwipe(
+        pswpElement,
+        PhotoSwipeUI_Default,
+        imgitems,
+        pswpoptions
+      );
+      gallery.init();
+    }
+    /**
+     * 用于添加图片点击事件
+     * @param img 图片元素
+     * @param index 所属下标（在imgitems中的位置）
+     */
+    function addImgClick(img, index) {
+      img.onclick = function () {
+        viewImg(index);
+      };
+    }
+    /**
+     * 轮询所有图片，获取src、width、height等数据，加入imgitems，并给图片元素添加事件
+     * 最好在onload中执行该方法，本站因放在最底部，所以直接初始化
+     * 异步加载图片可在图片元素创建完成后调用此方法
+     */
+    function initImg() {
+      //重置图片数组
+      imgitems = [];
+      //查找class:markdown 下的所有img元素并遍历
+      var imgs = document.querySelectorAll(".markdown img");
+      for (var i = 0; i < imgs.length; i++) {
+        var img = imgs[i];
+        //本站相册初始为loading图片，真实图片放在data-src
+        var ds = img.getAttribute("src");
+        //创建image对象，用于获取图片宽高
+        var imgtemp = new Image();
+        //判断是否存在data-src
+        if (ds != null && ds.length > 0) {
+          imgtemp.src = ds;
+        } else {
+          imgtemp.src = img.src;
+        }
+        //判断是否存在缓存
+        if (imgtemp.complete) {
+          var imgobj = {
+            src: imgtemp.src,
+            w: imgtemp.width,
+            h: imgtemp.height,
+          };
+          imgitems[i] = imgobj;
+          addImgClick(img, i);
+        } else {
+          // console.log("进来了2");
+          imgtemp.index = i;
+          imgtemp.img = img;
+          imgtemp.onload = function () {
+            var imgobj = {
+              src: this.src,
+              w: this.width,
+              h: this.height,
+            };
+            //不要使用push，因为onload前后顺序会不同
+            imgitems[this.index] = imgobj;
+            //添加点击事件
+            addImgClick(this.img, this.index);
+          };
+        }
+      }
+    }
+    //初始化
+    initImg();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Wherelse Blog</title>
+<meta name="ThemeName" content="Gridea Theme Rocky by EryouHao" />
+<meta name="referrer" content="always" />
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<link rel="manifest" href="/site.webmanifest">
+<!-- <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet preload" as="style"> -->
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"> -->
+<!-- <link rel="stylesheet" href="https://cdn.staticfile.org/animate.css/3.7.2/animate.min.css" as="style" /> -->
+<link href="/media/css/remixicon.css" rel="stylesheet" as="style">
+<link rel="stylesheet" href="/media/css/tailwind.css">
+<link rel="stylesheet" href="/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Wherelse Blog - Atom Feed" href="/atom.xml">
+
+  
+  <script defer src="https://www.googletagmanager.com/gtag/js?id=G-4449R7TQN5"></script>
+  <script>
+  var host = window.location.hostname;
+  if(host != "localhost")
+  {
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4449R7TQN5');
+  }
+  </script>
+    
+
+  <meta name="socialText" content="Everything always needs to be studied to be understood" />
+  <meta name="description" content="记录学习与折腾，网络，博客，嵌入式相关；Record learning and toss, network, blog, embedded related" />
+  <meta name="keywords" content=" 碎碎念,笔记,编程,matlab,python,网络,FPGA,电路,VSCode,荔枝派,数据结构与算法,Gridea,STM32,矿渣,linux,Latax," />
+  <link rel="canonical" href="https://wherelse.cc/" />
+   <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css" /> -->
+   <!-- <link rel="preload"  href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css" as="font"/> -->
+</head>
+
+<body>
+  <div class="antialiased flex flex-col min-h-screen" id="app">
+    <div class="nav py-3 md:py-8 fixed w-full z-10 bg-gray-50 dark:bg-gray-700 transition-all duration-300" :class="{ 'scroll': scrolled }">
+  <div class="flex justify-end px-4">
+    <div class="w-8 h-8 flex justify-center items-center rounded-full md:hidden" @click="showMenu = !showMenu">
+      <i class="ri-close-circle-fill" v-show="showMenu"></i>
+      <i class="ri-menu-line" v-show="!showMenu"></i>
+    </div>
+  </div>
+  <nav class="max-w-4xl w-full mx-auto text-center flex flex-col md:flex-row justify-center md:block" :class="`${ showMenu ? 'block' : 'hidden' }`">
+    
+      <a href="/" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        home
+      </a>
+    
+      <a href="/archives" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        achives
+      </a>
+    
+      <a href="/tags" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        tags
+      </a>
+    
+      <a href="/gallery" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        gallery
+      </a>
+    
+      <a href="/friends" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        friends
+      </a>
+    
+      <a href="/post/about" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        about
+      </a>
+    
+   <!--<a href="https://wherelse.cc/atom.xml" target="_blank" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+      RSS
+    </a>-->
+  </nav>
+</div>
+
+    <div class="max-w-4xl w-full mx-auto pt-32">
+      
+
+      <div
+        class="shadow-box bg-white dark:bg-gray-600 border-gray-300 rounded-none md:rounded-lg -mx-1 md:mx-0 md:px-0">
+        
+<div
+  class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+  
+  <div class="flex-1 order-2 md:order-1">
+    <h2 class="text-2xl font-semibold mb-4">
+      <a href="https://wherelse.cc/post/First-experience-of-Rime/"
+        class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+        Rime输入法初体验
+      </a>
+    </h2>
+    <div class="mb-4 text-xs text-gray-500">2020-12-03</div>
+    <div class="mb-4 text-gray-500 dark:text-gray-300">
+      <p>一番折腾后还是放弃了它</p>
+
+    </div>
+    <div class="overflow-hidden">
+      
+      <a href="https://wherelse.cc/tag/K2mKTnDKr/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        碎碎念
+      </a>
+      
+
+    </div>
+  </div>
+  
+  <img
+    class="flex-shrink-0 self-start md:ml-4 mb-4 md:mb-0 rounded-lg shadow-lg object-cover featured-img order-1 md:order-2 w-full h-40 md:w-56 md:h-32"
+    loading="lazy" src="https://wherelse.cc/post-images/First-experience-of-Rime.png" alt="Rime输入法初体验">
+  
+</div>
+
+<div
+  class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+  
+  <div class="flex-1 order-2 md:order-1">
+    <h2 class="text-2xl font-semibold mb-4">
+      <a href="https://wherelse.cc/post/ibm-cloud-mian-fei-qing-liang-fu-wu-qi-zhu-ce-jiao-cheng/"
+        class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+        IBM Cloud free lightweight server registration tutorial
+      </a>
+    </h2>
+    <div class="mb-4 text-xs text-gray-500">2020-09-09</div>
+    <div class="mb-4 text-gray-500 dark:text-gray-300">
+      First go to the IBM Cloud website, https://cloud.ibm.com/, and select Create Account.
+
+Enter your email address for acco...
+    </div>
+    <div class="overflow-hidden">
+      
+      <a href="https://wherelse.cc/tag/Hg2wOF7pj/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        网络
+      </a>
+      
+
+    </div>
+  </div>
+  
+</div>
+
+<div
+  class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+  
+  <div class="flex-1 order-2 md:order-1">
+    <h2 class="text-2xl font-semibold mb-4">
+      <a href="https://wherelse.cc/post/Added-Noto-Serif-SC-font-support-for-Gridea-theme/"
+        class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+        Added Noto Serif SC font support for Gridea theme
+      </a>
+    </h2>
+    <div class="mb-4 text-xs text-gray-500">2020-07-16</div>
+    <div class="mb-4 text-gray-500 dark:text-gray-300">
+      Noto Serif is an open source serif font that can be used as a blog font to improve the reading experience, and can be ea...
+    </div>
+    <div class="overflow-hidden">
+      
+      <a href="https://wherelse.cc/tag/sx7g1O9Qg/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        Gridea
+      </a>
+      
+
+    </div>
+  </div>
+  
+</div>
+
+<div
+  class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+  
+  <div class="flex-1 order-2 md:order-1">
+    <h2 class="text-2xl font-semibold mb-4">
+      <a href="https://wherelse.cc/post/matlab-sequentially-read-folder-data/"
+        class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+        MATLAB sequentially read folder data
+      </a>
+    </h2>
+    <div class="mb-4 text-xs text-gray-500">2020-07-13</div>
+    <div class="mb-4 text-gray-500 dark:text-gray-300">
+      By sequentially reading the data in the folder, you can realize matlab's batch processing analysis of different data, wh...
+    </div>
+    <div class="overflow-hidden">
+      
+      <a href="https://wherelse.cc/tag/-AWGj9akS/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        编程
+      </a>
+      
+      <a href="https://wherelse.cc/tag/sMpX3T-CB/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        matlab
+      </a>
+      
+
+    </div>
+  </div>
+  
+</div>
+
+<div
+  class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+  
+  <div class="flex-1 order-2 md:order-1">
+    <h2 class="text-2xl font-semibold mb-4">
+      <a href="https://wherelse.cc/post/openwrt-implementation-of-ipv6-nat/"
+        class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+        Openwrt&#39;s implementation of IPV6 NAT
+      </a>
+    </h2>
+    <div class="mb-4 text-xs text-gray-500">2020-05-17</div>
+    <div class="mb-4 text-gray-500 dark:text-gray-300">
+      If you want to use a router, you can only get the address through IPV6 NAT or relay. relay can get the public address, b...
+    </div>
+    <div class="overflow-hidden">
+      
+      <a href="https://wherelse.cc/tag/Hg2wOF7pj/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        网络
+      </a>
+      
+
+    </div>
+  </div>
+  
+</div>
+
+<div
+  class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+  
+  <div class="flex-1 order-2 md:order-1">
+    <h2 class="text-2xl font-semibold mb-4">
+      <a href="https://wherelse.cc/post/coding-ci-coding-github-sync/"
+        class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+        Use Coding&#39;s build (continuous integration CI) feature to synchronize coding repositories with github
+      </a>
+    </h2>
+    <div class="mb-4 text-xs text-gray-500">2020-04-11</div>
+    <div class="mb-4 text-gray-500 dark:text-gray-300">
+      Today I want to use coding and github for domestic and foreign dual deployment, although in the end because of the certi...
+    </div>
+    <div class="overflow-hidden">
+      
+      <a href="https://wherelse.cc/tag/sx7g1O9Qg/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        Gridea
+      </a>
+      
+
+    </div>
+  </div>
+  
+</div>
+
+<div
+  class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+  
+  <div class="flex-1 order-2 md:order-1">
+    <h2 class="text-2xl font-semibold mb-4">
+      <a href="https://wherelse.cc/post/self-use-hardware-test-board/"
+        class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+        A self-use hardware test board 
+      </a>
+    </h2>
+    <div class="mb-4 text-xs text-gray-500">2020-04-05</div>
+    <div class="mb-4 text-gray-500 dark:text-gray-300">
+      Last year, I made a small test board for myself and my classmates to test some hardware devices or sensors, and in the p...
+    </div>
+    <div class="overflow-hidden">
+      
+      <a href="https://wherelse.cc/tag/6uQsJp8Vs/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        STM32
+      </a>
+      
+
+    </div>
+  </div>
+  
+</div>
+
+<div
+  class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+  
+  <div class="flex-1 order-2 md:order-1">
+    <h2 class="text-2xl font-semibold mb-4">
+      <a href="https://wherelse.cc/post/Install-openwrt-under-Docker-for-bypass-router/"
+        class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+        Install openwrt under Docker for bypass router
+      </a>
+    </h2>
+    <div class="mb-4 text-xs text-gray-500">2020-03-31</div>
+    <div class="mb-4 text-gray-500 dark:text-gray-300">
+      Preface
+My Phicomm N1 is running armbian linux as a stream-free server for the campus network, but it is a bit wasteful ...
+    </div>
+    <div class="overflow-hidden">
+      
+      <a href="https://wherelse.cc/tag/Hg2wOF7pj/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        网络
+      </a>
+      
+
+    </div>
+  </div>
+  
+</div>
+
+<div
+  class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+  
+  <div class="flex-1 order-2 md:order-1">
+    <h2 class="text-2xl font-semibold mb-4">
+      <a href="https://wherelse.cc/post/add-live2d-in-the-gridea-theme/"
+        class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+        Add Live2D for Gridea theme
+      </a>
+    </h2>
+    <div class="mb-4 text-xs text-gray-500">2020-03-09</div>
+    <div class="mb-4 text-gray-500 dark:text-gray-300">
+      Summary
+I saw Kanban girls on other people's websites, but Gridea didn't have a particularly complete solution, so I loo...
+    </div>
+    <div class="overflow-hidden">
+      
+      <a href="https://wherelse.cc/tag/sx7g1O9Qg/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        Gridea
+      </a>
+      
+
+    </div>
+  </div>
+  
+</div>
+
+<div
+  class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+  
+  <div class="flex-1 order-2 md:order-1">
+    <h2 class="text-2xl font-semibold mb-4">
+      <a href="https://wherelse.cc/post/html-grammar-notes/"
+        class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+        HTML语法笔记
+      </a>
+    </h2>
+    <div class="mb-4 text-xs text-gray-500">2020-03-08</div>
+    <div class="mb-4 text-gray-500 dark:text-gray-300">
+      <p>HTML Grammar notes</p>
+
+    </div>
+    <div class="overflow-hidden">
+      
+      <a href="https://wherelse.cc/tag/bVOkvqw2z/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        笔记
+      </a>
+      
+      <a href="https://wherelse.cc/tag/-AWGj9akS/" class="text-indigo-500 float-left">
+        <span class="ri-price-tag-3-line"></span>
+        编程
+      </a>
+      
+
+    </div>
+  </div>
+  
+</div>
+
+      </div>
+
+      
+  <div class="my-4 flex justify-between px-4 md:px-0">
+    
+      <a href="https://wherelse.cc/page/3/" class="btn btn-white">
+        <i class="ri-arrow-left-line mr-4"></i>
+        上一页
+      </a>
+    
+    
+      <a href="https://wherelse.cc/page/5/" class="btn btn-white">
+        下一页
+        <i class="ri-arrow-right-line ml-4"></i>
+      </a>
+    
+  </div>
+
+
+      <footer class="py-12 text-center px-4 md:px-0" v-pre>
+  <a href="/atom.xml" target="_blank">RSS
+</a> | Powered by <a href="https://github.com/getgridea/gridea" 
+target="_blank">Gridea</a> &nbsp;&nbsp;
+<br>
+©2020 Wherelse All Right Reserved 
+</footer>
+
+    </div>
+  </div>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script> -->
+  <script src="https://wherelse.cc/media/scripts/vue.min.js"></script>
+  <script src="https://wherelse.cc/media/scripts/main.js"></script>
+</body>
+
+
+</html>

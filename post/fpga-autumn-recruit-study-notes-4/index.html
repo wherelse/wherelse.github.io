@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>FPGA秋招学习笔记整理（4） -
+    Wherelse Blog</title>
+<meta name="ThemeName" content="Gridea Theme Rocky by EryouHao" />
+<meta name="referrer" content="always" />
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<link rel="manifest" href="/site.webmanifest">
+<!-- <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet preload" as="style"> -->
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"> -->
+<!-- <link rel="stylesheet" href="https://cdn.staticfile.org/animate.css/3.7.2/animate.min.css" as="style" /> -->
+<link href="/media/css/remixicon.css" rel="stylesheet" as="style">
+<link rel="stylesheet" href="/media/css/tailwind.css">
+<link rel="stylesheet" href="/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="FPGA秋招学习笔记整理（4） -
+    Wherelse Blog - Atom Feed" href="/atom.xml">
+
+  
+  <script defer src="https://www.googletagmanager.com/gtag/js?id=G-4449R7TQN5"></script>
+  <script>
+  var host = window.location.hostname;
+  if(host != "localhost")
+  {
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4449R7TQN5');
+  }
+  </script>
+    
+
+  <!-- <title name="FPGA秋招学习笔记整理（4）"> </title> -->
+  <meta name="socialText" content="记录学习与折腾，网络，博客，嵌入式相关；Record learning and toss, network, blog, embedded related" />
+  <meta name="description" content="FPGA autumn recruit study notes (4): Common designs, calculations and problems
+FPGA秋招学习笔记（4）：常用设计、计算与问题
+
+FPGA中的常用存储
+
+
+
+储..." />
+  <meta name="referrer" content="always" />
+  <link rel="canonical" href="https://wherelse.cc/post/fpga-autumn-recruit-study-notes-4/" />
+  <link rel="preconnect" href="https://cdn.staticfile.org" />
+  <script src="https://wherelse.cc/media/scripts/photoswipe.min.js"></script>
+  <script src="https://wherelse.cc/media/scripts/photoswipe-ui-default.min.js"></script>
+  <link rel="stylesheet" href="https://wherelse.cc/media/css/photoswipe.css" as="style" />
+  <link rel="stylesheet" href="https://wherelse.cc/media/css/default-skin.css" as="style" />
+  <!-- Code Highlight -->
+  
+  <script src="https://wherelse.cc/media/prism.js"></script>
+  <script>
+    Prism.highlightAll();
+  </script>
+  
+  
+  <link rel="stylesheet preload"
+    href="https://wherelse.cc/media/css/prism-github.css"
+    as="style" />
+  
+</head>
+
+<body>
+  <div class="antialiased flex flex-col min-h-screen" id="app">
+    <a href="https://wherelse.cc"
+      class="fixed top-0 left-0 mt-4 bg-black text-white dark:text-gray-700 dark:bg-yellow-50 dark:hover:bg-black dark:hover:text-white inline-flex p-2 pl-8 hover:text-gray-700 hover:bg-yellow-50 font-bold z-10 transition-fast animated fadeInLeft">
+      Wherelse Blog
+    </a>
+    <div class="max-w-4xl w-full mx-auto">
+      <div
+        class="shadow-box bg-white dark:bg-gray-600 rounded-lg pt-32 md:pt-32 px-4 md:px-8 pb-8 animated fadeIn mb-8">
+        <h1 class="text-5xl font-semibold leading-normal pb-8 mb-8 border-b-8 border-gray-700">
+          FPGA秋招学习笔记整理（4）
+        </h1>
+        
+        <div class="mb-8 flex flex-wrap">
+          <div class="text-gray-400 text-sm mr-4">
+            2021-11-21 · 34 min read
+          </div>
+          
+          <a href="https://wherelse.cc/tag/mkjIAt7jy/"
+            class="text-gray-700 text-sm border-b-2 border-dotted border-gray-200 hover:border-gray-600 transition-all duration-100 inline-flex mr-2">
+            <i class="ri-hashtag"></i>
+            FPGA
+          </a>
+          
+          <a href="https://wherelse.cc/tag/bVOkvqw2z/"
+            class="text-gray-700 text-sm border-b-2 border-dotted border-gray-200 hover:border-gray-600 transition-all duration-100 inline-flex mr-2">
+            <i class="ri-hashtag"></i>
+            笔记
+          </a>
+          
+        </div>
+        <div class="markdown mb-16" v-pre>
+          <p>FPGA autumn recruit study notes (4): Common designs, calculations and problems<br>
+FPGA秋招学习笔记（4）：常用设计、计算与问题</p>
+<!--more-->
+<h2 id="fpga中的常用存储">FPGA中的常用存储</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">储存器件</th>
+<th style="text-align:center">特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">单端口RAM</td>
+<td style="text-align:center">只有一组控制信号线、地址线和数据线，不能同时读写，某时刻只能在控制信号作用下作为数据输入或输出的一种</td>
+</tr>
+<tr>
+<td style="text-align:center">双端口RAM</td>
+<td style="text-align:center">有两组独立的控制信号线、地址线和数据线，两组之间互不影响，允许两个独立的系统同时对其进行随机性的访问。即共享式多端口存储器，可以同时读写（两个端口都可以进行读写操作）注意：双端口RAM同时对同一地址进行读写时，会出现仲裁</td>
+</tr>
+<tr>
+<td style="text-align:center">伪双端口RAM</td>
+<td style="text-align:center">其他结构和双端口RAM类似，但是一个端口只读，一个端口只写</td>
+</tr>
+<tr>
+<td style="text-align:center">FIFO</td>
+<td style="text-align:center">先进先出数据缓冲器，也是一个端口只读，另一个端口只写。</td>
+</tr>
+</tbody>
+</table>
+<p>FIFO与RAM的区别<br>
+FIFO：数据储存形式为先进先出，没有地址线，对储存单元进行寻址操作<br>
+RAM：每个端口都有地址线，可以对储存单元寻址<br>
+就是FIFO只能以特定的顺序去存储数据，不能通过寻址的方式去访问数据中的值，而RAM可以。</p>
+<p>FIFO一般用于不同时钟域之间的数据传输,对于不同宽度的数据接口也可以用FIFO进行转换。</p>
+<h2 id="fifo设计">FIFO设计</h2>
+<p>FIFO设计在时钟沿来临时同时发生读写操作。FIFO设计的难点在于怎样判断FIFO的空/满状态。为了保证数据正确的写入或读出，而不发生益处或读空的状态出现，必须保证FIFO在满的情况下，不 能进行写操作。在空的状态下不能进行读操作。</p>
+<p>读写指针的工作原理<br>
+写指针：总是指向下一个将要被写入的单元，复位时，指向第1个单元(编号为0)。<br>
+读指针：总是指向当前要被读出的数据，复位时，指向第1个单元(编号为0)<br>
+<strong>FIFO设计的关键</strong>：产生可靠的FIFO读写指针和生成FIFO“空”/“满”状态标志。</p>
+<h3 id="同步fifo">同步FIFO</h3>
+<p>同步FIFO是指读时钟和写时钟为同一个时钟。以深度为16的FIFO为例，将读写指针位宽设置为5位，但是取低四位作为读取RAM的地址<br>
+<img src="https://wherelse.cc/post-images/1637486204498.png" alt="" loading="lazy"><br>
+当读写指针相等时，可以得出FIFO为空。<br>
+<img src="https://wherelse.cc/post-images/1637486233582.png" alt="" loading="lazy"><br>
+当继续读取数据，读指针达到15之后，如果再继续写入数据，写指针最高位第五位会变为1，由于取其第四位作为RAM地址，会返回到第0位写入数据，直到写入到地址2。<br>
+<img src="https://wherelse.cc/post-images/1637486247924.png" alt="" loading="lazy"><br>
+继续读取数据，直到读指针为11100，此时读写指针低四位相等，最高位相反，可以得出FIFO为满。</p>
+<p><strong>同步FIFO判断空满的标志：</strong></p>
+<ul>
+<li>地址完全相同，FIFO空</li>
+<li>地址最高位不同，其他均相同</li>
+</ul>
+<h3 id="异步fifo">异步FIFO</h3>
+<p>对于异步FIFO，需要将写指针从写时钟域同步到读时钟域，产生空信号，需要将读指针从读时钟域同步到写时钟域，产生满信号。使用两级同步器来减小跨时钟域产生亚稳态的概率。<br>
+由于需要同步多位宽的指针信号，如果指针继续使用二进制计数器，当指针从 11111 跳变到 00000 时，每以位数据都需要同步，产生亚稳态的概率会很高。可以使用格雷码代替二进制数进行跨时钟域的传输。格雷码是一个数列集合，每次相邻两数间只有一个位元改变。</p>
+<pre><code class="language-c">//以三位二进制和格雷码为例
+十进制　格雷码 二进制
+-----------------------
+0  　　 000    000
+1  　　 001    001
+2   　　011    010
+3   　　010    011
+4   　　110    100
+5   　　111    101
+6   　　101    110
+7   　　100    111
+</code></pre>
+<p>二进制码转换成二进制格雷码，其法则是保留二进制码的最高位作为格雷码的最高位，而次高位格雷码为二进制码的高位与次高位相异或。<br>
+二进制格雷码转换成二进制码,其法则是保留格雷码的最高位作为自然二进制码的最高位，而次高位自然二进制码为高位自然二进制码与次高位格雷码相异或$。<br>
+<img src="https://wherelse.cc/post-images/1637486337696.png" alt="" loading="lazy"></p>
+<pre><code class="language-verilog">//二进制码转格雷码
+module bin2gray(
+ input [2:0] bin,
+ output [2:0] gray
+ );
+reg[2:0] gray,temp;
+
+always @(*) begin
+	temp = (bin &gt;&gt; 1);
+	gray[2] = bin[2];
+	gray[1:0] = temp[1:0] ^ bin[1:0];
+end    
+endmodule
+
+//格雷码转二进制码
+module gray2bin(
+ input [2:0] gray,
+ output [2:0] bin
+ );
+assign  bin[2] = gray[2];
+         
+generate
+genvar i;
+	for(i=0;i&lt;2;i=i+1) begin:g2b
+		assign bin[i] = gray[i]^bin[i+1];
+	end
+endgenerate
+endmodule
+</code></pre>
+<p>异步FIFO通过比较读写指针进行满空判断，但是读写指针属于不同的时钟域，所以在比较之前需要先将读写指针进行同步处理.异步逻辑转到同步逻辑不可避免需要额外的时钟开销，这会导致满空趋于保守，但是保守并不等于错误，这么写会稍微有性能损失，但是不会出错。<br>
+<img src="https://wherelse.cc/post-images/1637486373235.png" alt="" loading="lazy"><br>
+使用4位格雷码作为深度为8的FIFO的读写指针。<br>
+将格雷码转换成四位二进制数，使用二进制数低三位作为访问RAM的地址。当读写指针相等时，得出FIFO为空.<br>
+<img src="https://wherelse.cc/post-images/1637486386894.png" alt="" loading="lazy"><br>
+当写指针比读指针多循环RAM一周时，此时读写指针的最高位和次高位都相反，其余位相同，FIFO为满。</p>
+<p><strong>异步FIFO判断空满的标志：</strong></p>
+<ul>
+<li>当读写指针相等时，FIFO空</li>
+<li>读写指针的最高位和次高位都相反，其他均相同</li>
+</ul>
+<h3 id="fifo深度的计算">FIFO深度的计算</h3>
+<p>异步FIFO，读时钟频率和写时钟频率一般是不同的，如果读时钟频率快并且平均读取速度快于写入速度，且读写同时进行，则最小深度为1即可。当写时钟频率大于读时钟频率，写入速度快于读取速度。</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mtext> fifo depth </mtext><mo>=</mo><mtext> burst length </mtext><mo>−</mo><mtext> burst length </mtext><mo>×</mo><mfrac><mi>X</mi><mi>Y</mi></mfrac><mo>×</mo><mfrac><mrow><msub><mi>r</mi><mo>−</mo></msub><mi>c</mi><mi>l</mi><mi>k</mi></mrow><mrow><msub><mi>w</mi><mo>−</mo></msub><mi>c</mi><mi>l</mi><mi>k</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">\text { fifo depth }=\text { burst length }-\text { burst length } \times \frac{X}{Y} \times \frac{r_{-} clk}{w_{-} clk}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord text"><span class="mord"> fifo depth </span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord text"><span class="mord"> burst length </span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord text"><span class="mord"> burst length </span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:2.04633em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.36033em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.22222em;">Y</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07847em;">X</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:2.265771em;vertical-align:-0.894331em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.37144em;"><span style="top:-2.3139999999999996em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.25833100000000003em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span><span class="mord mathdefault">c</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.25833100000000003em;"><span style="top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span><span class="mord mathdefault">c</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.894331em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+<p>这里<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>w</mi><mo>−</mo></msub><mi>c</mi><mi>l</mi><mi>k</mi></mrow><annotation encoding="application/x-tex">w_{-}clk</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.902771em;vertical-align:-0.208331em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.25833100000000003em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span><span class="mord mathdefault">c</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span>为写时钟频率；<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>r</mi><mo>−</mo></msub><mi>c</mi><mi>l</mi><mi>k</mi></mrow><annotation encoding="application/x-tex">r_{-}clk</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.902771em;vertical-align:-0.208331em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.25833100000000003em;"><span style="top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span><span class="mord mathdefault">c</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span>为读时钟频率；写时钟周期里，每B个时钟周期会有A个数据写入FIFO；读时钟周期里，每<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>Y</mi></mrow><annotation encoding="application/x-tex">Y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.22222em;">Y</span></span></span></span>个时钟周期会有<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07847em;">X</span></span></span></span>个数据读出FIFO；<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>b</mi><mi>u</mi><mi>r</mi><mi>s</mi><msub><mi>t</mi><mo>−</mo></msub><mi>l</mi><mi>e</mi><mi>n</mi><mi>g</mi><mi>t</mi><mi>h</mi></mrow><annotation encoding="application/x-tex">burst_{-}length</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.902771em;vertical-align:-0.208331em;"></span><span class="mord mathdefault">b</span><span class="mord mathdefault">u</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">s</span><span class="mord"><span class="mord mathdefault">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.25833100000000003em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">e</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">t</span><span class="mord mathdefault">h</span></span></span></span>为最大突发个数<br>
+一般用于写快读慢突发传输时需遵循的规则:</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mfrac><mrow><mi>F</mi><mi>I</mi><mi>F</mi><mi>O</mi><mtext> 深度 </mtext></mrow><mrow><mtext> 写入速率 </mtext><mo>−</mo><mtext> 读出速率 </mtext></mrow></mfrac><mo>=</mo><mi>F</mi><mi>I</mi><mi>F</mi><mi>O</mi><mtext> 被填满时间 </mtext><mo>&gt;</mo><mtext> 数据包传送时间 </mtext><mo>=</mo><mfrac><mtext> 写入最大突发数据量 </mtext><mtext> 写入速率 </mtext></mfrac></mrow><annotation encoding="application/x-tex">\frac{FIFO \text { 深度 }}{\text { 写入速率 }-\text { 读出速率 }}=FIFO \text { 被填满时间 }&gt;\text { 数据包传送时间 }=\frac{\text { 写入最大突发数据量 }}{\text { 写入速率 }}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.1296600000000003em;vertical-align:-0.7693300000000001em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.36033em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord"> </span><span class="mord cjk_fallback">写入速率</span><span class="mord"> </span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord text"><span class="mord"> </span><span class="mord cjk_fallback">读出速率</span><span class="mord"> </span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="mord mathdefault" style="margin-right:0.07847em;">I</span><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mord text"><span class="mord"> </span><span class="mord cjk_fallback">深度</span><span class="mord"> </span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.7693300000000001em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.72243em;vertical-align:-0.0391em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="mord mathdefault" style="margin-right:0.07847em;">I</span><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mord text"><span class="mord"> </span><span class="mord cjk_fallback">被填满时间</span><span class="mord"> </span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord text"><span class="mord"> </span><span class="mord cjk_fallback">数据包传送时间</span><span class="mord"> </span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.04633em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.36033em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord"> </span><span class="mord cjk_fallback">写入速率</span><span class="mord"> </span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord"> </span><span class="mord cjk_fallback">写入最大突发数据量</span><span class="mord"> </span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+<p>如果读写同时进行且写快读慢，那么深度除以速度差就是FIFO被填满的时间，这个时间应该大于最大突发数据量除以写入速率对应的时间，即数据包传送时间，否则写入的数据会溢出造成错误。</p>
+<p>例子：</p>
+<ol>
+<li>
+<p>AD采样速率为50M，FPGA读取速率为40M，需要将10万个采样数据读入FPGA需要多大的FIFO？<br>
+写入FIFO 的速率为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mi mathvariant="normal">/</mi><mn>50</mn><mi>M</mi><mo>=</mo><mn>0.02</mn><mo>⋅</mo><mn>1</mn><msup><mn>0</mn><mrow><mo>−</mo><mn>6</mn></mrow></msup></mrow><annotation encoding="application/x-tex">1/50M=0.02\cdot10^{-6}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mord">/</span><span class="mord">5</span><span class="mord">0</span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">0</span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mtight">6</span></span></span></span></span></span></span></span></span></span></span></span>,则写入所有数据的时间为 0.002s，读取FIFO 的速率为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mi mathvariant="normal">/</mi><mn>40</mn><mi>M</mi><mo>=</mo><mn>0.025</mn><mo>⋅</mo><mn>1</mn><msup><mn>0</mn><mrow><mo>−</mo><mn>6</mn></mrow></msup></mrow><annotation encoding="application/x-tex">1/40M=0.025\cdot10^{-6}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mord">/</span><span class="mord">4</span><span class="mord">0</span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">0</span><span class="mord">2</span><span class="mord">5</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mtight">6</span></span></span></span></span></span></span></span></span></span></span></span>,则0.002s内读出的数据为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0.002</mn><mi mathvariant="normal">/</mi><mn>0.025</mn><mo>⋅</mo><mn>1</mn><msup><mn>0</mn><mrow><mo>−</mo><mn>6</mn></mrow></msup><mo>=</mo><mn>80</mn><mo separator="true">,</mo><mn>000</mn></mrow><annotation encoding="application/x-tex">0.002/0.025\cdot10^{-6}=80,000</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">0</span><span class="mord">0</span><span class="mord">2</span><span class="mord">/</span><span class="mord">0</span><span class="mord">.</span><span class="mord">0</span><span class="mord">2</span><span class="mord">5</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mtight">6</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord">8</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span></span></span></span>,则FIFO的最小深度为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>100</mn><mo separator="true">,</mo><mn>000</mn><mo>−</mo><mn>80</mn><mo separator="true">,</mo><mn>000</mn><mo>=</mo><mn>2</mn><mo separator="true">,</mo><mn>000</mn></mrow><annotation encoding="application/x-tex">100,000-80,000=2,000</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord">8</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span></span></span></span></p>
+</li>
+<li>
+<p>FIFO写入时钟为100MHz，读取时钟为80Mhz。100个时钟写入80个数据，一个时钟读取一个数据，求FIFO最小深度。</p>
+</li>
+</ol>
+<ul>
+<li>读取2000个数据，FIFO最小深度为多少？<br>
+以100M速率写入2000个数据所需时间为20000ns，以80M速率读出，20000ns能够读出的数据量为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>20000</mn><mi mathvariant="normal">/</mi><mn>1</mn><mi mathvariant="normal">/</mi><mn>80</mn><mi>M</mi><mi>h</mi><mi>z</mi><mo>=</mo><mn>1600</mn></mrow><annotation encoding="application/x-tex">20000/1/80Mhz=1600</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">2</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mord">/</span><span class="mord">1</span><span class="mord">/</span><span class="mord">8</span><span class="mord">0</span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mord mathdefault">h</span><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">6</span><span class="mord">0</span><span class="mord">0</span></span></span></span>,则FIFO最小深度为2000-1600=400.</li>
+<li>100个时钟周期写入80个数据，一个时钟周期读取一个数据，求FIFO最小深度？<br>
+100MHz时钟写入一个数据需要的时间为：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mi mathvariant="normal">/</mi><mn>100</mn><mi>M</mi><mi>h</mi><mi>z</mi><mo>=</mo><mn>10</mn><mi>n</mi><mi>s</mi></mrow><annotation encoding="application/x-tex">1/100Mhz=10ns</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mord">/</span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mord mathdefault">h</span><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord mathdefault">n</span><span class="mord mathdefault">s</span></span></span></span>,80Mhz读出一个数据所需时钟为：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mi mathvariant="normal">/</mi><mn>80</mn><mi>M</mi><mi>h</mi><mi>z</mi><mo>=</mo><mn>12.5</mn><mi>n</mi><mi>s</mi></mrow><annotation encoding="application/x-tex">1/80Mhz=12.5ns</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mord">/</span><span class="mord">8</span><span class="mord">0</span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mord mathdefault">h</span><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">2</span><span class="mord">.</span><span class="mord">5</span><span class="mord mathdefault">n</span><span class="mord mathdefault">s</span></span></span></span> ，100个时钟写入80个数据，可以理解为以下状态：<br>
+<img src="https://wherelse.cc/post-images/1637486424594.svg" alt="" loading="lazy"><br>
+而可能发生的数据量最大的情况则为：<br>
+<img src="https://wherelse.cc/post-images/1637486435735.svg" alt="" loading="lazy"><br>
+这时会以100M速度连续写入160个数。写入1600个数据需要的时间为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>160</mn><mo>⋅</mo><mn>10</mn><mi>n</mi><mi>s</mi><mo>=</mo><mn>1600</mn><mi>n</mi><mi>s</mi></mrow><annotation encoding="application/x-tex">160\cdot10ns=1600ns</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">6</span><span class="mord">0</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord mathdefault">n</span><span class="mord mathdefault">s</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">6</span><span class="mord">0</span><span class="mord">0</span><span class="mord mathdefault">n</span><span class="mord mathdefault">s</span></span></span></span>，1600ns内读取的个数为：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1600</mn><mi>n</mi><mi>s</mi><mi mathvariant="normal">/</mi><mo>(</mo><mn>1</mn><mi mathvariant="normal">/</mi><mn>80</mn><mi>M</mi><mo>)</mo><mo>=</mo><mn>128</mn></mrow><annotation encoding="application/x-tex">1600ns/(1/80M)=128</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mord">6</span><span class="mord">0</span><span class="mord">0</span><span class="mord mathdefault">n</span><span class="mord mathdefault">s</span><span class="mord">/</span><span class="mopen">(</span><span class="mord">1</span><span class="mord">/</span><span class="mord">8</span><span class="mord">0</span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">2</span><span class="mord">8</span></span></span></span>,则FIFO深度应不少于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>160</mn><mo>−</mo><mn>128</mn><mo>=</mo><mn>32</mn></mrow><annotation encoding="application/x-tex">160-128=32</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mord">6</span><span class="mord">0</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">2</span><span class="mord">8</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span><span class="mord">2</span></span></span></span></li>
+</ul>
+<h2 id="同步复位与异步复位">同步复位与异步复位</h2>
+<p>异步复位是指无论时钟沿是否到来，只要复位信号有效，就对系统进行复位。</p>
+<pre><code class="language-verilog">always @ (posedge clk or negedge rst_n)begin
+     if(!rst_n) b &lt;= 1'b0;
+     else b &lt;= a;
+end
+</code></pre>
+<p>同步复位是指只有在时钟上升沿到来时才会对复位信号进行采样，也就是只有在时钟上升沿时，复位信号才有效。</p>
+<pre><code class="language-verilog">always @ (posedge clk)begin
+     if(!rst_n) b &lt;= 1'b0;
+     else b &lt;= a;
+end
+</code></pre>
+<h3 id="同步复位与异步复位的优缺点">同步复位与异步复位的优缺点</h3>
+<p>同步复位的优点：</p>
+<ul>
+<li>一般能够确保电路是百分之百同步的；</li>
+<li>确保复位只发生在有效时钟沿，可以作为过滤掉毛刺的手段；</li>
+</ul>
+<p>同步复位的缺点：</p>
+<ul>
+<li>复位信号的有效时长必须大于时钟周期，才能真正被系统识别并完成复位。同时还要考虑如：时钟偏移、组合逻辑路径延时、复位延时等因素；</li>
+<li>由于大多数的厂商目标库内的触发器都只有异步复位端口，采用同步复位的话，就会耗费较多的逻辑资源；</li>
+</ul>
+<p>异步复位优点：</p>
+<ul>
+<li>异步复位信号识别方便，而且可以很方便的使用全局复位；</li>
+<li>大多数的厂商目标库内的触发器都有异步复位端口，可以节约逻辑资源；</li>
+</ul>
+<p>异步复位缺点：</p>
+<ul>
+<li>复位信号容易受到毛刺的影响；</li>
+<li>复位结束时刻恰在亚稳态窗口内时，无法决定现在的复位状态是1还是0，会导致亚稳态；</li>
+</ul>
+<h3 id="异步复位同步释放">异步复位同步释放</h3>
+<p>使用异步复位同步释放就可以消除上述缺点。所谓异步复位，同步释放就是在复位信号到来的时候不受时钟信号的同步，而是在复位信号释放的时候受到时钟信号的同步。</p>
+<pre><code class="language-verilog">//example code 
+module areset_srelease(
+    input       rstn,  //异步复位信号
+    input       clk,   //时钟
+    input       din,   //输入数据
+    output reg  dout   //输出数据
+    );
+     
+    reg   rstn_r1, rstn_r2;
+    always @ (posedge clk or negedge rstn) begin
+        if (!rstn) begin
+            rstn_r1 &lt;= 1'b0;     //异步复位
+            rstn_r2 &lt;= 1'b0;  
+        end
+        else begin
+            rstn_r1 &lt;= 1'b1;     //同步释放
+            rstn_r2 &lt;= rstn_r1;  //同步打拍，时序差可以多延迟几拍
+        end
+    end
+     
+    //使用 rstn_r2 做同步复位，复位信号可以加到敏感列表中
+    always @ (posedge clk or negedge rstn_r2) begin
+        if (!rstn_r2) dout &lt;= 1'b0; //同步复位
+        else          dout &lt;= din;
+    end
+
+endmodule
+
+</code></pre>
+<h2 id="建立保持时间时钟抖动与时钟偏斜">建立保持时间，时钟抖动与时钟偏斜</h2>
+<figure data-type="image" tabindex="1"><img src="https://wherelse.cc/post-images/1637486499080.png" alt="" loading="lazy"></figure>
+<h3 id="建立时间">建立时间</h3>
+<p>建立时间就是时钟触发事件来临之前，数据需要保持稳定的最小时间，以便数据能够被时钟正确的采样。</p>
+<h3 id="保持时间">保持时间</h3>
+<p>保持时间就是时钟触发事件来临之后，数据需要保持稳定的最小时间，以便数据能够被电路准确的传输。可以通俗的理解为：时钟到来之前，数据需要提前准备好；时钟到来之后，数据还要稳定一段时间。建立时间和保持时间组成了数据稳定的窗口。</p>
+<h3 id="时钟偏斜偏移">时钟偏斜（偏移）</h3>
+<p><img src="https://wherelse.cc/post-images/1637486542402.png" alt="" loading="lazy"><br>
+时钟偏斜（偏移） (clock skew)是因为布线长度和负载不同，导致同一时钟上升沿到不同触发器的时间不同。</p>
+<h3 id="时钟抖动">时钟抖动</h3>
+<p><img src="https://wherelse.cc/post-images/1637486556524.png" alt="" loading="lazy"><br>
+时钟抖动（clock jitter）是指同一时钟，相邻周期间时间不一致的现象。这一误差来源于时钟自身（如：晶振、PLL电路的偏差），与噪声、干扰以及电源变化有关。</p>
+<h3 id="建立时间余量和保持时间余量">建立时间余量和保持时间余量</h3>
+<p><img src="https://wherelse.cc/post-images/1637486578361.png" alt="" loading="lazy"><br>
+<img src="https://wherelse.cc/post-images/1637486583735.png" alt="" loading="lazy"><br>
+因为时钟偏斜，到达DFF2为CLK2，考虑时钟到达DFF2的时钟偏斜<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi><mi>s</mi><mi>k</mi><mi>e</mi><mi>w</mi></mrow><annotation encoding="application/x-tex">Tskew</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault">s</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span></span></span></span>，则建立时间余量为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi><mi>s</mi><mi>e</mi><mi>t</mi><mi>u</mi><mi>p</mi><mi>s</mi><mi>l</mi><mi>a</mi><mi>c</mi><mi>k</mi><mo>=</mo><mi>T</mi><mi>c</mi><mi>l</mi><mi>k</mi><mo>−</mo><mi>T</mi><mi>c</mi><mi>q</mi><mo>−</mo><mi>T</mi><mi>c</mi><mi>o</mi><mo>−</mo><mi>T</mi><mi>s</mi><mi>e</mi><mi>t</mi><mi>u</mi><mi>p</mi><mo>+</mo><mi>T</mi><mi>s</mi><mi>k</mi><mi>e</mi><mi>w</mi></mrow><annotation encoding="application/x-tex">Tsetupslack
+=Tclk-Tcq-Tco-Tsetup+Tskew</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault">t</span><span class="mord mathdefault">u</span><span class="mord mathdefault">p</span><span class="mord mathdefault">s</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">a</span><span class="mord mathdefault">c</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault">c</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault">c</span><span class="mord mathdefault" style="margin-right:0.03588em;">q</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault">c</span><span class="mord mathdefault">o</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault">t</span><span class="mord mathdefault">u</span><span class="mord mathdefault">p</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault">s</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span></span></span></span>，其中<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi><mi>c</mi><mi>q</mi></mrow><annotation encoding="application/x-tex">Tcq</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault">c</span><span class="mord mathdefault" style="margin-right:0.03588em;">q</span></span></span></span>为DFF1的时钟端到输出延迟，为器件固定属性；<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi><mi>c</mi><mi>o</mi></mrow><annotation encoding="application/x-tex">Tco</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault">c</span><span class="mord mathdefault">o</span></span></span></span>是组合逻辑电路的延时,<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi><mi>s</mi><mi>e</mi><mi>t</mi><mi>u</mi><mi>p</mi></mrow><annotation encoding="application/x-tex">Tsetup</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault">t</span><span class="mord mathdefault">u</span><span class="mord mathdefault">p</span></span></span></span>为触发器建立时间特性。<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi><mi>h</mi><mi>o</mi><mi>l</mi><mi>d</mi></mrow><annotation encoding="application/x-tex">Thold</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault">h</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">d</span></span></span></span>为触发器保持时间特性。若不考虑DFF2的时钟偏斜，则建立时间裕量为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi><mi>s</mi><mi>e</mi><mi>t</mi><mi>u</mi><mi>p</mi><mi>s</mi><mi>l</mi><mi>a</mi><mi>c</mi><mi>k</mi><mo>=</mo><mi>T</mi><mi>c</mi><mi>l</mi><mi>k</mi><mo>−</mo><mi>T</mi><mi>c</mi><mi>q</mi><mo>−</mo><mi>T</mi><mi>c</mi><mi>o</mi><mo>−</mo><mi>T</mi><mi>s</mi><mi>e</mi><mi>t</mi><mi>u</mi><mi>p</mi></mrow><annotation encoding="application/x-tex">Tsetupslack=Tclk-Tcq-Tco-Tsetup</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault">t</span><span class="mord mathdefault">u</span><span class="mord mathdefault">p</span><span class="mord mathdefault">s</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">a</span><span class="mord mathdefault">c</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault">c</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault">c</span><span class="mord mathdefault" style="margin-right:0.03588em;">q</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault">c</span><span class="mord mathdefault">o</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault">t</span><span class="mord mathdefault">u</span><span class="mord mathdefault">p</span></span></span></span></p>
+<p>考虑时钟到达DFF2的时钟偏斜<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi><mi>s</mi><mi>k</mi><mi>e</mi><mi>w</mi></mrow><annotation encoding="application/x-tex">Tskew</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault">s</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span></span></span></span>，则保持时间余量：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi><mi>s</mi><mi>k</mi><mi>e</mi><mi>w</mi><mo>+</mo><mi>T</mi><mi>h</mi><mi>o</mi><mi>l</mi><mi>d</mi><mo>+</mo><mi>T</mi><mi>h</mi><mi>o</mi><mi>l</mi><mi>d</mi><mi>s</mi><mi>l</mi><mi>a</mi><mi>c</mi><mi>k</mi><mo>=</mo><mi>T</mi><mi>c</mi><mi>q</mi><mo>+</mo><mi>T</mi><mi>c</mi><mi>o</mi></mrow><annotation encoding="application/x-tex">Tskew+Thold+Tholdslack=Tcq+Tco</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault">s</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault">h</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">d</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault">h</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">d</span><span class="mord mathdefault">s</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">a</span><span class="mord mathdefault">c</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault">c</span><span class="mord mathdefault" style="margin-right:0.03588em;">q</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault">c</span><span class="mord mathdefault">o</span></span></span></span>，因此可推出<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi><mi>h</mi><mi>o</mi><mi>l</mi><mi>d</mi><mi>s</mi><mi>l</mi><mi>a</mi><mi>c</mi><mi>k</mi><mo>=</mo><mi>T</mi><mi>c</mi><mi>q</mi><mo>+</mo><mi>T</mi><mi>c</mi><mi>o</mi><mo>−</mo><mi>T</mi><mi>s</mi><mi>k</mi><mi>e</mi><mi>w</mi><mo>−</mo><mi>T</mi><mi>h</mi><mi>o</mi><mi>l</mi><mi>d</mi></mrow><annotation encoding="application/x-tex">Tholdslack=Tcq+Tco-Tskew-Thold</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault">h</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">d</span><span class="mord mathdefault">s</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">a</span><span class="mord mathdefault">c</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault">c</span><span class="mord mathdefault" style="margin-right:0.03588em;">q</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault">c</span><span class="mord mathdefault">o</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault">s</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault">h</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">d</span></span></span></span>，使保持时间不违例，则需<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi><mi>h</mi><mi>o</mi><mi>l</mi><mi>d</mi><mi>s</mi><mi>l</mi><mi>a</mi><mi>c</mi><mi>k</mi><mo>&gt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">Tholdslack&gt;0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.73354em;vertical-align:-0.0391em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault">h</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">d</span><span class="mord mathdefault">s</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">a</span><span class="mord mathdefault">c</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span>。若不考虑时钟偏斜，则<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi><mi>h</mi><mi>o</mi><mi>l</mi><mi>d</mi><mi>s</mi><mi>l</mi><mi>a</mi><mi>c</mi><mi>k</mi><mo>=</mo><mi>T</mi><mi>c</mi><mi>q</mi><mo>+</mo><mi>T</mi><mi>c</mi><mi>o</mi><mo>−</mo><mi>T</mi><mi>h</mi><mi>o</mi><mi>l</mi><mi>d</mi></mrow><annotation encoding="application/x-tex">Tholdslack=Tcq+Tco-Thold</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault">h</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">d</span><span class="mord mathdefault">s</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">a</span><span class="mord mathdefault">c</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault">c</span><span class="mord mathdefault" style="margin-right:0.03588em;">q</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault">c</span><span class="mord mathdefault">o</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault">h</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">d</span></span></span></span>。</p>
+<p><strong>FPGA在建立时间余量为0时可以获得最大时钟频率，即最小时钟周期</strong></p>
+<h2 id="亚稳态与跨时钟域">亚稳态与跨时钟域</h2>
+<p>在数字电路中，每一位数据不是1（高电平）就是0（低电平）。当然对于具体的电路来说，并非1（高电平）就是1V，0（低电平）就是0V。比方说对于某个器件来说，2.25<sub>2.5V可以识别出来是高电平，0</sub>0.25V可以识别出来是低电平，但是如果信号的电压处于0.25~2.25V之间，器件也就无法识别是高电平还是低电平（最终的结果可能是高电平也可能是低电平，无法预测），这种状态也就是亚稳态。</p>
+<p>亚稳态的出现归根到底就是因为建立时间和保持时间不满足要求。在时钟变化的这段时间里，寄存器将对数据进行锁存。如果数据在这段时间内发生了变化，对于寄存器来说也就无法识别应该锁存哪个数据，到底是变化前的还是变化后的，寄存器的输出也将变得无法预测。因此，数据在建立时间和保持时间内必须保持稳定不变。</p>
+<p>亚稳态无法彻底避免，只有尽可能减少它出现和传播的概率，一般有以下几种方法：</p>
+<ol>
+<li>使用同步器；</li>
+<li>在满足要求的情况下，降低时钟频率；</li>
+<li>采用反应更快的触发器；</li>
+<li>列表项减少使用或者避免使用信号翻转时间很长的输入信号。</li>
+</ol>
+<h3 id="跨时钟域处理方法">跨时钟域处理方法</h3>
+<p>不同的时钟域之间信号通信时需要进行同步处理，这样可以防止新时钟域中第一级触发器的亚稳态信号对下级逻辑造成影响。<br>
+信号跨时钟域同步：</p>
+<ol>
+<li>当单个信号跨时钟域时，可以采用两级触发器来同步</li>
+<li>数据或地址总线跨时钟域时可以采用异步FIFO来实现时钟同步；</li>
+<li>第三种方法就是采用握手信号。</li>
+</ol>
+<h2 id="常见分频设计">常见分频设计</h2>
+<h3 id="偶数分频">偶数分频</h3>
+<p>偶数分频实现比较简单，假设为 N（偶数）分频，只需计数到 N/2-1，然后时钟翻转、计数器清零，如此循环就可以得到 N（偶）分频。</p>
+<pre><code class="language-verilog">//example code 
+module divide_clock
+(
+input clk , // system clock 50Mhz on board
+input rst_n, // system rst, low active
+output reg out_clk // output signal
+);
+
+parameter N = 4 ;
+reg [N/2-1:0] cnt ;
+
+always @ (posedge clk or negedge rst_n) begin
+if(!rst_n) begin
+	cnt &lt;= 0;
+	out_clk &lt;= 0;
+end
+else begin
+	if(cnt==N/2-1) begin
+			out_clk &lt;= ~out_clk;
+			cnt &lt;= 0;
+	end
+	else
+		cnt &lt;= cnt + 1;
+	end
+end
+
+endmodule
+</code></pre>
+<h3 id="奇数分配">奇数分配</h3>
+<p>实现奇数分频原理是分别用上升沿计数到 N/2+1， 分频后输出时钟进行翻转，再计数到 N/2 输出 out_clk1，再用下降沿计数到 N/2+1， 分频后输出时钟再进行翻转，再计数到 N/2 输出 out_clk2，将 out_clk1 和 out_clk2相或即可。 我们可以通过修改 N 的值和计数器的位宽来实现其他奇数分频。</p>
+<pre><code class="language-verilog">//example code
+module divide_clock
+(
+input clk , // system clock 50Mhz on board
+input rst_n, // system rst, low active
+output out_clk // output signal
+);
+
+parameter N = 3 ;
+
+ reg [N/2 :0] cnt_1 ;
+ reg [N/2 :0] cnt_2 ;
+
+ reg out_clk1 ;
+ reg out_clk2 ;
+
+ 
+always @(posedge clk or negedge rst_n) begin //上升沿输出 out_clk1
+if(!rst_n) begin
+	out_clk1 &lt;= 0;
+ 	cnt_1 &lt;= 1; //这里计数器从 1 开始
+end
+else begin
+	if(out_clk1 == 0) begin
+		if(cnt_1 == N/2+1) begin
+		out_clk1 &lt;= ~out_clk1;
+	cnt_1 &lt;= 1;
+	end
+	else
+ 	cnt_1 &lt;= cnt_1+1;
+	end
+	else if(cnt_1 == N/2) begin
+		out_clk1 &lt;= ~out_clk1;
+		cnt_1 &lt;= 1;
+	end
+	else
+		cnt_1 &lt;= cnt_1+1;
+	end
+end
+
+always @(negedge clk or negedge rst_n) begin //下降沿输出 out_clk2
+if(!rst_n) begin
+	out_clk2 &lt;= 0;
+	cnt_2 &lt;= 1; //这里计数器从 1 开始
+end
+	else begin
+		if(out_clk2 == 0) begin
+			if(cnt_2 == N/2+1) begin
+				out_clk2 &lt;= ~out_clk2;
+				cnt_2 &lt;= 1;
+			end
+		else
+			cnt_2 &lt;= cnt_2+1;
+		end
+		else if(cnt_2 == N/2) begin
+			out_clk2 &lt;= ~out_clk2;
+			cnt_2 &lt;= 1;
+		end
+		else
+			cnt_2 &lt;= cnt_2+1;
+		end
+end
+
+assign out_clk = out_clk1 | out_clk2;
+endmodule
+</code></pre>
+<h3 id="小数分频">小数分频</h3>
+<p>假设实现N.5分频（N为整数），在输入时钟上升沿下计数到 2N，同时在 0 和 N+1 处时钟信号1翻转；在输入时钟下降沿下计数到 2N，同时在 0 和 N 处时钟信号2翻转；最后信号1和信号2进行相与。</p>
+<pre><code class="language-verilog">`timescale 1ns/1ns
+//1.5分频
+module fraction_div(
+    input  i_clk,
+    input  i_rst_n,
+    output o_div_clk
+);
+
+reg [2:0] s_cnt_p;
+reg [2:0] s_cnt_n;
+reg       s_clk_p;
+reg       s_clk_n;	
+always @(posedge i_clk or negedge i_rst_n)
+    if(!i_rst_n)
+	     s_cnt_p &lt;= 3'd0;
+	 else if(s_cnt_p == 3'd2)
+	     s_cnt_p &lt;= 3'd0;
+    else 
+	     s_cnt_p &lt;= s_cnt_p + 1'b1;
+
+always @(negedge i_clk or negedge i_rst_n)
+    if(!i_rst_n)
+	     s_cnt_n &lt;= 3'd0;
+	 else if(s_cnt_n == 3'd2)
+	     s_cnt_n &lt;= 3'd0;
+    else 
+	     s_cnt_n &lt;= s_cnt_n + 1'b1;
+	 
+always @(posedge i_clk or negedge i_rst_n)
+    if(!i_rst_n)
+	     s_clk_p &lt;= 1'b0;
+	 else if(s_cnt_p == 3'd0 || s_cnt_p == 3'd2)
+		  s_clk_p &lt;= ~s_clk_p;
+	 else
+        s_clk_p &lt;= s_clk_p;
+		
+always @(negedge i_clk or negedge i_rst_n)
+    if(!i_rst_n)
+	     s_clk_n &lt;= 1'b1;
+	 else if(s_cnt_n == 3'd0 || s_cnt_n == 3'd1)
+		  s_clk_n &lt;= ~s_clk_n;
+	 else
+        s_clk_n &lt;= s_clk_n;
+
+assign o_div_clk = s_clk_p &amp; s_clk_n;		  
+		  
+endmodule 
+</code></pre>
+<h2 id="状态机">状态机</h2>
+<p>第一类，输出只和状态有关而与输入无关，则称为Moore状态机；<br>
+第二类，输出不仅和状态有关而且和输入有关系，则称为Mealy状态机。</p>
+<pre><code>Mealy型：输出信号不仅取决于当前状态，还取决于输入；
+Moore型：输出信号只取决于当前状态；
+</code></pre>
+<p>实现相同的功能时，Mealy型比Moore型能节省一个状态（大部分情况下能够节省一个触发器资源，其余情况下使用的资源相同，视状态数和状态编码方式决定），Mealy型比Moore型输出超前一个时钟周期。<br>
+例子：设计一个自动售卖饮料机，设饮料售价为2.5元，可使用5角和一元硬币，有找零功能。<br>
+<strong>moore型设计</strong><br>
+状态图：</p>
+<pre><code class="language-mermaid">stateDiagram-v2
+    IDEL/S0 --&gt; S1/0.5元:0.5元
+    S1/0.5元 --&gt; S2/1元:0.5元
+    IDEL/S0 --&gt; S2/1元:1元
+    S1/0.5元 --&gt; S3/1.5元:1元
+    S2/1元 --&gt; S3/1.5元:0.5元
+    S3/1.5元--&gt; S4/2元:0.5元
+    S2/1元 --&gt; S4/2元:1元
+    S3/1.5元--&gt; S5/2.5元:1元
+    S4/2元--&gt; S5/2.5元:0.5元
+    S4/2元--&gt; S6/3元:1元
+    S5/2.5元--&gt;IDEL/S0
+    S6/3元--&gt;IDEL/S0
+    S5/2.5元--&gt;不找零，出货
+    S6/3元--&gt;找零，出货
+
+</code></pre>
+<p>状态表：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">状态</th>
+<th style="text-align:center">含义</th>
+<th style="text-align:center">编码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">S0</td>
+<td style="text-align:center">IDLE复位状态</td>
+<td style="text-align:center">3'b000</td>
+</tr>
+<tr>
+<td style="text-align:center">S1</td>
+<td style="text-align:center">投入0.5元</td>
+<td style="text-align:center">3'b001</td>
+</tr>
+<tr>
+<td style="text-align:center">S2</td>
+<td style="text-align:center">投入1元</td>
+<td style="text-align:center">3'b010</td>
+</tr>
+<tr>
+<td style="text-align:center">S3</td>
+<td style="text-align:center">投入1.5元</td>
+<td style="text-align:center">3'b011</td>
+</tr>
+<tr>
+<td style="text-align:center">S4</td>
+<td style="text-align:center">投入2元</td>
+<td style="text-align:center">3'b100</td>
+</tr>
+<tr>
+<td style="text-align:center">S5</td>
+<td style="text-align:center">投入2.5元</td>
+<td style="text-align:center">3'b101</td>
+</tr>
+<tr>
+<td style="text-align:center">S6</td>
+<td style="text-align:center">投入3元</td>
+<td style="text-align:center">3'b110</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-verilog">//example code
+module drink_status_moore(clk,reset,half.one,out,cout);
+  input clk;
+  input reset;
+  input half;
+  input one;
+  output out;
+  output cout;
+   
+  parameter [2:0] s0 = 3'b000,       //3'd0，参数声明
+                  s1 = 3'b001,       //3'd1
+                  s2 = 3'b010,       //3'd2
+                  s3 = 3'b011,       //3'd3
+                  s4 = 3'b100,       //3'd4
+                  s5 = 3'b101,       //3'd5
+                  s6 = 3'b110;       //3'd6
+
+  reg [2:0] curr_state;        //内部信号声明
+  reg [2:0] next_state;
+
+//first segement: state transfer---描述状态寄存器、时序逻辑
+always @(posedge clk, negedge reset) begin
+  if(!reset)
+    curr_state &lt;= s0;
+  else
+    curr_state &lt;= next_state;
+end
+
+//second segment: transfer condition--描述次态逻辑、组合逻辑
+always @(curr_state,one,half)begin     //等价 always@(*)
+  case(curr_state)
+    s0:begin
+       if(half)     next_state = s1;
+       else if(one) next_state = s2;
+       else         next_state = s0;
+       end
+    s1:begin
+       if(half)     next_state = s2;
+       else if(one) next_state = s3;
+       else         next_state = s1;
+       end
+    s2:begin
+       if(half)     next_state = s3;
+       else if(one) next_state = s4;
+       else         next_state = s2;
+       end
+    s3:begin
+       if(half)     next_state = s4;
+       else if(one) next_state = s5;
+       else         next_state = s3;
+       end
+    s4:begin
+       if(half)     next_state = s5;
+       else if(one) next_state = s6;
+       else         next_state = s4;
+       end
+    s5:begin
+                    next_state = s0;
+       end
+    s6:begin
+                    next_state = s0;
+       end
+    default:        next_state = s0;
+ endcase
+end
+
+//third segement: state output---状态输出（描述输出逻辑）
+assign out = ((curr_state == s5) || (curr_state == s6))?1:0;
+assign cout = (curr_state == s6)?1:0;               //assign可简化输出
+
+endmodule
+</code></pre>
+<p><strong>melay型设计</strong><br>
+状态图：</p>
+<pre><code class="language-mermaid">stateDiagram-v2
+    IDEL/S0 --&gt; S1/0.5元:0.5元
+    S1/0.5元 --&gt; S2/1元:0.5元
+    IDEL/S0 --&gt; S2/1元:1元
+    S1/0.5元 --&gt; S3/1.5元:1元
+    S2/1元 --&gt; S3/1.5元:0.5元
+    S3/1.5元--&gt; S4/2元:0.5元
+    S2/1元 --&gt; S4/2元:1元
+		S3/1.5元 --&gt;IDEL/S0:1元
+		S3/1.5元 --&gt;不找零，出货
+		S4/2元--&gt;IDEL/S0:0.5元
+		S4/2元--&gt;IDEL/S0:1元
+		S4/2元--&gt;不找零，出货
+		S4/2元--&gt;找零，出货
+
+</code></pre>
+<p>状态表：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">状态</th>
+<th style="text-align:center">含义</th>
+<th style="text-align:center">编码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">S0</td>
+<td style="text-align:center">IDLE复位状态</td>
+<td style="text-align:center">3'b000</td>
+</tr>
+<tr>
+<td style="text-align:center">S1</td>
+<td style="text-align:center">投入0.5元</td>
+<td style="text-align:center">3'b001</td>
+</tr>
+<tr>
+<td style="text-align:center">S2</td>
+<td style="text-align:center">投入1元</td>
+<td style="text-align:center">3'b010</td>
+</tr>
+<tr>
+<td style="text-align:center">S3</td>
+<td style="text-align:center">投入1.5元</td>
+<td style="text-align:center">3'b011</td>
+</tr>
+<tr>
+<td style="text-align:center">S4</td>
+<td style="text-align:center">投入2元</td>
+<td style="text-align:center">3'b100</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-verilog">module drink_status_mealy(
+  input clk,               //verilog-2001
+  input reset,
+  input half,
+  input one,
+  output out,
+  output cout);
+   
+  parameter [2:0] s0 = 3'b000,       //3'd0
+                  s1 = 3'b001,       //3'd1
+                  s2 = 3'b010,       //3'd2
+                  s3 = 3'b011,       //3'd3
+                  s4 = 3'b100,       //3'd4
+  reg [2:0] curr_state;
+  reg [2:0] next_state;
+
+//first segement: state transfer---时序逻辑、描述状态寄存器
+always @(posedge clk, negedge reset) begin
+  if(!reset)
+    curr_state &lt;= s0;
+  else
+    curr_state &lt;= next_state;
+end
+
+//second segment: transfer condition---组合逻辑、描述次态逻辑
+always @(*)begin     //等价 always @(curr_state,one,half)
+  case(curr_state)
+    s0:begin
+       if(half)     next_state = s1;
+       else if(one) next_state = s2;
+       else         next_state = s0;
+       end
+    s1:begin
+       if(half)     next_state = s2;
+       else if(one) next_state = s3;
+       else         next_state = s1;
+       end
+    s2:begin
+       if(half)     next_state = s3;
+       else if(one) next_state = s4;
+       else         next_state = s2;
+       end
+    s3:begin
+       if(half)     next_state = s4;
+       else if(one) next_state = s0;
+       else         next_state = s3;
+       end
+    s4:begin
+       if(half)     next_state = s0;
+       else if(one) next_state = s0;
+       else         next_state = s4;
+       end       
+    default:        next_state = s0;
+ endcase
+end
+
+//third segement: state output---状态输出（描述输出逻辑）
+assign out = ((curr_state == s4) &amp; (half|one))?1:((curr_state == s3) &amp; (one))?1:0;    //等价于if--else if--else，即条件操作符的嵌套使用
+assign cout = ((curr_state == s4) &amp; (one))?1:0;
+
+endmodule
+</code></pre>
+<h2 id="面积与速度优化">面积与速度优化</h2>
+<p><strong>FPGA速度优化方法</strong></p>
+<ul>
+<li>流水线设计</li>
+<li>寄存器配平</li>
+<li>关键路径优化（减少关键路径上的组合逻辑延迟）</li>
+<li>迟滞信号后移（将延时较大的信号放到后面，缩短信号的路径长度）</li>
+<li>消除代码优先级</li>
+<li>并行化</li>
+</ul>
+<p><strong>FPGA面积优化方法</strong></p>
+<ul>
+<li>串行化</li>
+<li>资源共享</li>
+<li>逻辑优化</li>
+</ul>
+<h2 id="时序约束的概念和基本策略">时序约束的概念和基本策略</h2>
+<p>时序约束主要包括周期约束，偏移约束，静态时序路径约束三种。<br>
+通过附加时序约束可以综合布线工具调整映射和布局布线，使设计达到时序要求。<br>
+附加时序约束的一般策略是先附加全局约束，然后对快速和慢速例外路径附加专门约束。附加全局约束时，首先定义设计的所有时钟，对各时钟域内的同步元件进行分组，对分组附加周期约束，然后对FPGA/CPLD输入输出PAD附加偏移约束、对全组合逻辑的PAD TO PAD路径附加约束。附加专门约束时，首先约束分组之间的路径，然后约束快、慢速例外路径和多周期路径，以及其他特殊路径。</p>
+<h3 id="附加约束的作用">附加约束的作用</h3>
+<ol>
+<li>提高设计的工作频率（减少了逻辑和布线延时）；</li>
+<li>获得正确的时序分析报告；（静态时序分析工具以约束作为判断时序是否满足设计要求的标准，因此要求设计者正确输入约束，以便静态时序分析工具可以正确的输出时序报告）</li>
+<li>指定FPGA/CPLD的电气标准和引脚位置。</li>
+</ol>
+<h2 id="常用协议">常用协议</h2>
+<h3 id="spi">SPI</h3>
+<p>SPI是一个同步的、基于主从的全双工接口。来自主机或从机的数据在上升或下降的时钟边缘同步。主机和从机都可以同时传输数据。SPI接口可以是3线制，也可以是4线制。<br>
+<img src="https://wherelse.cc/post-images/1637486616037.png" alt="" loading="lazy"><br>
+4 线 SPI 设备有四个信号：</p>
+<ul>
+<li>时钟（SPI CLK、SCLK）</li>
+<li>片选 (CS)</li>
+<li>主出，从入（MOSI）（数据线）</li>
+<li>主进从出 (MISO)（数据线）</li>
+</ul>
+<p>要开始 SPI 通信，主机必须发送时钟信号并通过启用 CS 信号来选择从机。</p>
+<p>在 SPI 中，主机可以选择时钟极性和时钟相位。 CPOL 位设置空闲状态期间时钟信号的极性。空闲状态定义为在传输开始时 CS 为高并转换为低以及 CS 为低并在传输结束时转换为高的时段。 CPHA 位选择时钟相位。根据 CPHA 位，时钟上升沿或下降沿用于采样和/或移位数据。主机必须根据从机的要求选择时钟极性和时钟相位。根据 CPOL 和 CPHA 位选择，有四种 SPI 模式可用。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">SPI Mode</th>
+<th style="text-align:center">CPOL</th>
+<th style="text-align:center">CPHA</th>
+<th style="text-align:center">时钟极性默认状态</th>
+<th style="text-align:center">数据采样位置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">Logic low</td>
+<td style="text-align:center">数据在上升沿采样并在下降沿移出</td>
+</tr>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">Logic low</td>
+<td style="text-align:center">数据在下降沿采样并在上升沿移出</td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">Logic high</td>
+<td style="text-align:center">数据在下降沿采样并在上升沿移出</td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">Logic high</td>
+<td style="text-align:center">数据在下降沿采样并在上升沿移出</td>
+</tr>
+</tbody>
+</table>
+<h3 id="iic">IIC</h3>
+<p><img src="https://wherelse.cc/post-images/1637486626214.png" alt="" loading="lazy"><br>
+I2C 总线仅使用两条双向线，串行数据线 (SDA) 和串行时钟线 (SCL)。 I2C 兼容设备通过集电极开路或漏极开路引脚连接到总线，将线路拉低。当没有数据传输时，I2C 总线处于 HIGH 状态空闲；总线被被动拉高。<br>
+IIC支持多设备并使用地址进行设备寻址，各从机间的地址不能重复。IIC通过拉低并释放高来切换线路来进行传输。位在时钟下降沿计时。标准数据传输速率为 100kbits/s，而快速模式传输速率为 400kbits/s。<br>
+<img src="https://wherelse.cc/post-images/1637486671290.png" alt="" loading="lazy"><br>
+<strong>开始信号</strong>，SDA 线从高电平状态转换为低电平状态，而 SCL 为高电平。<br>
+<strong>停止信号</strong>，SDA 线从低电平转换为高电平状态，而 SCL 为高电平。<br>
+<img src="https://wherelse.cc/post-images/1637486637210.png" alt="" loading="lazy"><br>
+在传输期间可以重复开始信号，而无需停止，称为重复启动，用于更改数据传输方向、重复传输尝试、同步多个 IC，控制串行存储器。</p>
+<p>进行传输时，从机地址以 8 位字节格式发送，MSB 在前，但最后一位表示事务是读取还是写入从机。实际上，高 7 位构成从地址，而第 8 位用作 READ/WRITE# 命令位。因此，有一个包含 128 个唯一地址的地址空间，最多可用于寻址 128 个从站。<br>
+<img src="https://wherelse.cc/post-images/1637486729752.png" alt="" loading="lazy"><br>
+<strong>确认和不确认位</strong> (ACK/NACK)，ACK 用于表示一个字节（地址或数据）已成功传输和接收，并且传输可以继续进行到下一个字节传输、停止条件或重复开始。接收方通常使用 NACK 来指示数据传输中是否发生了错误。这用于向传输设备发送信号以立即终止传输或通过发送重复开始进行另一次尝试。</p>
+<p><strong>写入流程</strong><br>
+<img src="https://wherelse.cc/post-images/1637486752419.png" alt="" loading="lazy"><br>
+主机寻址并将数据写入具有 7 位地址的从接收器。发送的第一位是启动通信的 START 位。地址字节跟随在随后的时钟脉冲之后。此时，总线上的所有 SLAVE 设备都在侦听它们的设备地址，该地址构成地址字节的前 7 位。找到地址匹配的 SLAVE 设备继续侦听最后一位（READ/WRITE# 位）以了解主设备是要从从设备读取还是写入。所有其他从设备通过发送 NACK 来忽略进一步的通信。<br>
+从机响应识别其地址和写入命令，被寻址的设备通过向主设备发送确认位 (ACK) 作为反馈来响应总线上存在具有正确地址的从设备并等待进一步通信。然后主机通过以字节格式发送数据来继续进行数据传输。如果 主机正在写入从设备中的特定寄存器，则它会在发送数据之前写入相应的命令字节。在每个字节传输后，从机通过发送 ACK 进行响应。一旦 主机完成所有数据的传输，它就会通过发送一个 STOP 条件来终止传输。</p>
+<blockquote>
+<p>简单来说：写时序：写地址-&gt;ack-&gt;写寄存器-&gt;ack-&gt;写数据-&gt;ack-&gt;stop</p>
+</blockquote>
+<p><strong>读取流程</strong><br>
+<img src="https://wherelse.cc/post-images/1637486877984.png" alt="" loading="lazy"><br>
+主机从从机中读取数据。传输再次由主机以 START信号启动，之后地址在后续时钟脉冲上传输。寻址设备通过读取 READ/WRITE 位继续侦听传输，并以确认位进行响应。一旦 从机发送确认信号，它就会接管 SDA 并向主机发送数据。为响应传输的每个字节，主机发送一个确认位。当主机不再想要接收数据时，它会在它希望接收的最后一个字节之后以 NACK 响应，然后恢复对总线的控制并发送 STOP 信号结束传输。</p>
+<blockquote>
+<p>简单来说：写地址-&gt;ack-&gt;写寄存器-&gt;ack-&gt;写地址-&gt;restart-&gt;读数据-&gt;nack-&gt;stop</p>
+</blockquote>
+<h3 id="uart">UART</h3>
+<p>UART，通用异步接收器-发送器，是最常用的设备到设备通信协议之一。UART 的速度是可以配置的，而且它不需要时钟信号来同步发送设备和接收设备。<br>
+对于 UART 和大多数串行通信，需要在发送和接收设备上设置相同的波特率。波特率是信息传输到通信信道的速率。在串行端口配置中，设置的波特率将作为每秒传输的最大位数。<br>
+在 UART 中，传输模式是数据包的形式。。数据包由起始位、数据帧、奇偶校验位和停止位组成。<br>
+<img src="https://wherelse.cc/post-images/1637486908436.png" alt="" loading="lazy"><br>
+起始位<br>
+UART 数据传输线在不传输数据时通常保持高电平。为了开始数据传输，发送 UART 将传输线从高电平拉至低电平一个时钟周期。当接收 UART 检测到高低电压转换时，它开始以波特率的频率读取数据帧中的位。<br>
+<img src="https://wherelse.cc/post-images/1637486934958.png" alt="" loading="lazy"><br>
+数据帧<br>
+数据帧包含正在传输的实际数据。如果使用奇偶校验位，它可以是5位到8位长度。如果未使用奇偶校验位，则数据帧的长度可以是9位。在大多数情况下，数据首先以最低有效位发送。<br>
+<img src="https://wherelse.cc/post-images/1637486944152.png" alt="" loading="lazy"><br>
+校验帧<br>
+奇偶性描述了一个数的偶数或奇数。奇偶校验位是接收 UART 判断传输过程中是否有任何数据发生变化的一种方式。数据位可能受到电磁辐射、不匹配的波特率或长距离数据传输的影响而改变。<br>
+接收 数据帧后，计算值为 1 的位数，并检查总数是偶数还是奇数。如果奇偶校验位为 0（偶校验），则数据帧中的 1 或逻辑高位总计应为偶数。如果奇偶校验位为 1（奇校验），则数据帧中的 1 位或逻辑高位总计应为奇数。<br>
+当奇偶校验位与数据匹配时，UART 就知道传输没有错误。但如果奇偶校验位为 0，且总数为奇数，或者奇偶校验位为 1，且总数为偶数，则 UART 知道数据帧中的位发生了变化。<br>
+<img src="https://wherelse.cc/post-images/1637486966083.png" alt="" loading="lazy"><br>
+停止位<br>
+为了发出数据包结束的信号，发送 UART 将数据传输线从低电压驱动到高电压，持续1-2位。<br>
+<img src="https://wherelse.cc/post-images/1637486987170.png" alt="" loading="lazy"></p>
+<blockquote>
+<p>https://blog.csdn.net/qq_40230112/article/details/109766740<br>
+https://zhuanlan.zhihu.com/p/168744814<br>
+https://zhuanlan.zhihu.com/p/187458456<br>
+https://zhuanlan.zhihu.com/p/370935420<br>
+https://blog.csdn.net/jingfengvae/article/details/51691124<br>
+https://zhuanlan.zhihu.com/p/119302165<br>
+https://blog.csdn.net/bleauchat/article/details/97028410<br>
+https://www.runoob.com/w3cnote/verilog2-setup-hold-time.html<br>
+https://www.cnblogs.com/shadow-fish/p/13472129.html<br>
+https://zhuanlan.zhihu.com/p/80698138<br>
+https://zhuanlan.zhihu.com/p/363743703<br>
+https://blog.csdn.net/weixin_46022434/article/details/105166407<br>
+https://www.analog.com/en/analog-dialogue/articles/introduction-to-spi-interface.html<br>
+https://www.analog.com/en/technical-articles/i2c-primer-what-is-i2c-part-1.html<br>
+https://www.analog.com/en/analog-dialogue/articles/uart-a-hardware-communication-protocol.html</p>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>若需要md版本或者pdf版本，请邮件联系<a href="mailto:blog@wherelse.cc">邮箱</a>。</p>
+</blockquote>
+</blockquote>
+
+        </div>
+
+        <!-- copyright -->
+        <div class="copyright">
+          <div class="container">
+            <p><small class="text-gray-400">
+                The copyright of the articles on this website is owned by me. Without consent, it is not allowed to copy without permission. Reasonable reprints are welcome to indicate the source of the quotation. Please leave a message for reprinting pictures. The content of the article is only used for technical research and exploration, and shall not be used for illegal purposes.
+             </small></p>
+          </div>
+        </div>
+
+        <div class="text-center text-gray-300">
+          
+          <span id="/post/fpga-autumn-recruit-study-notes-4/" class="leancloud_visitors views-counter meta-info">
+            <a class="text-center">📋阅读量:</a>
+            <span id="twikoo_visitors">0</span>
+          </span>
+          
+        </div>
+      </div>
+
+      
+
+      
+        <button type="button" class="collapsible">
+          <i class="ri-message-2-line"></i>
+        </button>
+        <div class="tcomment rounded-lg px-4 py-4">
+          <div id="tcomment"></div>
+        </div>  
+      
+
+      <footer class="py-12 text-center px-4 md:px-0" v-pre>
+  <a href="/atom.xml" target="_blank">RSS
+</a> | Powered by <a href="https://github.com/getgridea/gridea" 
+target="_blank">Gridea</a> &nbsp;&nbsp;
+<br>
+©2020 Wherelse All Right Reserved 
+</footer>
+
+    </div>
+
+
+    <!-- TOC Container -->
+    <div id="toc"
+      class="fixed right-0 bottom-0 mb-20 mr-6 shadow w-12 h-12 rounded-lg flex justify-center items-center z-10 cursor-pointer bg-white dark:bg-gray-500 dark:text-gray-200 hover:shadow-lg transition-all animated fadeInRight"
+      @click="showToc = true">
+      <i class="ri-menu-line font-bold"></i>
+    </div>
+
+    <div
+      class="fixed right-0 top-0 bottom-0 overflow-y-auto w-64 rounded-lg p-4 m-4  shadow-md bg-white dark:bg-gray-800 p-4 border-l border-gray-100 dark:border-gray-600 z-10 transition-fast"
+      :class="{ '-mr-64': !showToc }">
+      <div class="flex mb-4 justify-end">
+        <div
+          class="w-8 h-8 inline-flex justify-center items-center rounded-full cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-fast"
+          @click="showToc = false">
+          <i class="ri-close-circle-fill"></i>
+        </div>
+      </div>
+      <div class="post-toc-container"><ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#fpga%E4%B8%AD%E7%9A%84%E5%B8%B8%E7%94%A8%E5%AD%98%E5%82%A8">FPGA中的常用存储</a></li>
+<li><a href="#fifo%E8%AE%BE%E8%AE%A1">FIFO设计</a>
+<ul>
+<li><a href="#%E5%90%8C%E6%AD%A5fifo">同步FIFO</a></li>
+<li><a href="#%E5%BC%82%E6%AD%A5fifo">异步FIFO</a></li>
+<li><a href="#fifo%E6%B7%B1%E5%BA%A6%E7%9A%84%E8%AE%A1%E7%AE%97">FIFO深度的计算</a></li>
+</ul>
+</li>
+<li><a href="#%E5%90%8C%E6%AD%A5%E5%A4%8D%E4%BD%8D%E4%B8%8E%E5%BC%82%E6%AD%A5%E5%A4%8D%E4%BD%8D">同步复位与异步复位</a>
+<ul>
+<li><a href="#%E5%90%8C%E6%AD%A5%E5%A4%8D%E4%BD%8D%E4%B8%8E%E5%BC%82%E6%AD%A5%E5%A4%8D%E4%BD%8D%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9">同步复位与异步复位的优缺点</a></li>
+<li><a href="#%E5%BC%82%E6%AD%A5%E5%A4%8D%E4%BD%8D%E5%90%8C%E6%AD%A5%E9%87%8A%E6%94%BE">异步复位同步释放</a></li>
+</ul>
+</li>
+<li><a href="#%E5%BB%BA%E7%AB%8B%E4%BF%9D%E6%8C%81%E6%97%B6%E9%97%B4%E6%97%B6%E9%92%9F%E6%8A%96%E5%8A%A8%E4%B8%8E%E6%97%B6%E9%92%9F%E5%81%8F%E6%96%9C">建立保持时间，时钟抖动与时钟偏斜</a>
+<ul>
+<li><a href="#%E5%BB%BA%E7%AB%8B%E6%97%B6%E9%97%B4">建立时间</a></li>
+<li><a href="#%E4%BF%9D%E6%8C%81%E6%97%B6%E9%97%B4">保持时间</a></li>
+<li><a href="#%E6%97%B6%E9%92%9F%E5%81%8F%E6%96%9C%E5%81%8F%E7%A7%BB">时钟偏斜（偏移）</a></li>
+<li><a href="#%E6%97%B6%E9%92%9F%E6%8A%96%E5%8A%A8">时钟抖动</a></li>
+<li><a href="#%E5%BB%BA%E7%AB%8B%E6%97%B6%E9%97%B4%E4%BD%99%E9%87%8F%E5%92%8C%E4%BF%9D%E6%8C%81%E6%97%B6%E9%97%B4%E4%BD%99%E9%87%8F">建立时间余量和保持时间余量</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BA%9A%E7%A8%B3%E6%80%81%E4%B8%8E%E8%B7%A8%E6%97%B6%E9%92%9F%E5%9F%9F">亚稳态与跨时钟域</a>
+<ul>
+<li><a href="#%E8%B7%A8%E6%97%B6%E9%92%9F%E5%9F%9F%E5%A4%84%E7%90%86%E6%96%B9%E6%B3%95">跨时钟域处理方法</a></li>
+</ul>
+</li>
+<li><a href="#%E5%B8%B8%E8%A7%81%E5%88%86%E9%A2%91%E8%AE%BE%E8%AE%A1">常见分频设计</a>
+<ul>
+<li><a href="#%E5%81%B6%E6%95%B0%E5%88%86%E9%A2%91">偶数分频</a></li>
+<li><a href="#%E5%A5%87%E6%95%B0%E5%88%86%E9%85%8D">奇数分配</a></li>
+<li><a href="#%E5%B0%8F%E6%95%B0%E5%88%86%E9%A2%91">小数分频</a></li>
+</ul>
+</li>
+<li><a href="#%E7%8A%B6%E6%80%81%E6%9C%BA">状态机</a></li>
+<li><a href="#%E9%9D%A2%E7%A7%AF%E4%B8%8E%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96">面积与速度优化</a></li>
+<li><a href="#%E6%97%B6%E5%BA%8F%E7%BA%A6%E6%9D%9F%E7%9A%84%E6%A6%82%E5%BF%B5%E5%92%8C%E5%9F%BA%E6%9C%AC%E7%AD%96%E7%95%A5">时序约束的概念和基本策略</a>
+<ul>
+<li><a href="#%E9%99%84%E5%8A%A0%E7%BA%A6%E6%9D%9F%E7%9A%84%E4%BD%9C%E7%94%A8">附加约束的作用</a></li>
+</ul>
+</li>
+<li><a href="#%E5%B8%B8%E7%94%A8%E5%8D%8F%E8%AE%AE">常用协议</a>
+<ul>
+<li><a href="#spi">SPI</a></li>
+<li><a href="#iic">IIC</a></li>
+<li><a href="#uart">UART</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+    </div>
+
+    <!-- Back to top -->
+    <div
+      class="fixed right-0 bottom-0 mb-4 mr-6 shadow w-12 h-12 rounded-lg flex justify-center items-center z-10 cursor-pointer bg-white hover:shadow-lg transition-all dark:bg-gray-500 dark:text-gray-200"
+      @click="backToUp" v-show="scrolled">
+      <i class="ri-arrow-up-circle-fill"></i>
+    </div>
+  </div>
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+  <!-- Background of PhotoSwipe. 
+        It's a separate element as animating opacity is faster than rgba(). -->
+  <div class="pswp__bg">
+  </div>
+  <!-- Slides wrapper with overflow:hidden. -->
+  <div class="pswp__scroll-wrap">
+    <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+    <div class="pswp__container">
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+    </div>
+    <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+    <div class="pswp__ui pswp__ui--hidden">
+      <div class="pswp__top-bar">
+        <!--  Controls are self-explanatory. Order can be changed. -->
+        <div class="pswp__counter">
+        </div>
+        <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+        <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+        <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+        <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+        <!-- element will get class pswp__preloader--active when preloader is running -->
+        <div class="pswp__preloader">
+          <div class="pswp__preloader__icn">
+            <div class="pswp__preloader__cut">
+              <div class="pswp__preloader__donut">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+        <div class="pswp__share-tooltip">
+        </div>
+      </div>
+      <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+      </button>
+      <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+      </button>
+      <div class="pswp__caption">
+        <div class="pswp__caption__center">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>-->
+  <script src="https://wherelse.cc/media/scripts/vue.min.js"></script>
+  <script src="https://wherelse.cc/media/scripts/main.js"></script>
+
+  <!--根据内容动态加载-->
+  <script type="text/javascript">
+    window.onload = function () {
+      //根据内容动态加载mermiad
+      if (document.getElementsByClassName("language-mermaid").length != 0) {
+        console.log("find mermaid")
+        for (let x of document.getElementsByClassName("language-mermaid")) {
+          if (x.nodeName == "CODE") {
+            let m = document.createElement("div");
+            m.classList.add("mermaid");
+            m.textContent = x.textContent;
+            x.parentNode.insertAdjacentElement("beforebegin", m);
+          }
+        }
+        let script = document.createElement('script');
+        defer = "defer";
+        script.src =
+          "https://wherelse.cc/media/scripts/mermaid.min.js";
+        document.body.append(script);
+        script.onload = function () {
+          mermaid.initialize({
+            startOnLoad: false
+          });
+          mermaid.init();
+          console.log("mermaid init done");
+        }
+      }
+
+      //bilibili 视频支持
+      var content = document.getElementsByClassName("language-bilibili")[0];
+      if (content != null) {
+        var m = document.createElement("div");
+        m.classList.add("bilibili-video");
+        m.innerHTML = content.textContent;
+        content.parentNode.insertAdjacentElement("beforeend", m);
+      }
+      //katex自适应加载
+      if (document.getElementsByClassName("katex").length != 0) {
+        let script = document.createElement('script');
+        script.defer = "defer"
+        script.src =
+          "https://wherelse.cc/media/scripts/katex.min.js";
+        document.body.append(script);
+        script = document.createElement('script');
+        script.defer = "defer"
+        script.src =
+          "https://wherelse.cc/media/scripts/copy-tex.min.js";
+        document.body.append(script);
+        let link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.defer = "defer"
+        link.href =
+          "https://wherelse.cc/media/css/katex.min.css";
+        document.body.append(link);
+        link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.defer = "defer"
+        link.href =
+          "https://wherelse.cc/media/css/copy-tex.css";
+        document.body.append(link);
+      }
+
+      script = document.createElement('script');
+      script.defer = "defer"
+      script.src =
+        "https://cdn.staticfile.org/twikoo/1.6.7/twikoo.all.min.js";
+      document.body.append(script);
+      script.onload = function () {
+        let scripts = document.createElement('script');
+        scripts.append(document.createTextNode(
+          " twikoo.init({envId: \"https://twikoo.vlieo.com\",el: \"#tcomment\",});"));
+        var parentDiv = document.getElementById("toc").parentNode;
+        var sp = document.getElementById("toc");
+        parentDiv.insertBefore(scripts, sp);
+      }
+    }
+  </script>
+  <script>
+    comment_collapse();
+  </script>
+
+ <script>
+    //拿到预览框架，也就是上面的html代码
+    var pswpElement = document.querySelectorAll(".pswp")[0];
+    //定义图片数组变量
+    var imgitems;
+    /**
+     * 用于显示预览界面
+     * @param index 图片数组下标
+     */
+    function viewImg(index) {
+      //其它选项这里不做过多阐述，详情见官网
+      var pswpoptions = {
+        index: parseInt(index, 10), // 开始幻灯片索引。0是第一张幻灯片。必须是整数，而不是字符串。
+        bgOpacity: 0.7, // 背景透明度，0-1
+        maxSpreadZoom: 3, // 缩放级别，不要太大
+      };
+      //初始化并打开PhotoSwipe，pswpElement对应上面预览框架，PhotoSwipeUI_Default为皮肤，imgitems为图片数组，pswpoptions为选项
+      var gallery = new PhotoSwipe(
+        pswpElement,
+        PhotoSwipeUI_Default,
+        imgitems,
+        pswpoptions
+      );
+      gallery.init();
+    }
+    /**
+     * 用于添加图片点击事件
+     * @param img 图片元素
+     * @param index 所属下标（在imgitems中的位置）
+     */
+    function addImgClick(img, index) {
+      img.onclick = function () {
+        viewImg(index);
+      };
+    }
+    /**
+     * 轮询所有图片，获取src、width、height等数据，加入imgitems，并给图片元素添加事件
+     * 最好在onload中执行该方法，本站因放在最底部，所以直接初始化
+     * 异步加载图片可在图片元素创建完成后调用此方法
+     */
+    function initImg() {
+      //重置图片数组
+      imgitems = [];
+      //查找class:markdown 下的所有img元素并遍历
+      var imgs = document.querySelectorAll(".markdown img");
+      for (var i = 0; i < imgs.length; i++) {
+        var img = imgs[i];
+        //本站相册初始为loading图片，真实图片放在data-src
+        var ds = img.getAttribute("src");
+        //创建image对象，用于获取图片宽高
+        var imgtemp = new Image();
+        //判断是否存在data-src
+        if (ds != null && ds.length > 0) {
+          imgtemp.src = ds;
+        } else {
+          imgtemp.src = img.src;
+        }
+        //判断是否存在缓存
+        if (imgtemp.complete) {
+          var imgobj = {
+            src: imgtemp.src,
+            w: imgtemp.width,
+            h: imgtemp.height,
+          };
+          imgitems[i] = imgobj;
+          addImgClick(img, i);
+        } else {
+          // console.log("进来了2");
+          imgtemp.index = i;
+          imgtemp.img = img;
+          imgtemp.onload = function () {
+            var imgobj = {
+              src: this.src,
+              w: this.width,
+              h: this.height,
+            };
+            //不要使用push，因为onload前后顺序会不同
+            imgitems[this.index] = imgobj;
+            //添加点击事件
+            addImgClick(this.img, this.index);
+          };
+        }
+      }
+    }
+    //初始化
+    initImg();
+  </script>
+</body>
+
+</html>

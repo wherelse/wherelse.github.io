@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>相册 - Wherelse Blog</title>
+<meta name="ThemeName" content="Gridea Theme Rocky by EryouHao" />
+<meta name="referrer" content="always" />
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<link rel="manifest" href="/site.webmanifest">
+<!-- <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet preload" as="style"> -->
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"> -->
+<!-- <link rel="stylesheet" href="https://cdn.staticfile.org/animate.css/3.7.2/animate.min.css" as="style" /> -->
+<link href="/media/css/remixicon.css" rel="stylesheet" as="style">
+<link rel="stylesheet" href="/media/css/tailwind.css">
+<link rel="stylesheet" href="/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="相册 - Wherelse Blog - Atom Feed" href="/atom.xml">
+
+  
+  <script defer src="https://www.googletagmanager.com/gtag/js?id=G-4449R7TQN5"></script>
+  <script>
+  var host = window.location.hostname;
+  if(host != "localhost")
+  {
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4449R7TQN5');
+  }
+  </script>
+    
+
+  <meta name="description" content="相册" />
+  <link rel="stylesheet" href="https://wherelse.cc/media/css/gallery.css">
+  <link rel="canonical" href="https://wherelse.cc/gallery/" />
+  <link rel="stylesheet" href="https://wherelse.cc/media/css/photoswipe.css" as="style" />
+  <link rel="stylesheet" href="https://wherelse.cc/media/css/default-skin.css" as="style" />
+  <script src="https://wherelse.cc/media/scripts/bootstrap.bundle.min.js"></script>
+  <script src="https://wherelse.cc/media/scripts/photoswipe.min.js"></script>
+  <script src="https://wherelse.cc/media/scripts/photoswipe-ui-default.min.js"></script>
+</head>
+
+<body>
+  <div class="antialiased flex flex-col min-h-screen" id="app">
+    <a href="https://wherelse.cc"
+      class="fixed top-0 left-0 mt-4 bg-black text-white dark:text-gray-700 dark:bg-yellow-50 dark:hover:bg-black dark:hover:text-white inline-flex p-2 pl-8 hover:text-gray-700 hover:bg-yellow-50 font-bold z-10 transition-fast animated fadeInLeft">
+      Wherelse Blog
+    </a>
+    <div class="max-w-5xl w-full mx-auto">
+      <div
+        class="shadow-box bg-white dark:bg-gray-600 rounded-lg pt-32 md:pt-32 px-4 md:px-8 pb-8 animated fadeIn mb-8">
+        <h1 class="text-5xl font-semibold leading-normal pb-8 mb-8 border-b-8 border-gray-700">相册</h1>
+
+        <!-- jumbotron -->
+        <div class="jumbotron">
+          <div class="container">
+            <p><i class="ri-camera-line"></i> 光影一瞬，留下记忆的片段</p>
+            <br>
+            <p><small class="text-gray-400">
+                <!-- 写点介绍什么的都行，不需要就整段去掉，CSS 片段单独发你 -->
+                本页面下所有图片均为本人所有，未经同意不得转载，爬取。
+              </small></p>
+          </div>
+        </div>
+
+        <!-- Photos -->
+        <div class="card-columns">
+          
+          
+          <!-- Cards -->
+          <div class="card">
+            
+            <img class="card-img-top" loading="lazy"
+              src="https://wherelse.cc/post-images/xue-ye.jpg" alt="">
+            
+            <!-- <img class="card-img-top" loading="lazy" src="https://wherelse.ccxue-ye.jpg"> -->
+            <div class="card-body">
+              <!-- <h5 class="card-title">标题，我那边是去掉的，但是 CSS 里有</h5> -->
+              <p class="card-text"><small class="text-gray-400">Hefei | SONY a6300  Sigma S30 | 2019</small></p><!-- 时间、地点什么的，随你 -->
+            </div>
+          </div>
+          
+          <!-- Cards -->
+          <div class="card">
+            
+            <img class="card-img-top" loading="lazy"
+              src="https://wherelse.cc/post-images/ru-qiu.jpg" alt="">
+            
+            <!-- <img class="card-img-top" loading="lazy" src="https://wherelse.ccru-qiu.jpg"> -->
+            <div class="card-body">
+              <!-- <h5 class="card-title">标题，我那边是去掉的，但是 CSS 里有</h5> -->
+              <p class="card-text"><small class="text-gray-400">Xi&#39;an | SONY a6300  Sigma S30 | 2019</small></p><!-- 时间、地点什么的，随你 -->
+            </div>
+          </div>
+          
+          <!-- Cards -->
+          <div class="card">
+            
+            <img class="card-img-top" loading="lazy"
+              src="https://wherelse.cc/post-images/qiu-ye.jpg" alt="">
+            
+            <!-- <img class="card-img-top" loading="lazy" src="https://wherelse.ccqiu-ye.jpg"> -->
+            <div class="card-body">
+              <!-- <h5 class="card-title">标题，我那边是去掉的，但是 CSS 里有</h5> -->
+              <p class="card-text"><small class="text-gray-400">Xi&#39;an | SONY a6300  Sigma S30 | 2019</small></p><!-- 时间、地点什么的，随你 -->
+            </div>
+          </div>
+          
+          <!-- Cards -->
+          <div class="card">
+            
+            <img class="card-img-top" loading="lazy"
+              src="https://wherelse.cc/post-images/qiu-ri-yin-xing.jpg" alt="">
+            
+            <!-- <img class="card-img-top" loading="lazy" src="https://wherelse.ccqiu-ri-yin-xing.jpg"> -->
+            <div class="card-body">
+              <!-- <h5 class="card-title">标题，我那边是去掉的，但是 CSS 里有</h5> -->
+              <p class="card-text"><small class="text-gray-400">Xi&#39;an | SONY a6300  Sigma S30 | 2019</small></p><!-- 时间、地点什么的，随你 -->
+            </div>
+          </div>
+          
+          <!-- Cards -->
+          <div class="card">
+            
+            <img class="card-img-top" loading="lazy"
+              src="https://wherelse.cc/post-images/wan-ou-mo-xing.jpg" alt="">
+            
+            <!-- <img class="card-img-top" loading="lazy" src="https://wherelse.ccwan-ou-mo-xing.jpg"> -->
+            <div class="card-body">
+              <!-- <h5 class="card-title">标题，我那边是去掉的，但是 CSS 里有</h5> -->
+              <p class="card-text"><small class="text-gray-400">TianJin | SONY a6300  Sigma S30 | 2018</small></p><!-- 时间、地点什么的，随你 -->
+            </div>
+          </div>
+          
+          <!-- Cards -->
+          <div class="card">
+            
+            <img class="card-img-top" loading="lazy"
+              src="https://wherelse.cc/post-images/wu-ti.jpg" alt="">
+            
+            <!-- <img class="card-img-top" loading="lazy" src="https://wherelse.ccwu-ti.jpg"> -->
+            <div class="card-body">
+              <!-- <h5 class="card-title">标题，我那边是去掉的，但是 CSS 里有</h5> -->
+              <p class="card-text"><small class="text-gray-400">TianJin | SONY a6300  Sigma S30 | 2019</small></p><!-- 时间、地点什么的，随你 -->
+            </div>
+          </div>
+          
+          <!-- Cards -->
+          <div class="card">
+            
+            <img class="card-img-top" loading="lazy"
+              src="https://wherelse.cc/post-images/shang-chao-sui-pai-2.jpg" alt="">
+            
+            <!-- <img class="card-img-top" loading="lazy" src="https://wherelse.ccshang-chao-sui-pai-2.jpg"> -->
+            <div class="card-body">
+              <!-- <h5 class="card-title">标题，我那边是去掉的，但是 CSS 里有</h5> -->
+              <p class="card-text"><small class="text-gray-400">西安 | SONY a6300  Sigma S30 | 2019</small></p><!-- 时间、地点什么的，随你 -->
+            </div>
+          </div>
+          
+          <!-- Cards -->
+          <div class="card">
+            
+            <img class="card-img-top" loading="lazy"
+              src="https://wherelse.cc/post-images/shang-chao-sui-pai.jpg" alt="">
+            
+            <!-- <img class="card-img-top" loading="lazy" src="https://wherelse.ccshang-chao-sui-pai.jpg"> -->
+            <div class="card-body">
+              <!-- <h5 class="card-title">标题，我那边是去掉的，但是 CSS 里有</h5> -->
+              <p class="card-text"><small class="text-gray-400">西安 | SONY a6300  Sigma S30 | 2019</small></p><!-- 时间、地点什么的，随你 -->
+            </div>
+          </div>
+          
+          <!-- Cards -->
+          <div class="card">
+            
+            <img class="card-img-top" loading="lazy"
+              src="https://wherelse.cc/post-images/qin-ling-feng-huang-shan-2.jpg" alt="">
+            
+            <!-- <img class="card-img-top" loading="lazy" src="https://wherelse.ccqin-ling-feng-huang-shan-2.jpg"> -->
+            <div class="card-body">
+              <!-- <h5 class="card-title">标题，我那边是去掉的，但是 CSS 里有</h5> -->
+              <p class="card-text"><small class="text-gray-400">西安 秦岭 凤凰山 | SONY a6300  Sigma S30 | 2019</small></p><!-- 时间、地点什么的，随你 -->
+            </div>
+          </div>
+          
+          <!-- Cards -->
+          <div class="card">
+            
+            <img class="card-img-top" loading="lazy"
+              src="https://wherelse.cc/post-images/qin-ling-feng-huang-shan.jpg" alt="">
+            
+            <!-- <img class="card-img-top" loading="lazy" src="https://wherelse.ccqin-ling-feng-huang-shan.jpg"> -->
+            <div class="card-body">
+              <!-- <h5 class="card-title">标题，我那边是去掉的，但是 CSS 里有</h5> -->
+              <p class="card-text"><small class="text-gray-400">西安 秦岭 凤凰山 | SONY a6300  Sigma S30 | 2019</small></p><!-- 时间、地点什么的，随你 -->
+            </div>
+          </div>
+          
+          <!-- Cards -->
+          <div class="card">
+            
+            <img class="card-img-top" loading="lazy"
+              src="https://wherelse.cc/post-images/ji-chun.jpg" alt="">
+            
+            <!-- <img class="card-img-top" loading="lazy" src="https://wherelse.ccji-chun.jpg"> -->
+            <div class="card-body">
+              <!-- <h5 class="card-title">标题，我那边是去掉的，但是 CSS 里有</h5> -->
+              <p class="card-text"><small class="text-gray-400">合肥 | SONY a6300 SONY 16-50 | 2020</small></p><!-- 时间、地点什么的，随你 -->
+            </div>
+          </div>
+          
+          <!-- Cards -->
+          <div class="card">
+            
+            <img class="card-img-top" loading="lazy"
+              src="https://wherelse.cc/post-images/jichun.jpg" alt="">
+            
+            <!-- <img class="card-img-top" loading="lazy" src="https://wherelse.ccjichun.jpg"> -->
+            <div class="card-body">
+              <!-- <h5 class="card-title">标题，我那边是去掉的，但是 CSS 里有</h5> -->
+              <p class="card-text"><small class="text-gray-400">合肥 | SONY a6300 SONY 16-50 | 2020</small></p><!-- 时间、地点什么的，随你 -->
+            </div>
+          </div>
+          
+          <!-- Cards -->
+          <div class="card">
+            
+            <img class="card-img-top" loading="lazy"
+              src="https://wherelse.cc/post-images/fei-xing.jpg" alt="">
+            
+            <!-- <img class="card-img-top" loading="lazy" src="https://wherelse.ccfei-xing.jpg"> -->
+            <div class="card-body">
+              <!-- <h5 class="card-title">标题，我那边是去掉的，但是 CSS 里有</h5> -->
+              <p class="card-text"><small class="text-gray-400">合肥-&gt;西安  | XIAOMI MIX 2S | 2020</small></p><!-- 时间、地点什么的，随你 -->
+            </div>
+          </div>
+          
+          <!-- Cards -->
+          <div class="card">
+            
+            <img class="card-img-top" loading="lazy"
+              src="https://wherelse.cc/post-images/bang-wan.jpg" alt="">
+            
+            <!-- <img class="card-img-top" loading="lazy" src="https://wherelse.ccbang-wan.jpg"> -->
+            <div class="card-body">
+              <!-- <h5 class="card-title">标题，我那边是去掉的，但是 CSS 里有</h5> -->
+              <p class="card-text"><small class="text-gray-400">西安  | XIAOMI MIX 2S | 2020</small></p><!-- 时间、地点什么的，随你 -->
+            </div>
+          </div>
+          
+          <!-- Cards -->
+          <div class="card">
+            
+            <img class="card-img-top" loading="lazy"
+              src="https://wherelse.cc/post-images/1634050838253.jpg" alt="">
+            
+            <!-- <img class="card-img-top" loading="lazy" src="https://wherelse.cc1634050838253.jpg"> -->
+            <div class="card-body">
+              <!-- <h5 class="card-title">标题，我那边是去掉的，但是 CSS 里有</h5> -->
+              <p class="card-text"><small class="text-gray-400">岳西 | Redmi K40 | 2021</small></p><!-- 时间、地点什么的，随你 -->
+            </div>
+          </div>
+          
+          <!-- Cards -->
+          <div class="card">
+            
+            <img class="card-img-top" loading="lazy"
+              src="https://wherelse.cc/post-images/1634050817276.jpg" alt="">
+            
+            <!-- <img class="card-img-top" loading="lazy" src="https://wherelse.cc1634050817276.jpg"> -->
+            <div class="card-body">
+              <!-- <h5 class="card-title">标题，我那边是去掉的，但是 CSS 里有</h5> -->
+              <p class="card-text"><small class="text-gray-400">岳西 | Redmi K40 | 2021</small></p><!-- 时间、地点什么的，随你 -->
+            </div>
+          </div>
+          
+          <!-- Cards -->
+          <div class="card">
+            
+            <img class="card-img-top" loading="lazy"
+              src="https://wherelse.cc/post-images/1634050830029.jpg" alt="">
+            
+            <!-- <img class="card-img-top" loading="lazy" src="https://wherelse.cc1634050830029.jpg"> -->
+            <div class="card-body">
+              <!-- <h5 class="card-title">标题，我那边是去掉的，但是 CSS 里有</h5> -->
+              <p class="card-text"><small class="text-gray-400">岳西 | SONY a6300  Sigma S30 | 2021</small></p><!-- 时间、地点什么的，随你 -->
+            </div>
+          </div>
+          
+          <!-- Cards -->
+          <div class="card">
+            
+            <img class="card-img-top" loading="lazy"
+              src="https://wherelse.cc/post-images/1634050823802.jpg" alt="">
+            
+            <!-- <img class="card-img-top" loading="lazy" src="https://wherelse.cc1634050823802.jpg"> -->
+            <div class="card-body">
+              <!-- <h5 class="card-title">标题，我那边是去掉的，但是 CSS 里有</h5> -->
+              <p class="card-text"><small class="text-gray-400">岳西 | SONY a6300  Sigma S30 | 2021</small></p><!-- 时间、地点什么的，随你 -->
+            </div>
+          </div>
+          
+          <!-- Cards -->
+          <div class="card">
+            
+            <img class="card-img-top" loading="lazy"
+              src="https://wherelse.cc/post-images/1634050826174.jpg" alt="">
+            
+            <!-- <img class="card-img-top" loading="lazy" src="https://wherelse.cc1634050826174.jpg"> -->
+            <div class="card-body">
+              <!-- <h5 class="card-title">标题，我那边是去掉的，但是 CSS 里有</h5> -->
+              <p class="card-text"><small class="text-gray-400">霍山 | SONY a6300  Sigma S30 | 2021</small></p><!-- 时间、地点什么的，随你 -->
+            </div>
+          </div>
+          
+          <!-- Cards -->
+          <div class="card">
+            
+            <img class="card-img-top" loading="lazy"
+              src="https://wherelse.cc/post-images/1634050814687.jpg" alt="">
+            
+            <!-- <img class="card-img-top" loading="lazy" src="https://wherelse.cc1634050814687.jpg"> -->
+            <div class="card-body">
+              <!-- <h5 class="card-title">标题，我那边是去掉的，但是 CSS 里有</h5> -->
+              <p class="card-text"><small class="text-gray-400">霍山 | SONY a6300  Sigma S30 | 2021</small></p><!-- 时间、地点什么的，随你 -->
+            </div>
+          </div>
+          
+          <!-- Cards -->
+          <div class="card">
+            
+            <img class="card-img-top" loading="lazy"
+              src="https://wherelse.cc/post-images/1634050821270.jpg" alt="">
+            
+            <!-- <img class="card-img-top" loading="lazy" src="https://wherelse.cc1634050821270.jpg"> -->
+            <div class="card-body">
+              <!-- <h5 class="card-title">标题，我那边是去掉的，但是 CSS 里有</h5> -->
+              <p class="card-text"><small class="text-gray-400">霍山 | Redmi K40 | 2021</small></p><!-- 时间、地点什么的，随你 -->
+            </div>
+          </div>
+          
+          <!-- Cards -->
+          <div class="card">
+            
+            <img class="card-img-top" loading="lazy"
+              src="https://wherelse.cc/post-images/C0038T01-1.jpg" alt="">
+            
+            <!-- <img class="card-img-top" loading="lazy" src="https://wherelse.ccC0038T01-1.jpg"> -->
+            <div class="card-body">
+              <!-- <h5 class="card-title">标题，我那边是去掉的，但是 CSS 里有</h5> -->
+              <p class="card-text"><small class="text-gray-400">西安 | a6300 | 2021</small></p><!-- 时间、地点什么的，随你 -->
+            </div>
+          </div>
+          
+          <!-- Cards -->
+          <div class="card">
+            
+            <img class="card-img-top" loading="lazy"
+              src="https://wherelse.cc/post-images/DSC04124-2.JPG" alt="">
+            
+            <!-- <img class="card-img-top" loading="lazy" src="https://wherelse.ccDSC04124-2.JPG"> -->
+            <div class="card-body">
+              <!-- <h5 class="card-title">标题，我那边是去掉的，但是 CSS 里有</h5> -->
+              <p class="card-text"><small class="text-gray-400">西安 | a6300 | 2021</small></p><!-- 时间、地点什么的，随你 -->
+            </div>
+          </div>
+          
+          <!-- Cards -->
+          <div class="card">
+            
+            <img class="card-img-top" loading="lazy"
+              src="https://wherelse.cc/post-images/DSC04273.JPG" alt="">
+            
+            <!-- <img class="card-img-top" loading="lazy" src="https://wherelse.ccDSC04273.JPG"> -->
+            <div class="card-body">
+              <!-- <h5 class="card-title">标题，我那边是去掉的，但是 CSS 里有</h5> -->
+              <p class="card-text"><small class="text-gray-400">西安 | a6300 | 2022</small></p><!-- 时间、地点什么的，随你 -->
+            </div>
+          </div>
+          
+          <!-- Cards -->
+          <div class="card">
+            
+            <img class="card-img-top" loading="lazy"
+              src="https://wherelse.cc/post-images/DSC04276.JPG" alt="">
+            
+            <!-- <img class="card-img-top" loading="lazy" src="https://wherelse.ccDSC04276.JPG"> -->
+            <div class="card-body">
+              <!-- <h5 class="card-title">标题，我那边是去掉的，但是 CSS 里有</h5> -->
+              <p class="card-text"><small class="text-gray-400">西安 | a6300 | 2022</small></p><!-- 时间、地点什么的，随你 -->
+            </div>
+          </div>
+          
+          <!-- Cards -->
+          <div class="card">
+            
+            <img class="card-img-top" loading="lazy"
+              src="https://wherelse.cc/post-images/DSC04228.JPG" alt="">
+            
+            <!-- <img class="card-img-top" loading="lazy" src="https://wherelse.ccDSC04228.JPG"> -->
+            <div class="card-body">
+              <!-- <h5 class="card-title">标题，我那边是去掉的，但是 CSS 里有</h5> -->
+              <p class="card-text"><small class="text-gray-400">西安 | a6300 | 2022</small></p><!-- 时间、地点什么的，随你 -->
+            </div>
+          </div>
+          
+          <!-- Cards -->
+          <div class="card">
+            
+            <img class="card-img-top" loading="lazy"
+              src="https://wherelse.cc/post-images/DSC04233.JPG" alt="">
+            
+            <!-- <img class="card-img-top" loading="lazy" src="https://wherelse.ccDSC04233.JPG"> -->
+            <div class="card-body">
+              <!-- <h5 class="card-title">标题，我那边是去掉的，但是 CSS 里有</h5> -->
+              <p class="card-text"><small class="text-gray-400">西安 | a6300 | 2022</small></p><!-- 时间、地点什么的，随你 -->
+            </div>
+          </div>
+          
+          <!-- Cards -->
+          <div class="card">
+            
+            <img class="card-img-top" loading="lazy"
+              src="https://wherelse.cc/post-images/DSC04319.JPG" alt="">
+            
+            <!-- <img class="card-img-top" loading="lazy" src="https://wherelse.ccDSC04319.JPG"> -->
+            <div class="card-body">
+              <!-- <h5 class="card-title">标题，我那边是去掉的，但是 CSS 里有</h5> -->
+              <p class="card-text"><small class="text-gray-400">西安 | a6300 | 2022</small></p><!-- 时间、地点什么的，随你 -->
+            </div>
+          </div>
+          
+          <!-- Cards -->
+          <div class="card">
+            
+            <img class="card-img-top" loading="lazy"
+              src="https://wherelse.cc/post-images/DSC04431.JPG" alt="">
+            
+            <!-- <img class="card-img-top" loading="lazy" src="https://wherelse.ccDSC04431.JPG"> -->
+            <div class="card-body">
+              <!-- <h5 class="card-title">标题，我那边是去掉的，但是 CSS 里有</h5> -->
+              <p class="card-text"><small class="text-gray-400">合肥 | a6300 | 2022</small></p><!-- 时间、地点什么的，随你 -->
+            </div>
+          </div>
+          
+          <!-- Cards -->
+          <div class="card">
+            
+            <img class="card-img-top" loading="lazy"
+              src="https://wherelse.cc/post-images/DSC04436.JPG" alt="">
+            
+            <!-- <img class="card-img-top" loading="lazy" src="https://wherelse.ccDSC04436.JPG"> -->
+            <div class="card-body">
+              <!-- <h5 class="card-title">标题，我那边是去掉的，但是 CSS 里有</h5> -->
+              <p class="card-text"><small class="text-gray-400">合肥 | a6300 | 2022</small></p><!-- 时间、地点什么的，随你 -->
+            </div>
+          </div>
+          
+          
+        </div>
+
+      </div>
+    </div>
+
+    <footer class="py-12 text-center px-4 md:px-0" v-pre>
+  <a href="/atom.xml" target="_blank">RSS
+</a> | Powered by <a href="https://github.com/getgridea/gridea" 
+target="_blank">Gridea</a> &nbsp;&nbsp;
+<br>
+©2020 Wherelse All Right Reserved 
+</footer>
+
+
+    <!-- Back to top -->
+    <div
+      class="fixed right-0 bottom-0 mb-6 mr-4 shadow w-12 h-12 rounded-full flex justify-center items-center z-10 cursor-pointer bg-white hover:shadow-lg transition-all dark:bg-gray-500 dark:text-gray-200"
+      @click="backToUp" v-show="scrolled">
+       <i class="ri-arrow-up-circle-fill"></i>
+    </div>
+  </div>
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+  <!-- Background of PhotoSwipe. 
+        It's a separate element as animating opacity is faster than rgba(). -->
+  <div class="pswp__bg">
+  </div>
+  <!-- Slides wrapper with overflow:hidden. -->
+  <div class="pswp__scroll-wrap">
+    <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+    <div class="pswp__container">
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+    </div>
+    <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+    <div class="pswp__ui pswp__ui--hidden">
+      <div class="pswp__top-bar">
+        <!--  Controls are self-explanatory. Order can be changed. -->
+        <div class="pswp__counter">
+        </div>
+        <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+        <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+        <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+        <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+        <!-- element will get class pswp__preloader--active when preloader is running -->
+        <div class="pswp__preloader">
+          <div class="pswp__preloader__icn">
+            <div class="pswp__preloader__cut">
+              <div class="pswp__preloader__donut">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+        <div class="pswp__share-tooltip">
+        </div>
+      </div>
+      <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+      </button>
+      <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+      </button>
+      <div class="pswp__caption">
+        <div class="pswp__caption__center">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script> -->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script> -->
+  <script src="https://wherelse.cc/media/scripts/vue.min.js"></script>
+  <script src="https://wherelse.cc/media/scripts/main.js"></script>
+ <script>
+    //拿到预览框架，也就是上面的html代码
+    var pswpElement = document.querySelectorAll(".pswp")[0];
+    //定义图片数组变量
+    var imgitems;
+    /**
+     * 用于显示预览界面
+     * @param index 图片数组下标
+     */
+    function viewImg(index) {
+      //其它选项这里不做过多阐述，详情见官网
+      var pswpoptions = {
+        index: parseInt(index, 10), // 开始幻灯片索引。0是第一张幻灯片。必须是整数，而不是字符串。
+        bgOpacity: 0.7, // 背景透明度，0-1
+        maxSpreadZoom: 3, // 缩放级别，不要太大
+      };
+      //初始化并打开PhotoSwipe，pswpElement对应上面预览框架，PhotoSwipeUI_Default为皮肤，imgitems为图片数组，pswpoptions为选项
+      var gallery = new PhotoSwipe(
+        pswpElement,
+        PhotoSwipeUI_Default,
+        imgitems,
+        pswpoptions
+      );
+      gallery.init();
+    }
+    /**
+     * 用于添加图片点击事件
+     * @param img 图片元素
+     * @param index 所属下标（在imgitems中的位置）
+     */
+    function addImgClick(img, index) {
+      img.onclick = function () {
+        viewImg(index);
+      };
+    }
+    /**
+     * 轮询所有图片，获取src、width、height等数据，加入imgitems，并给图片元素添加事件
+     * 最好在onload中执行该方法，本站因放在最底部，所以直接初始化
+     * 异步加载图片可在图片元素创建完成后调用此方法
+     */
+    function initImg() {
+      //重置图片数组
+      imgitems = [];
+      //查找class:markdown 下的所有img元素并遍历
+      var imgs = document.querySelectorAll(".card-columns img");
+      for (var i = 0; i < imgs.length; i++) {
+        var img = imgs[i];
+        //本站相册初始为loading图片，真实图片放在data-src
+        var ds = img.getAttribute("src");
+        //创建image对象，用于获取图片宽高
+        var imgtemp = new Image();
+        //判断是否存在data-src
+        if (ds != null && ds.length > 0) {
+          imgtemp.src = ds;
+        } else {
+          imgtemp.src = img.src;
+        }
+        //判断是否存在缓存
+        if (imgtemp.complete) {
+          var imgobj = {
+            src: imgtemp.src,
+            w: imgtemp.width,
+            h: imgtemp.height,
+          };
+          imgitems[i] = imgobj;
+          addImgClick(img, i);
+        } else {
+          // console.log("进来了2");
+          imgtemp.index = i;
+          imgtemp.img = img;
+          imgtemp.onload = function () {
+            var imgobj = {
+              src: this.src,
+              w: this.width,
+              h: this.height,
+            };
+            //不要使用push，因为onload前后顺序会不同
+            imgitems[this.index] = imgobj;
+            //添加点击事件
+            addImgClick(this.img, this.index);
+          };
+        }
+      }
+    }
+    //初始化
+    initImg();
+  </script>
+
+</body>
+
+</html>

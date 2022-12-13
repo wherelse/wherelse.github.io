@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Caddy2安装与托管静态博客 -
+    Wherelse Blog</title>
+<meta name="ThemeName" content="Gridea Theme Rocky by EryouHao" />
+<meta name="referrer" content="always" />
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<link rel="manifest" href="/site.webmanifest">
+<!-- <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet preload" as="style"> -->
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"> -->
+<!-- <link rel="stylesheet" href="https://cdn.staticfile.org/animate.css/3.7.2/animate.min.css" as="style" /> -->
+<link href="/media/css/remixicon.css" rel="stylesheet" as="style">
+<link rel="stylesheet" href="/media/css/tailwind.css">
+<link rel="stylesheet" href="/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Caddy2安装与托管静态博客 -
+    Wherelse Blog - Atom Feed" href="/atom.xml">
+
+  
+  <script defer src="https://www.googletagmanager.com/gtag/js?id=G-4449R7TQN5"></script>
+  <script>
+  var host = window.location.hostname;
+  if(host != "localhost")
+  {
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4449R7TQN5');
+  }
+  </script>
+    
+
+  <!-- <title name="Caddy2安装与托管静态博客"> </title> -->
+  <meta name="socialText" content="记录学习与折腾，网络，博客，嵌入式相关；Record learning and toss, network, blog, embedded related" />
+  <meta name="description" content="Caddy2 installation and hosting of static blogs
+
+Caddy2安装
+以下操作均为ubuntu环境
+源安装(推荐)
+sudo apt install -y debian-keyring debi..." />
+  <meta name="referrer" content="always" />
+  <link rel="canonical" href="https://wherelse.cc/post/Caddy2-installation-hosting-of-static-blogs/" />
+  <link rel="preconnect" href="https://cdn.staticfile.org" />
+  <script src="https://wherelse.cc/media/scripts/photoswipe.min.js"></script>
+  <script src="https://wherelse.cc/media/scripts/photoswipe-ui-default.min.js"></script>
+  <link rel="stylesheet" href="https://wherelse.cc/media/css/photoswipe.css" as="style" />
+  <link rel="stylesheet" href="https://wherelse.cc/media/css/default-skin.css" as="style" />
+  <!-- Code Highlight -->
+  
+  <script src="https://wherelse.cc/media/prism.js"></script>
+  <script>
+    Prism.highlightAll();
+  </script>
+  
+  
+  <link rel="stylesheet preload"
+    href="https://wherelse.cc/media/css/prism-github.css"
+    as="style" />
+  
+</head>
+
+<body>
+  <div class="antialiased flex flex-col min-h-screen" id="app">
+    <a href="https://wherelse.cc"
+      class="fixed top-0 left-0 mt-4 bg-black text-white dark:text-gray-700 dark:bg-yellow-50 dark:hover:bg-black dark:hover:text-white inline-flex p-2 pl-8 hover:text-gray-700 hover:bg-yellow-50 font-bold z-10 transition-fast animated fadeInLeft">
+      Wherelse Blog
+    </a>
+    <div class="max-w-4xl w-full mx-auto">
+      <div
+        class="shadow-box bg-white dark:bg-gray-600 rounded-lg pt-32 md:pt-32 px-4 md:px-8 pb-8 animated fadeIn mb-8">
+        <h1 class="text-5xl font-semibold leading-normal pb-8 mb-8 border-b-8 border-gray-700">
+          Caddy2安装与托管静态博客
+        </h1>
+        
+        <div class="mb-8 flex flex-wrap">
+          <div class="text-gray-400 text-sm mr-4">
+            2021-01-17 · 8 min read
+          </div>
+          
+          <a href="https://wherelse.cc/tag/bVOkvqw2z/"
+            class="text-gray-700 text-sm border-b-2 border-dotted border-gray-200 hover:border-gray-600 transition-all duration-100 inline-flex mr-2">
+            <i class="ri-hashtag"></i>
+            笔记
+          </a>
+          
+          <a href="https://wherelse.cc/tag/Hg2wOF7pj/"
+            class="text-gray-700 text-sm border-b-2 border-dotted border-gray-200 hover:border-gray-600 transition-all duration-100 inline-flex mr-2">
+            <i class="ri-hashtag"></i>
+            网络
+          </a>
+          
+        </div>
+        <div class="markdown mb-16" v-pre>
+          <p>Caddy2 installation and hosting of static blogs</p>
+<!-- more -->
+<h2 id="caddy2安装">Caddy2安装</h2>
+<p>以下操作均为ubuntu环境</p>
+<h3 id="源安装推荐">源安装(推荐)</h3>
+<pre><code class="language-shell">sudo apt install -y debian-keyring debian-archive-keyring apt-transport-https 
+curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/cfg/gpg/gpg.155B6D79CA56EA34.key' | sudo apt-key add -
+curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/cfg/setup/config.deb.txt?distro=debian&amp;version=any-version' | sudo tee -a /etc/apt/sources.list.d/caddy-stable.list
+sudo apt update
+sudo apt install caddy
+</code></pre>
+<p>安装完成后，在命令窗口输入<code>caddy</code>，可以查看caddy相关的命令。</p>
+<pre><code class="language-shell">usage:
+ caddy &lt;command&gt; [&lt;args...&gt;]
+
+commands:
+ adapt           Adapts a configuration to Caddy's native JSON
+ build-info      Prints information about this build
+ environ         Prints the environment
+ file-server     Spins up a production-ready file server
+ fmt             Formats a Caddyfile
+ hash-password   Hashes a password and writes base64
+ help            Shows help for a Caddy subcommand
+ list-modules    Lists the installed Caddy modules
+ reload          Changes the config of the running Caddy instance
+ reverse-proxy   A quick and production-ready reverse proxy
+ run             Starts the Caddy process and blocks indefinitely
+ start           Starts the Caddy process in the background and then returns
+ stop            Gracefully stops a started Caddy process
+ trust           Installs a CA certificate into local trust stores
+ untrust         Untrusts a locally-trusted CA certificate
+ validate        Tests whether a configuration file is valid
+ version         Prints the version
+</code></pre>
+<h3 id="下载安装并手动注册linux-service">下载安装并手动注册linux service</h3>
+<p>首先到官网下载<a href="https://caddyserver.com/download">Caddy2</a>，然后将下载的文件改名为caddy后上传至服务器。</p>
+<pre><code class="language-shell">sudo mv caddy /usr/bin/
+caddy version #测试是否正常运行
+sudo groupadd --system caddy
+sudo useradd --system \
+    --gid caddy \
+    --create-home \
+    --home-dir /var/lib/caddy \
+    --shell /usr/sbin/nologin \
+    --comment &quot;Caddy web server&quot; \
+    caddy
+</code></pre>
+<p>下载<a href="https://github.com/caddyserver/dist/blob/master/init/caddy.service">caddy.service</a>文件，并移动到<code>/etc/systemd/system/caddy.service</code>。然后可以通过以下指令配置caddy运行状态：</p>
+<pre><code class="language-shell">sudo systemctl daemon-reload #重载配置
+sudo systemctl enable caddy    #启用caddy
+sudo systemctl start caddy     #开启caddy
+sudo systemctl reload caddy     #应用所有配置文件修改
+sudo systemctl status caddy     #查看caddy状态
+sudo systemctl stop caddy       #停止caddy
+</code></pre>
+<p>使用官方服务文件时，caddy输出将重定向到<code>journalctl</code></p>
+<pre><code class="language-shell">journalctl -u caddy --no-pager | less
+</code></pre>
+<h2 id="编辑配置文件">编辑配置文件</h2>
+<p>Caddy2与Caddy1不同，开始使用json作为默认的配置文件，但是仍然可以使用Caddyfile进行配置，后续内容均使用Caddyfile。默认Caddyfile路径为<code>/etc/caddy</code>，使用vi或nano编辑该文件，若无该文件则手动创建。</p>
+<pre><code class="language-shell">cd /etc/caddy
+touch Caddyfile #若目录下无配置文件
+sudo nano Caddyfile
+</code></pre>
+<p>在配置文件填写以下内容：</p>
+<pre><code class="language-yaml">your domain {
+        root * /root/deploy #你需要发布的文件路径
+        file_server
+}
+</code></pre>
+<p>这样网站就可以跑起来了，但是还没有配置 HTTPS，自动的HTTPS是个人使用Caddy的最大优势。</p>
+<h3 id="auto-https">Auto-HTTPS</h3>
+<p>Caddy的Auto-HTTPS验证有几种方法，分为HTTP验证、TLS-ALPN验证和DNS验证。</p>
+<h3 id="http验证与tls-alpn验证">HTTP验证与TLS-ALPN验证</h3>
+<p>这两种验证方式分别需要80端口和443端口没有被其他服务占用，可被Caddy使用。<br>
+这两种验证的配置方式较为简单，仅需要在配置文件中添加：</p>
+<pre><code class="language-yaml">tls xxxxx@xxx.com #你的邮箱
+</code></pre>
+<p>就可以实现自动HTTPS。<br>
+配置完成后的完整配置：</p>
+<pre><code class="language-yaml">your domain {
+        root * /root/deploy #你需要发布的文件路径
+        file_server
+        tls xxxxx@xxx.com  #你的邮箱
+}
+</code></pre>
+<h3 id="dns-验证">DNS 验证</h3>
+<p>以Cloudflare为DNS托管服务商为例。首先去Cloudflare控制台,选择<code>站点-&gt;获取您的 API 令牌-&gt;API令牌-&gt;创建令牌-&gt;编辑区域DNS-&gt;使用模板</code>，选择相关配置后，创建令牌，复制并记录令牌。在Caddyfile的网站配置中添加一下语句。</p>
+<pre><code class="language-yaml">tls {
+    dns cloudflare $your_token 
+}
+</code></pre>
+<p>配置完成后的完整配置：</p>
+<pre><code class="language-yaml">your domain {
+        root * /root/deploy #你需要发布的文件路径
+        file_server
+        tls {
+            dns cloudflare $your_token 
+        }
+}
+</code></pre>
+<p>Cloudflare的DNS验证需要Caddy的验证插件，而源安装的版本是不带验证插件的，需要对caddy源文件进行替换，首先去官网下载预编译插件版本源文件，注意选择插件，运行平台后下载。<br>
+<img src="https://wherelse.cc/post-images/1610935077456.jpg" alt="" loading="lazy"><br>
+下载后上传至服务器，并移动源文件至<code>/usr/bin/</code>目录下。</p>
+<pre><code class="language-shell">sudo mv caddy /usr/bin/
+chmod +x /usr/bin/caddy #赋可执行权限
+</code></pre>
+<p>重启Caddy，并运行<code>caddy list-modules</code>，查看插件是否已在已安装列表中。<br>
+<img src="https://wherelse.cc/post-images/1610935520714.jpg" alt="" loading="lazy"><br>
+这里就完成了基于DNS验证的Auto-HTTPS的配置。<br>
+<strong>关于Auto-HTTPS更详细进一步的配置参考请官方文档。</strong></p>
+<h2 id="进一步配置">进一步配置</h2>
+<p>Caddyfile 支持类似代码中函数一样的配置片段，可以在任意位置被 import引入，且可以传递参数，下面分别配置一部分配置片段。<br>
+<strong>启用HTHS</strong> ( HTTP Strict Transport Security，HTTP严格传输安全 ), 它告诉浏览器只能通过HTTPS访问当前资源，而不是HTTP：</p>
+<pre><code class="language-yaml;">(HSTS) {
+    # HSTS (最大时长63072000 seconds)
+    header / Strict-Transport-Security &quot;max-age=63072000&quot;
+}
+</code></pre>
+<p><strong>错误处理</strong><br>
+处理404错误页面，指向网站根目录的404页面：</p>
+<pre><code class="language-yaml">(ERROR_HANDLE) {
+        handle_errors {
+                @404 {
+                        expression {http.error.status_code} == 404
+                }
+                handle @404 {
+                        rewrite * /404.html
+                        file_server
+                }
+        }
+}
+</code></pre>
+<p><strong>开启并配置log</strong></p>
+<pre><code class="language-yaml">(LOG) {
+    log {
+        output file &quot;{args.0}&quot; {
+                roll_size     500MiB #滚动存储大小最大500MiB
+                roll_local_time     #使用服务器本地时间
+                roll_keep     20    #保存20个版本的滚动log
+                roll_keep_for 30d #滚动保存时长30天
+        }
+    }
+}
+</code></pre>
+<p>其中<code>{args.0}</code>为通过参数传递的log文件名信息。</p>
+<p><strong>配置TLS使其更安全</strong></p>
+<pre><code class="language-yaml">(TLS_CONFIG) {
+    # TLS 配置采用 https://mozilla.github.io/server-side-tls/ssl-config-generator/ 生成
+    # Due to a lack of DHE support, you -must- use an ECDSA cert to support IE 11 on Windows 7
+    protocols tls1.2 tls1.3
+    ciphers TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256 TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384 TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256 TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256
+}
+</code></pre>
+<p><strong>聚合为通用配置</strong></p>
+<pre><code class="language-yaml">(GENERAL_CONFIG) {
+        # 使用HTTP验证或TLS-ALPN验证
+        tls xxxxxx@xxx.com {
+            import TLS_CONFIG    
+        }
+        # HSTS
+        import HSTS
+        # 压缩支持
+        encode zstd gzip
+        # 错误处理
+        import ERROR_HANDLE
+}
+</code></pre>
+<p><strong>配置全局设置</strong><br>
+尝试在全局设置中开启HTTP3支持</p>
+<pre><code class="language-yaml">{
+        servers :443 {
+                protocol {
+                                experimental_http3
+                } 
+        }
+}
+</code></pre>
+<h2 id="完善最终配置文件">完善最终配置文件</h2>
+<pre><code class="language-yaml">(TLS_CONFIG) {
+    # TLS 配置采用 https://mozilla.github.io/server-side-tls/ssl-config-generator/ 生成
+    # Due to a lack of DHE support, you -must- use an ECDSA cert to support IE 11 on Windows 7
+    protocols tls1.2 tls1.3
+    ciphers TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256 TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384 TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256 TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256
+}
+
+(LOG) {
+    log {
+        output file &quot;{args.0}&quot; {
+                roll_size     500MiB
+                roll_local_time
+                roll_keep     20
+                roll_keep_for 30d
+        }
+    }
+}
+
+
+(HSTS) {
+   # HSTS (最大时长63072000 seconds)
+    header / Strict-Transport-Security &quot;max-age=63072000&quot;
+}
+
+(ERROR_HANDLE) {
+        handle_errors {
+                @404 {
+                        expression {http.error.status_code} == 404
+                }
+                handle @404 {
+                        rewrite * /404.html
+                        file_server
+                }
+        }
+}
+
+(GENERAL_CONFIG) {
+     # 使用HTTP验证或TLS-ALPN验证
+        tls xxxxxx@xxx.com {
+            import TLS_CONFIG    
+        }
+        # HSTS
+        import HSTS
+        # 压缩支持
+        encode zstd gzip
+        # 错误处理
+        import ERROR_HANDLE
+}
+
+{
+        servers :443 {
+                protocol {
+                                experimental_http3
+                } 
+        }
+}
+
+example.com {
+        # Set this path to your site's directory.
+        root * /root/deploy #替换为你需要发布的文件路径
+        file_server
+        import LOG &quot;/root/deploy/logs/example.com.log&quot; #替换为你需要的文件路径和文件名
+        import GENERAL_CONFIG
+}
+# 引入其他的站点配置
+import /etc/caddy/*.caddy
+</code></pre>
+<h2 id="启动与运行">启动与运行</h2>
+<p>首先使用<code>caddy validate</code>命令，验证配置文件语法有无错误。</p>
+<pre><code class="language-shell">caddy validate --config /etc/caddy/Caddyfile
+</code></pre>
+<p>停止并重新启动caddy</p>
+<pre><code class="language-shell">caddy stop
+caddy start
+</code></pre>
+<p>或者</p>
+<pre><code class="language-shell">caddy reload --config /etc/caddy/Caddyfile
+</code></pre>
+<p>将静态网站内容上传至发布目录，配置防火墙端口放行后，网站应该就可以访问了。</p>
+
+        </div>
+
+        <!-- copyright -->
+        <div class="copyright">
+          <div class="container">
+            <p><small class="text-gray-400">
+                The copyright of the articles on this website is owned by me. Without consent, it is not allowed to copy without permission. Reasonable reprints are welcome to indicate the source of the quotation. Please leave a message for reprinting pictures. The content of the article is only used for technical research and exploration, and shall not be used for illegal purposes.
+             </small></p>
+          </div>
+        </div>
+
+        <div class="text-center text-gray-300">
+          
+          <span id="/post/Caddy2-installation-hosting-of-static-blogs/" class="leancloud_visitors views-counter meta-info">
+            <a class="text-center">📋阅读量:</a>
+            <span id="twikoo_visitors">0</span>
+          </span>
+          
+        </div>
+      </div>
+
+      
+
+      
+        <button type="button" class="collapsible">
+          <i class="ri-message-2-line"></i>
+        </button>
+        <div class="tcomment rounded-lg px-4 py-4">
+          <div id="tcomment"></div>
+        </div>  
+      
+
+      <footer class="py-12 text-center px-4 md:px-0" v-pre>
+  <a href="/atom.xml" target="_blank">RSS
+</a> | Powered by <a href="https://github.com/getgridea/gridea" 
+target="_blank">Gridea</a> &nbsp;&nbsp;
+<br>
+©2020 Wherelse All Right Reserved 
+</footer>
+
+    </div>
+
+
+    <!-- TOC Container -->
+    <div id="toc"
+      class="fixed right-0 bottom-0 mb-20 mr-6 shadow w-12 h-12 rounded-lg flex justify-center items-center z-10 cursor-pointer bg-white dark:bg-gray-500 dark:text-gray-200 hover:shadow-lg transition-all animated fadeInRight"
+      @click="showToc = true">
+      <i class="ri-menu-line font-bold"></i>
+    </div>
+
+    <div
+      class="fixed right-0 top-0 bottom-0 overflow-y-auto w-64 rounded-lg p-4 m-4  shadow-md bg-white dark:bg-gray-800 p-4 border-l border-gray-100 dark:border-gray-600 z-10 transition-fast"
+      :class="{ '-mr-64': !showToc }">
+      <div class="flex mb-4 justify-end">
+        <div
+          class="w-8 h-8 inline-flex justify-center items-center rounded-full cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-fast"
+          @click="showToc = false">
+          <i class="ri-close-circle-fill"></i>
+        </div>
+      </div>
+      <div class="post-toc-container"><ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#caddy2%E5%AE%89%E8%A3%85">Caddy2安装</a>
+<ul>
+<li><a href="#%E6%BA%90%E5%AE%89%E8%A3%85%E6%8E%A8%E8%8D%90">源安装(推荐)</a></li>
+<li><a href="#%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85%E5%B9%B6%E6%89%8B%E5%8A%A8%E6%B3%A8%E5%86%8Clinux-service">下载安装并手动注册linux service</a></li>
+</ul>
+</li>
+<li><a href="#%E7%BC%96%E8%BE%91%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">编辑配置文件</a>
+<ul>
+<li><a href="#auto-https">Auto-HTTPS</a></li>
+<li><a href="#http%E9%AA%8C%E8%AF%81%E4%B8%8Etls-alpn%E9%AA%8C%E8%AF%81">HTTP验证与TLS-ALPN验证</a></li>
+<li><a href="#dns-%E9%AA%8C%E8%AF%81">DNS 验证</a></li>
+</ul>
+</li>
+<li><a href="#%E8%BF%9B%E4%B8%80%E6%AD%A5%E9%85%8D%E7%BD%AE">进一步配置</a></li>
+<li><a href="#%E5%AE%8C%E5%96%84%E6%9C%80%E7%BB%88%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">完善最终配置文件</a></li>
+<li><a href="#%E5%90%AF%E5%8A%A8%E4%B8%8E%E8%BF%90%E8%A1%8C">启动与运行</a></li>
+</ul>
+</li>
+</ul>
+</div>
+    </div>
+
+    <!-- Back to top -->
+    <div
+      class="fixed right-0 bottom-0 mb-4 mr-6 shadow w-12 h-12 rounded-lg flex justify-center items-center z-10 cursor-pointer bg-white hover:shadow-lg transition-all dark:bg-gray-500 dark:text-gray-200"
+      @click="backToUp" v-show="scrolled">
+      <i class="ri-arrow-up-circle-fill"></i>
+    </div>
+  </div>
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+  <!-- Background of PhotoSwipe. 
+        It's a separate element as animating opacity is faster than rgba(). -->
+  <div class="pswp__bg">
+  </div>
+  <!-- Slides wrapper with overflow:hidden. -->
+  <div class="pswp__scroll-wrap">
+    <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+    <div class="pswp__container">
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+    </div>
+    <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+    <div class="pswp__ui pswp__ui--hidden">
+      <div class="pswp__top-bar">
+        <!--  Controls are self-explanatory. Order can be changed. -->
+        <div class="pswp__counter">
+        </div>
+        <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+        <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+        <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+        <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+        <!-- element will get class pswp__preloader--active when preloader is running -->
+        <div class="pswp__preloader">
+          <div class="pswp__preloader__icn">
+            <div class="pswp__preloader__cut">
+              <div class="pswp__preloader__donut">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+        <div class="pswp__share-tooltip">
+        </div>
+      </div>
+      <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+      </button>
+      <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+      </button>
+      <div class="pswp__caption">
+        <div class="pswp__caption__center">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>-->
+  <script src="https://wherelse.cc/media/scripts/vue.min.js"></script>
+  <script src="https://wherelse.cc/media/scripts/main.js"></script>
+
+  <!--根据内容动态加载-->
+  <script type="text/javascript">
+    window.onload = function () {
+      //根据内容动态加载mermiad
+      if (document.getElementsByClassName("language-mermaid").length != 0) {
+        console.log("find mermaid")
+        for (let x of document.getElementsByClassName("language-mermaid")) {
+          if (x.nodeName == "CODE") {
+            let m = document.createElement("div");
+            m.classList.add("mermaid");
+            m.textContent = x.textContent;
+            x.parentNode.insertAdjacentElement("beforebegin", m);
+          }
+        }
+        let script = document.createElement('script');
+        defer = "defer";
+        script.src =
+          "https://wherelse.cc/media/scripts/mermaid.min.js";
+        document.body.append(script);
+        script.onload = function () {
+          mermaid.initialize({
+            startOnLoad: false
+          });
+          mermaid.init();
+          console.log("mermaid init done");
+        }
+      }
+
+      //bilibili 视频支持
+      var content = document.getElementsByClassName("language-bilibili")[0];
+      if (content != null) {
+        var m = document.createElement("div");
+        m.classList.add("bilibili-video");
+        m.innerHTML = content.textContent;
+        content.parentNode.insertAdjacentElement("beforeend", m);
+      }
+      //katex自适应加载
+      if (document.getElementsByClassName("katex").length != 0) {
+        let script = document.createElement('script');
+        script.defer = "defer"
+        script.src =
+          "https://wherelse.cc/media/scripts/katex.min.js";
+        document.body.append(script);
+        script = document.createElement('script');
+        script.defer = "defer"
+        script.src =
+          "https://wherelse.cc/media/scripts/copy-tex.min.js";
+        document.body.append(script);
+        let link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.defer = "defer"
+        link.href =
+          "https://wherelse.cc/media/css/katex.min.css";
+        document.body.append(link);
+        link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.defer = "defer"
+        link.href =
+          "https://wherelse.cc/media/css/copy-tex.css";
+        document.body.append(link);
+      }
+
+      script = document.createElement('script');
+      script.defer = "defer"
+      script.src =
+        "https://cdn.staticfile.org/twikoo/1.6.7/twikoo.all.min.js";
+      document.body.append(script);
+      script.onload = function () {
+        let scripts = document.createElement('script');
+        scripts.append(document.createTextNode(
+          " twikoo.init({envId: \"https://twikoo.vlieo.com\",el: \"#tcomment\",});"));
+        var parentDiv = document.getElementById("toc").parentNode;
+        var sp = document.getElementById("toc");
+        parentDiv.insertBefore(scripts, sp);
+      }
+    }
+  </script>
+  <script>
+    comment_collapse();
+  </script>
+
+ <script>
+    //拿到预览框架，也就是上面的html代码
+    var pswpElement = document.querySelectorAll(".pswp")[0];
+    //定义图片数组变量
+    var imgitems;
+    /**
+     * 用于显示预览界面
+     * @param index 图片数组下标
+     */
+    function viewImg(index) {
+      //其它选项这里不做过多阐述，详情见官网
+      var pswpoptions = {
+        index: parseInt(index, 10), // 开始幻灯片索引。0是第一张幻灯片。必须是整数，而不是字符串。
+        bgOpacity: 0.7, // 背景透明度，0-1
+        maxSpreadZoom: 3, // 缩放级别，不要太大
+      };
+      //初始化并打开PhotoSwipe，pswpElement对应上面预览框架，PhotoSwipeUI_Default为皮肤，imgitems为图片数组，pswpoptions为选项
+      var gallery = new PhotoSwipe(
+        pswpElement,
+        PhotoSwipeUI_Default,
+        imgitems,
+        pswpoptions
+      );
+      gallery.init();
+    }
+    /**
+     * 用于添加图片点击事件
+     * @param img 图片元素
+     * @param index 所属下标（在imgitems中的位置）
+     */
+    function addImgClick(img, index) {
+      img.onclick = function () {
+        viewImg(index);
+      };
+    }
+    /**
+     * 轮询所有图片，获取src、width、height等数据，加入imgitems，并给图片元素添加事件
+     * 最好在onload中执行该方法，本站因放在最底部，所以直接初始化
+     * 异步加载图片可在图片元素创建完成后调用此方法
+     */
+    function initImg() {
+      //重置图片数组
+      imgitems = [];
+      //查找class:markdown 下的所有img元素并遍历
+      var imgs = document.querySelectorAll(".markdown img");
+      for (var i = 0; i < imgs.length; i++) {
+        var img = imgs[i];
+        //本站相册初始为loading图片，真实图片放在data-src
+        var ds = img.getAttribute("src");
+        //创建image对象，用于获取图片宽高
+        var imgtemp = new Image();
+        //判断是否存在data-src
+        if (ds != null && ds.length > 0) {
+          imgtemp.src = ds;
+        } else {
+          imgtemp.src = img.src;
+        }
+        //判断是否存在缓存
+        if (imgtemp.complete) {
+          var imgobj = {
+            src: imgtemp.src,
+            w: imgtemp.width,
+            h: imgtemp.height,
+          };
+          imgitems[i] = imgobj;
+          addImgClick(img, i);
+        } else {
+          // console.log("进来了2");
+          imgtemp.index = i;
+          imgtemp.img = img;
+          imgtemp.onload = function () {
+            var imgobj = {
+              src: this.src,
+              w: this.width,
+              h: this.height,
+            };
+            //不要使用push，因为onload前后顺序会不同
+            imgitems[this.index] = imgobj;
+            //添加点击事件
+            addImgClick(this.img, this.index);
+          };
+        }
+      }
+    }
+    //初始化
+    initImg();
+  </script>
+</body>
+
+</html>

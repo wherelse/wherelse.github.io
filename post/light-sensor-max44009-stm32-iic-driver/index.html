@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>亮度传感器MAX44009 STM32模拟IIC驱动 -
+    Wherelse Blog</title>
+<meta name="ThemeName" content="Gridea Theme Rocky by EryouHao" />
+<meta name="referrer" content="always" />
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<link rel="manifest" href="/site.webmanifest">
+<!-- <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet preload" as="style"> -->
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"> -->
+<!-- <link rel="stylesheet" href="https://cdn.staticfile.org/animate.css/3.7.2/animate.min.css" as="style" /> -->
+<link href="/media/css/remixicon.css" rel="stylesheet" as="style">
+<link rel="stylesheet" href="/media/css/tailwind.css">
+<link rel="stylesheet" href="/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="亮度传感器MAX44009 STM32模拟IIC驱动 -
+    Wherelse Blog - Atom Feed" href="/atom.xml">
+
+  
+  <script defer src="https://www.googletagmanager.com/gtag/js?id=G-4449R7TQN5"></script>
+  <script>
+  var host = window.location.hostname;
+  if(host != "localhost")
+  {
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4449R7TQN5');
+  }
+  </script>
+    
+
+  <!-- <title name="亮度传感器MAX44009 STM32模拟IIC驱动"> </title> -->
+  <meta name="socialText" content="记录学习与折腾，网络，博客，嵌入式相关；Record learning and toss, network, blog, embedded related" />
+  <meta name="description" content="MAX44009 driver for STM32 use software IIC
+
+当前程序运行环境：STM32F103C8T6
+IIC IO端口：PB10,PB11
+ADDR端口连接至GND
+
+IIC驱动文件：myiic.c
+#inc..." />
+  <meta name="referrer" content="always" />
+  <link rel="canonical" href="https://wherelse.cc/post/light-sensor-max44009-stm32-iic-driver/" />
+  <link rel="preconnect" href="https://cdn.staticfile.org" />
+  <script src="https://wherelse.cc/media/scripts/photoswipe.min.js"></script>
+  <script src="https://wherelse.cc/media/scripts/photoswipe-ui-default.min.js"></script>
+  <link rel="stylesheet" href="https://wherelse.cc/media/css/photoswipe.css" as="style" />
+  <link rel="stylesheet" href="https://wherelse.cc/media/css/default-skin.css" as="style" />
+  <!-- Code Highlight -->
+  
+  <script src="https://wherelse.cc/media/prism.js"></script>
+  <script>
+    Prism.highlightAll();
+  </script>
+  
+  
+  <link rel="stylesheet preload"
+    href="https://wherelse.cc/media/css/prism-github.css"
+    as="style" />
+  
+</head>
+
+<body>
+  <div class="antialiased flex flex-col min-h-screen" id="app">
+    <a href="https://wherelse.cc"
+      class="fixed top-0 left-0 mt-4 bg-black text-white dark:text-gray-700 dark:bg-yellow-50 dark:hover:bg-black dark:hover:text-white inline-flex p-2 pl-8 hover:text-gray-700 hover:bg-yellow-50 font-bold z-10 transition-fast animated fadeInLeft">
+      Wherelse Blog
+    </a>
+    <div class="max-w-4xl w-full mx-auto">
+      <div
+        class="shadow-box bg-white dark:bg-gray-600 rounded-lg pt-32 md:pt-32 px-4 md:px-8 pb-8 animated fadeIn mb-8">
+        <h1 class="text-5xl font-semibold leading-normal pb-8 mb-8 border-b-8 border-gray-700">
+          亮度传感器MAX44009 STM32模拟IIC驱动
+        </h1>
+        
+        <div class="mb-8 flex flex-wrap">
+          <div class="text-gray-400 text-sm mr-4">
+            2019-12-10 · 8 min read
+          </div>
+          
+          <a href="https://wherelse.cc/tag/-AWGj9akS/"
+            class="text-gray-700 text-sm border-b-2 border-dotted border-gray-200 hover:border-gray-600 transition-all duration-100 inline-flex mr-2">
+            <i class="ri-hashtag"></i>
+            编程
+          </a>
+          
+        </div>
+        <div class="markdown mb-16" v-pre>
+          <p>MAX44009 driver for STM32 use software IIC</p>
+<!-- more -->
+<p><strong>当前程序运行环境：STM32F103C8T6<br>
+IIC IO端口：PB10,PB11<br>
+ADDR端口连接至GND</strong></p>
+<figure data-type="image" tabindex="1"><img src="https://wherelse.cc/post-images/1575985397089.jpg" alt="" loading="lazy"></figure>
+<p>IIC驱动文件：myiic.c</p>
+<pre><code class="language-c">#include &quot;myiic.h&quot;
+#include &quot;delay.h&quot;
+
+//初始化IIC
+void IIC_Init(void)
+{			
+    GPIO_InitTypeDef GPIO_InitStructure;
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB , ENABLE); //使能GPIOB时钟
+
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10 | GPIO_Pin_11;
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; //推挽输出
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+    GPIO_Init(GPIOB, &amp;GPIO_InitStructure);
+    GPIO_SetBits(GPIOB, GPIO_Pin_10 | GPIO_Pin_11); //PB6,PB7 输出高，空闲状态
+}
+//产生IIC起始信号
+void IIC_Start(void)
+{
+	SDA_OUT();     //sda线输出
+	IIC_SDA=1;	  	  
+	IIC_SCL=1;
+	delay_us(4);
+ 	IIC_SDA=0;//START:when CLK is high,DATA change form high to low 
+	delay_us(4);
+	IIC_SCL=0;//钳住I2C总线，准备发送或接收数据 
+}	  
+
+void IIC_Stop(void)
+{
+	SDA_OUT();//sda线输出
+	IIC_SDA=0;
+ 	IIC_SCL=1;
+	delay_us(4);
+	IIC_SDA=1;//发送I2C总线结束信号
+	delay_us(4);							   	
+}
+//等待应答信号到来
+//返回值：1，接收应答失败
+//        0，接收应答成功
+u8 IIC_Wait_Ack(void)
+{
+	u8 ucErrTime=0;
+	SDA_IN();      //SDA设置为输入  
+	IIC_SDA=1;delay_us(1);	   
+	IIC_SCL=1;delay_us(1);	 
+	while(READ_SDA)
+	{
+		ucErrTime++;
+		if(ucErrTime&gt;250)
+		{
+			IIC_Stop();
+			return 1;
+		}
+	}
+	IIC_SCL=0;//时钟输出0 	   
+	return 0;  
+} 
+//产生ACK应答
+void IIC_Ack(void)
+{
+	IIC_SCL=0;
+	SDA_OUT();
+	IIC_SDA=0;
+	delay_us(2);
+	IIC_SCL=1;
+	delay_us(2);
+	IIC_SCL=0;
+}
+//不产生ACK应答		    
+void IIC_NAck(void)
+{
+	IIC_SCL=0;
+	SDA_OUT();
+	IIC_SDA=1;
+	delay_us(2);
+	IIC_SCL=1;
+	delay_us(2);
+	IIC_SCL=0;
+}					 				     
+//IIC发送一个字节
+//返回从机有无应答
+//1，有应答
+//0，无应答			  
+void IIC_Send_Byte(u8 txd)
+{                        
+    u8 t;   
+	SDA_OUT(); 	    
+    IIC_SCL=0;//拉低时钟开始数据传输
+    for(t=0;t&lt;8;t++)
+    {              
+        IIC_SDA=(txd&amp;0x80)&gt;&gt;7;
+        txd&lt;&lt;=1; 	  
+		delay_us(2);   //对TEA5767这三个延时都是必须的
+		IIC_SCL=1;
+		delay_us(2); 
+		IIC_SCL=0;	
+		delay_us(2);
+    }	 
+} 	    
+//读1个字节，ack=1时，发送ACK，ack=0，发送nACK   
+u8 IIC_Read_Byte(unsigned char ack)
+{
+	unsigned char i,receive=0;
+	SDA_IN();//SDA设置为输入
+    for(i=0;i&lt;8;i++ )
+	{
+        IIC_SCL=0; 
+        delay_us(2);
+		IIC_SCL=1;
+        receive&lt;&lt;=1;
+        if(READ_SDA)receive++;   
+		delay_us(2); 
+    }					 
+    if (!ack)
+        IIC_NAck();//发送nACK
+    else
+        IIC_Ack(); //发送ACK   
+    return receive;
+}
+
+
+</code></pre>
+<p>IIC驱动文件：myiic.h</p>
+<pre><code class="language-c">#ifndef __MYIIC_H
+#define __MYIIC_H
+#include &quot;sys.h&quot; 
+   	   		   
+//IO方向设置
+#define SDA_IN()  {GPIOB-&gt;CRH &amp;= 0xFFFF0FFF;GPIOB-&gt;CRH |= 0x00008000;}	//PB11输入模式
+#define SDA_OUT() {GPIOB-&gt;CRH &amp;= 0xFFFF0FFF;GPIOB-&gt;CRH |= 0x00003000;} //PB11输出模式
+//IO操作函数	 
+#define IIC_SCL    PBout(10) //SCL
+#define IIC_SDA    PBout(11) //SDA	 
+#define READ_SDA   PBin(11)  //输入SDA 
+
+//IIC所有操作函数
+void IIC_Init(void);                //初始化IIC的IO口				 
+void IIC_Start(void);				//发送IIC开始信号
+void IIC_Stop(void);	  			//发送IIC停止信号
+void IIC_Send_Byte(u8 txd);			//IIC发送一个字节
+u8 IIC_Read_Byte(unsigned char ack);//IIC读取一个字节
+u8 IIC_Wait_Ack(void); 				//IIC等待ACK信号
+void IIC_Ack(void);					//IIC发送ACK信号
+void IIC_NAck(void);				//IIC不发送ACK信号
+
+void IIC_Write_One_Byte(u8 daddr,u8 addr,u8 data);
+u8 IIC_Read_One_Byte(u8 daddr,u8 addr);	  
+#endif
+</code></pre>
+<p>MAX44009驱动文件：MAX44009.c</p>
+<pre><code class="language-c">#include &quot;MAX44009.h&quot;
+#include &quot;myiic.h&quot;
+#include &quot;delay.h&quot;
+
+void MAX44009_Init(void)
+{
+
+	IIC_Init(); //IIC初始化
+	MAX44009_WriteOneByte(MAX44009_REG_CFG, 0x03);				// Default mode: measurements performed every 800ms
+																// Auto range: CDR and integration time are automatically determined by
+																//             the internal autoranging circuitry of the IC
+	MAX44009_WriteOneByte(MAX44009_REG_INTE, MAX44009_INT_DISABLE);//关闭中断
+	MAX44009_WriteOneByte(MAX44009_REG_THT, MAX44009_IT_800ms);//积分时间800ms
+	MAX44009_WriteOneByte(MAX44009_REG_THU, 0xff);
+	MAX44009_WriteOneByte(MAX44009_REG_THL, 0x00);
+	MAX44009_WriteOneByte(0x02,0x80);//连续转换、手动模式、积分时间6.25MS
+}
+
+//在MAX44009指定地址读出一个数据
+//ReadAddr:开始读数的地址
+//返回值  :读到的数据
+u8 MAX44009_ReadOneByte(u8 ReadAddr)
+{
+	u8 temp = 0;
+	IIC_Start();
+
+	IIC_Send_Byte(MAX44009_ADDR);
+	IIC_Wait_Ack();
+
+	IIC_Send_Byte(ReadAddr);
+	IIC_Wait_Ack();
+
+	IIC_Start();
+	IIC_Send_Byte(MAX44009_ADDR+1); //进入接收模式
+	IIC_Wait_Ack();
+
+	temp = IIC_Read_Byte(0);
+
+	IIC_Stop(); //产生一个停止条件
+	return temp;
+}
+//在MAX44009指定地址写入一个数据
+//WriteAddr  :写入数据的目的地址
+//DataToWrite:要写入的数据
+void MAX44009_WriteOneByte(u8 WriteAddr, u8 DataToWrite)
+{
+	IIC_Start();
+	IIC_Send_Byte(MAX44009_ADDR);
+	IIC_Wait_Ack();
+
+	IIC_Send_Byte(WriteAddr);
+	IIC_Wait_Ack();
+
+	IIC_Send_Byte(DataToWrite); //发送字节
+	IIC_Wait_Ack();
+
+	IIC_Stop(); //产生一个停止条件
+}
+
+//在MAX44009里面读取流明值
+
+float MAX44009_ReadLux(void)
+{
+	u8 exponent=0, mantissa=0;
+	u8 High_Lux = 0, Low_Lux = 0;
+	float result=0;
+	High_Lux=MAX44009_ReadOneByte(0x03);
+	Low_Lux=MAX44009_ReadOneByte(0x04);
+	
+	exponent = (High_Lux &amp; 0xF0) &gt;&gt; 4;
+	mantissa = (High_Lux &amp; 0x0F) &lt;&lt; 4;
+	mantissa += Low_Lux &amp; 0x0F;
+	result=(float)(((0x00000001 &lt;&lt; exponent) * (float)mantissa) * 0.045);
+	return result;
+}
+//在MAX44009里面的指定地址开始写入长度为Len的数据
+//该函数用于写入16bit或者32bit的数据.
+//WriteAddr  :开始写入的地址
+//DataToWrite:数据数组首地址
+//Len        :要写入数据的长度2,4
+void MAX44009_WriteLenByte(u16 WriteAddr, u32 DataToWrite, u8 Len)
+{
+	u8 t;
+	for (t = 0; t &lt; Len; t++)
+	{
+		MAX44009_WriteOneByte(WriteAddr + t, (DataToWrite &gt;&gt; (8 * t)) &amp; 0xff);
+	}
+}
+
+//在MAX44009里面的指定地址开始读出长度为Len的数据
+//该函数用于读出16bit或者32bit的数据.
+//ReadAddr   :开始读出的地址
+//返回值     :数据
+//Len        :要读出数据的长度2,4
+u32 MAX44009_ReadLenByte(u16 ReadAddr, u8 Len)
+{
+	u8 t;
+	u32 temp = 0;
+	for (t = 0; t &lt; Len; t++)
+	{
+		temp &lt;&lt;= 8;
+		temp += MAX44009_ReadOneByte(ReadAddr + Len - t - 1);
+	}
+	return temp;
+}
+
+//在MAX44009里面的指定地址开始读出指定个数的数据
+//ReadAddr :开始读出的地址
+//pBuffer  :数据数组首地址
+//NumToRead:要读出数据的个数
+void MAX44009_Read(u16 ReadAddr, u8 *pBuffer, u16 NumToRead)
+{
+	while (NumToRead)
+	{
+		*pBuffer++ = MAX44009_ReadOneByte(ReadAddr++);
+		NumToRead--;
+	}
+}
+//在MAX44009里面的指定地址开始写入指定个数的数据
+//WriteAddr :开始写入的地址
+//pBuffer   :数据数组首地址
+//NumToWrite:要写入数据的个数
+void MAX44009_Write(u16 WriteAddr, u8 *pBuffer, u16 NumToWrite)
+{
+	while (NumToWrite--)
+	{
+		MAX44009_WriteOneByte(WriteAddr, *pBuffer);
+		WriteAddr++;
+		pBuffer++;
+	}
+}
+
+</code></pre>
+<p>MAX44009驱动文件：MAX44009.h</p>
+<pre><code class="language-c">#ifndef __MAX44009_H
+#define __MAX44009_H
+#include &quot;sys.h&quot;
+
+// Accuracy of the Lux value calculation
+//   0: reduced accuracy (slightly faster)
+//   1: maximum accuracy (slightly slower)
+#define MAX44009_ACCURACY 1
+
+// MAX44009 HAL
+#define MAX44009_I2C_PORT I2C1 // I2C port where the MAX44009 connected
+
+// Possible I2C device addresses
+#define MAX44009_ADDR_G ((uint8_t)0x4A) // A0 pin tied to GND //0100 1010
+#define MAX44009_ADDR_V ((uint8_t)0x4B) // A0 pin tied to VCC //0100 1011
+
+// Current I2C device address (depends on the pin A0 connection)
+#define MAX44009_ADDR (MAX44009_ADDR_G &lt;&lt; 1)
+//#define MAX44009_ADDR (0x94)
+// MAX44009 register definitions
+#define MAX44009_REG_INTS ((uint8_t)0x00) // Interrupt status
+#define MAX44009_REG_INTE ((uint8_t)0x01) // Interrupt enable
+#define MAX44009_REG_CFG ((uint8_t)0x02)  // Configuration
+#define MAX44009_REG_LUXH ((uint8_t)0x03) // Lux reading high byte
+#define MAX44009_REG_LUXL ((uint8_t)0x04) // Lux reading low byte
+#define MAX44009_REG_THU ((uint8_t)0x05)  // Upper threshold high byte
+#define MAX44009_REG_THL ((uint8_t)0x06)  // Lower threshold high byte
+#define MAX44009_REG_THT ((uint8_t)0x07)  // Threshold timer
+
+// MAX44009 interrupt status end configuration definitions
+#define MAX44009_INT_SET ((uint8_t)0x01)     // Interrupt is asserted
+#define MAX44009_INT_RESET ((uint8_t)0x00)   // Interrupt is deasserted
+#define MAX44009_INT_ENABLE ((uint8_t)0x01)  // Interrupt enabled
+#define MAX44009_INT_DISABLE ((uint8_t)0x00) // Interrupt disabled
+
+// MAX44009 CFG register bits
+
+#define MAX44009_CFG_CONT ((uint8_t)0x80)   // Continuous mode
+#define MAX44009_CFG_MANUAL ((uint8_t)0x40) // Manual configuration
+
+// Current division ratio (CDR)
+#define MAX44009_CDR_NORM ((uint8_t)0x00) // All photodiode current goes to the ADC
+#define MAX44009_CDR_DIV8 ((uint8_t)0x08) // Only 1/8 of the photodiode current goes to the ADC
+
+// Integration time
+#define MAX44009_IT_800ms ((uint8_t)0x00)  // 800ms
+#define MAX44009_IT_400ms ((uint8_t)0x01)  // 400ms
+#define MAX44009_IT_200ms ((uint8_t)0x02)  // 200ms
+#define MAX44009_IT_100ms ((uint8_t)0x03)  // 100ms
+#define MAX44009_IT_50ms ((uint8_t)0x04)   // 50ms
+#define MAX44009_IT_25ms ((uint8_t)0x05)   // 25ms
+#define MAX44009_IT_12d5ms ((uint8_t)0x06) // 12.5ms
+#define MAX44009_IT_6d25ms ((uint8_t)0x07) // 6.25ms
+
+// Bit mask for MODE and RANGE bits
+#define MAX44009_MASK_CFG_MODE ((uint8_t)0xC0)
+
+// Bit mask for CDR bit and integration time
+#define MAX44009_MASK_CDR_IT ((uint8_t)0x0F)
+
+// Value indicating overrange condition (used in return of GetLux() function)
+#define MAX44009_OVERRANGE ((uint32_t)1000000000U)
+
+void MAX44009_Init(void);
+u8 MAX44009_ReadOneByte(u8 ReadAddr);
+void MAX44009_WriteOneByte(u8 WriteAddr,u8 DataToWrite);
+void MAX44009_WriteLenByte(u16 WriteAddr,u32 DataToWrite,u8 Len);
+u32 MAX44009_ReadLenByte(u16 ReadAddr,u8 Len);
+void MAX44009_Read(u16 ReadAddr,u8 *pBuffer,u16 NumToRead);
+void MAX44009_Write(u16 WriteAddr,u8 *pBuffer,u16 NumToWrite);
+float MAX44009_ReadLux(void);
+
+#endif
+</code></pre>
+
+        </div>
+
+        <!-- copyright -->
+        <div class="copyright">
+          <div class="container">
+            <p><small class="text-gray-400">
+                The copyright of the articles on this website is owned by me. Without consent, it is not allowed to copy without permission. Reasonable reprints are welcome to indicate the source of the quotation. Please leave a message for reprinting pictures. The content of the article is only used for technical research and exploration, and shall not be used for illegal purposes.
+             </small></p>
+          </div>
+        </div>
+
+        <div class="text-center text-gray-300">
+          
+          <span id="/post/light-sensor-max44009-stm32-iic-driver/" class="leancloud_visitors views-counter meta-info">
+            <a class="text-center">📋阅读量:</a>
+            <span id="twikoo_visitors">0</span>
+          </span>
+          
+        </div>
+      </div>
+
+      
+
+      
+        <button type="button" class="collapsible">
+          <i class="ri-message-2-line"></i>
+        </button>
+        <div class="tcomment rounded-lg px-4 py-4">
+          <div id="tcomment"></div>
+        </div>  
+      
+
+      <footer class="py-12 text-center px-4 md:px-0" v-pre>
+  <a href="/atom.xml" target="_blank">RSS
+</a> | Powered by <a href="https://github.com/getgridea/gridea" 
+target="_blank">Gridea</a> &nbsp;&nbsp;
+<br>
+©2020 Wherelse All Right Reserved 
+</footer>
+
+    </div>
+
+
+    <!-- TOC Container -->
+    <div id="toc"
+      class="fixed right-0 bottom-0 mb-20 mr-6 shadow w-12 h-12 rounded-lg flex justify-center items-center z-10 cursor-pointer bg-white dark:bg-gray-500 dark:text-gray-200 hover:shadow-lg transition-all animated fadeInRight"
+      @click="showToc = true">
+      <i class="ri-menu-line font-bold"></i>
+    </div>
+
+    <div
+      class="fixed right-0 top-0 bottom-0 overflow-y-auto w-64 rounded-lg p-4 m-4  shadow-md bg-white dark:bg-gray-800 p-4 border-l border-gray-100 dark:border-gray-600 z-10 transition-fast"
+      :class="{ '-mr-64': !showToc }">
+      <div class="flex mb-4 justify-end">
+        <div
+          class="w-8 h-8 inline-flex justify-center items-center rounded-full cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-fast"
+          @click="showToc = false">
+          <i class="ri-close-circle-fill"></i>
+        </div>
+      </div>
+      <div class="post-toc-container"></div>
+    </div>
+
+    <!-- Back to top -->
+    <div
+      class="fixed right-0 bottom-0 mb-4 mr-6 shadow w-12 h-12 rounded-lg flex justify-center items-center z-10 cursor-pointer bg-white hover:shadow-lg transition-all dark:bg-gray-500 dark:text-gray-200"
+      @click="backToUp" v-show="scrolled">
+      <i class="ri-arrow-up-circle-fill"></i>
+    </div>
+  </div>
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+  <!-- Background of PhotoSwipe. 
+        It's a separate element as animating opacity is faster than rgba(). -->
+  <div class="pswp__bg">
+  </div>
+  <!-- Slides wrapper with overflow:hidden. -->
+  <div class="pswp__scroll-wrap">
+    <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+    <div class="pswp__container">
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+    </div>
+    <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+    <div class="pswp__ui pswp__ui--hidden">
+      <div class="pswp__top-bar">
+        <!--  Controls are self-explanatory. Order can be changed. -->
+        <div class="pswp__counter">
+        </div>
+        <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+        <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+        <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+        <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+        <!-- element will get class pswp__preloader--active when preloader is running -->
+        <div class="pswp__preloader">
+          <div class="pswp__preloader__icn">
+            <div class="pswp__preloader__cut">
+              <div class="pswp__preloader__donut">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+        <div class="pswp__share-tooltip">
+        </div>
+      </div>
+      <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+      </button>
+      <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+      </button>
+      <div class="pswp__caption">
+        <div class="pswp__caption__center">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>-->
+  <script src="https://wherelse.cc/media/scripts/vue.min.js"></script>
+  <script src="https://wherelse.cc/media/scripts/main.js"></script>
+
+  <!--根据内容动态加载-->
+  <script type="text/javascript">
+    window.onload = function () {
+      //根据内容动态加载mermiad
+      if (document.getElementsByClassName("language-mermaid").length != 0) {
+        console.log("find mermaid")
+        for (let x of document.getElementsByClassName("language-mermaid")) {
+          if (x.nodeName == "CODE") {
+            let m = document.createElement("div");
+            m.classList.add("mermaid");
+            m.textContent = x.textContent;
+            x.parentNode.insertAdjacentElement("beforebegin", m);
+          }
+        }
+        let script = document.createElement('script');
+        defer = "defer";
+        script.src =
+          "https://wherelse.cc/media/scripts/mermaid.min.js";
+        document.body.append(script);
+        script.onload = function () {
+          mermaid.initialize({
+            startOnLoad: false
+          });
+          mermaid.init();
+          console.log("mermaid init done");
+        }
+      }
+
+      //bilibili 视频支持
+      var content = document.getElementsByClassName("language-bilibili")[0];
+      if (content != null) {
+        var m = document.createElement("div");
+        m.classList.add("bilibili-video");
+        m.innerHTML = content.textContent;
+        content.parentNode.insertAdjacentElement("beforeend", m);
+      }
+      //katex自适应加载
+      if (document.getElementsByClassName("katex").length != 0) {
+        let script = document.createElement('script');
+        script.defer = "defer"
+        script.src =
+          "https://wherelse.cc/media/scripts/katex.min.js";
+        document.body.append(script);
+        script = document.createElement('script');
+        script.defer = "defer"
+        script.src =
+          "https://wherelse.cc/media/scripts/copy-tex.min.js";
+        document.body.append(script);
+        let link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.defer = "defer"
+        link.href =
+          "https://wherelse.cc/media/css/katex.min.css";
+        document.body.append(link);
+        link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.defer = "defer"
+        link.href =
+          "https://wherelse.cc/media/css/copy-tex.css";
+        document.body.append(link);
+      }
+
+      script = document.createElement('script');
+      script.defer = "defer"
+      script.src =
+        "https://cdn.staticfile.org/twikoo/1.6.7/twikoo.all.min.js";
+      document.body.append(script);
+      script.onload = function () {
+        let scripts = document.createElement('script');
+        scripts.append(document.createTextNode(
+          " twikoo.init({envId: \"https://twikoo.vlieo.com\",el: \"#tcomment\",});"));
+        var parentDiv = document.getElementById("toc").parentNode;
+        var sp = document.getElementById("toc");
+        parentDiv.insertBefore(scripts, sp);
+      }
+    }
+  </script>
+  <script>
+    comment_collapse();
+  </script>
+
+ <script>
+    //拿到预览框架，也就是上面的html代码
+    var pswpElement = document.querySelectorAll(".pswp")[0];
+    //定义图片数组变量
+    var imgitems;
+    /**
+     * 用于显示预览界面
+     * @param index 图片数组下标
+     */
+    function viewImg(index) {
+      //其它选项这里不做过多阐述，详情见官网
+      var pswpoptions = {
+        index: parseInt(index, 10), // 开始幻灯片索引。0是第一张幻灯片。必须是整数，而不是字符串。
+        bgOpacity: 0.7, // 背景透明度，0-1
+        maxSpreadZoom: 3, // 缩放级别，不要太大
+      };
+      //初始化并打开PhotoSwipe，pswpElement对应上面预览框架，PhotoSwipeUI_Default为皮肤，imgitems为图片数组，pswpoptions为选项
+      var gallery = new PhotoSwipe(
+        pswpElement,
+        PhotoSwipeUI_Default,
+        imgitems,
+        pswpoptions
+      );
+      gallery.init();
+    }
+    /**
+     * 用于添加图片点击事件
+     * @param img 图片元素
+     * @param index 所属下标（在imgitems中的位置）
+     */
+    function addImgClick(img, index) {
+      img.onclick = function () {
+        viewImg(index);
+      };
+    }
+    /**
+     * 轮询所有图片，获取src、width、height等数据，加入imgitems，并给图片元素添加事件
+     * 最好在onload中执行该方法，本站因放在最底部，所以直接初始化
+     * 异步加载图片可在图片元素创建完成后调用此方法
+     */
+    function initImg() {
+      //重置图片数组
+      imgitems = [];
+      //查找class:markdown 下的所有img元素并遍历
+      var imgs = document.querySelectorAll(".markdown img");
+      for (var i = 0; i < imgs.length; i++) {
+        var img = imgs[i];
+        //本站相册初始为loading图片，真实图片放在data-src
+        var ds = img.getAttribute("src");
+        //创建image对象，用于获取图片宽高
+        var imgtemp = new Image();
+        //判断是否存在data-src
+        if (ds != null && ds.length > 0) {
+          imgtemp.src = ds;
+        } else {
+          imgtemp.src = img.src;
+        }
+        //判断是否存在缓存
+        if (imgtemp.complete) {
+          var imgobj = {
+            src: imgtemp.src,
+            w: imgtemp.width,
+            h: imgtemp.height,
+          };
+          imgitems[i] = imgobj;
+          addImgClick(img, i);
+        } else {
+          // console.log("进来了2");
+          imgtemp.index = i;
+          imgtemp.img = img;
+          imgtemp.onload = function () {
+            var imgobj = {
+              src: this.src,
+              w: this.width,
+              h: this.height,
+            };
+            //不要使用push，因为onload前后顺序会不同
+            imgitems[this.index] = imgobj;
+            //添加点击事件
+            addImgClick(this.img, this.index);
+          };
+        }
+      }
+    }
+    //初始化
+    initImg();
+  </script>
+</body>
+
+</html>
